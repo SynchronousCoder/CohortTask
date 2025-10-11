@@ -1,0 +1,112 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body,
+html {
+  height: 100%;
+  width: 100%;
+  background-color: black;
+  color: white;
+  font-family: sans-serif;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2.5vh 5vh;
+  font-weight: 100;
+}
+.first {
+  display: flex;
+  gap: 1.7vh;
+  font-size: 9.5px;
+  opacity: 0.8;
+}
+.second {
+  display: flex;
+  gap: 1.2vh;
+  font-size: 20px;
+  font-family: "Courier New", Courier, monospace;
+}
+.third {
+  display: flex;
+  gap: 1.7vh;
+  font-size: 9.5px;
+  font-weight: 100;
+  opacity: 0.8;
+}
+
+.heading {
+  text-align: center;
+  margin-top: -5vh;
+  font-size: 20vw;
+  font-weight: 100;
+  letter-spacing: 1px;
+  position: relative;
+}
+#img{
+    border-radius: 3%;
+}
+.box1 {
+  height: 35vh;
+  width: 28vh;
+  position: absolute;
+  z-index: 2;
+  right: 380px;
+  top: 60vh;
+  background: url(https://images.unsplash.com/photo-1580331451062-99ff652288d7?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=687);
+  background-size: cover;
+  background-position: center;
+}
+.box2 {
+  height: 55vh;
+  width: 42vh;
+  background: url(https://plus.unsplash.com/premium_photo-1695339146296-ab03c0e6ae50?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8c3dlYXRlcnxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&q=60&w=600);
+  background-size: cover;
+  background-position: center;
+  position: absolute;
+  z-index: 3;
+  right: 100px;
+  top: 32vh;
+}
+.box3 {
+  height: 20vh;
+  width: 20vh;
+  background: url(https://images.unsplash.com/photo-1574201635302-388dd92a4c3f?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8c3dlYXRlcnxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&q=60&w=600);
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  top: 2vh;
+  left: 580px;
+}
+
+footer {
+  padding: 0vh 5vh;
+}
+.foot {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  gap: 0.5vh;
+  margin-top: 3vh;
+  opacity: 0.825;
+}
+.foot h2 {
+  font-size: 16.5px;
+}
+.foot p {
+  font-size: 11px;
+  width: 15%;
+  line-height: 1.7vh;
+}
+
+.last {
+  margin-top: 3vh;
+  font-size: 17px;
+  font-family: serif;
+  font-style: italic;
+  opacity: 0.825;
+}
