@@ -1,0 +1,38 @@
+@font-face {
+    font-family: fa;
+    src: url(./sf-pro-text_semibold.woff2);
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body, html {
+    height: 100%;
+    width: 100%;
+    background-color: black;
+    color: white;
+    font-family: fa;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    justify-content: center;
+    gap: 17px;
+    padding: 2.5vh 5vh;
+    font-weight: 100;
+    background-color: rgb(25, 25, 25);
+}
+header h4{
+    font-size: 2.3vh;
+}
+header i{
+    font-size: 2.7vh;
+}
+
+.middle{
+    
+}
