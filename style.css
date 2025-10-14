@@ -1,3 +1,12 @@
+@font-face {
+  font-family: font1;
+  src: url(../public/font/FoundersGrotesk-Semibold.woff);
+}
+@font-face {
+  font-family: font2;
+  src: url(../public/font/NeueMontreal-Regular.woff);
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -8,6 +17,14 @@ body {
   height: 100%;
   width: 100%;
   background: linear-gradient(to right, #485563, #29323c);
+  font-family: font1;
+  overflow: hidden;
+}
+.head h1{
+    font-size: 3rem;
+    color: #ebf0f5;
+    text-align: center;
+    text-transform: uppercase;
 }
 #main {
   height: 100%;
