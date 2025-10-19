@@ -1,3 +1,8 @@
+@font-face {
+  font-family: font1;
+  src: url(./63cffc0a3942456e003bc265_Chillax-Regular.woff);
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -8,36 +13,101 @@ body {
   height: 100%;
   width: 100%;
 }
-main{
-    height: 100%;
+html {
+  font-family: font1;
+  color: #f4f2ed;
+  font-size: clamp(14px, 1.2vw, 18px);
+}
+body {
+  background-color: #121212;
+}
+
+@mixin flex-column($gap: 0) {
+  display: flex;
+  flex-direction: column;
+  gap: $gap;
+}
+section{
+  max-width: 2000px;
+}
+
+main {
+  width: 100%;
+  @include flex-column(0rem);
+  align-items: center;
+
+  section.view1 {
     width: 100%;
-    display: flex;
-    gap: 5px;
+    padding: 4rem 0.7rem;
+    @include flex-column(1rem);
 
-    section{
-        height: 100%;
-        flex-grow: 1;
-        background-size: cover;
-        background-position: center;
-        transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
-    }
-    section:nth-child(1){
-        background-image: url('https://i.pinimg.com/736x/fb/b1/85/fbb18544bde79d72244d80ae4d9d1824.jpg');
-    }
-    section:nth-child(2){
-      background-image: url('https://i.pinimg.com/1200x/83/07/ba/8307ba7e3eadf348eeccea25651463f1.jpg');
-    }
-    section:nth-child(3){
-      background-image: url('https://i.pinimg.com/1200x/b8/87/91/b88791a0f6c6d4050203efbde4fd5b54.jpg');
-    }
-    section:nth-child(4){
-      background-image: url('https://i.pinimg.com/1200x/4c/87/07/4c87074418ff627be45e2e64c7c9ca08.jpg');
-    }
-    section:nth-child(5){
-      background-image: url('https://i.pinimg.com/736x/1c/10/0d/1c100d0e9129ef9a763a8074ef7d7aab.jpg');
+    .top {
+      width: 100%;
+      border-radius: 10px;
+
+      img {
+        width: 100%;
+      }
     }
 
-    section:hover{
-        flex-grow: 2.5;
+    .bottom {
+      width: 100%;
+      @include flex-column(4rem);
+      background-color: #1e1e1e;
+      padding: 1rem 1.7rem;
+      border-radius: 10px;
+
+      h2 {
+        font-size: 1rem;
+        font-weight: 300;
+      }
+
+      .text {
+        @include flex-column(.7rem);
+        h1 {
+          font-size: 2.5rem;
+          line-height: 2.7rem;
+          font-weight: 500;
+        }
+        p {
+          font-size: 1.25rem;
+          color: #f4f2edad;
+          line-height: 1.75rem;
+        }
+        button {
+          width: fit-content;
+          border: none;
+          outline: none;
+          padding: 0.7rem 1rem;
+          border-radius: 0.5rem;
+        }
+      }
     }
+  }
+}
+
+@media (min-width: 900px) {
+  main {
+    background-color: #f1a8a8;
+    section {
+      flex-direction: row;
+
+      .top,
+      .bottom {
+        width: 50%;
+      }
+
+      .bottom{
+        justify-content: space-between;
+        padding: 3rem;
+        .text{
+          gap: 1rem;
+          h1{
+            font-size: 3.87rem;
+            line-height: 4rem;
+          }
+        }
+      }
+    }
+  }
 }
