@@ -27,7 +27,7 @@ body {
   flex-direction: column;
   gap: $gap;
 }
-section{
+section {
   max-width: 2000px;
 }
 
@@ -43,7 +43,7 @@ main {
 
     .top {
       width: 100%;
-      border-radius: 10px;
+      border-radius: 0.7rem;
 
       img {
         width: 100%;
@@ -55,7 +55,7 @@ main {
       @include flex-column(4rem);
       background-color: #1e1e1e;
       padding: 1rem 1.7rem;
-      border-radius: 10px;
+      border-radius: 0.7rem;
 
       h2 {
         font-size: 1rem;
@@ -63,7 +63,7 @@ main {
       }
 
       .text {
-        @include flex-column(.7rem);
+        @include flex-column(0.7rem);
         h1 {
           font-size: 2.5rem;
           line-height: 2.7rem;
@@ -80,7 +80,145 @@ main {
           outline: none;
           padding: 0.7rem 1rem;
           border-radius: 0.5rem;
+          cursor: pointer;
         }
+      }
+    }
+  }
+}
+
+section.view2 {
+  width: 100%;
+  @include flex-column(7rem);
+  justify-content: center;
+  flex-direction: row;
+
+  .top {
+    @include flex-column(1.2rem);
+    .element {
+      @include flex-column(0.1rem);
+      align-items: center;
+      small {
+        font-size: 1rem;
+        opacity: 0.7;
+      }
+      h2 {
+        font-size: 3rem;
+        font-weight: 500;
+      }
+    }
+  }
+
+  .bottom {
+    @include flex-column(1.2rem);
+    .element {
+      @include flex-column(0.1rem);
+      align-items: center;
+      small {
+        font-size: 1.1rem;
+        opacity: 0.6;
+      }
+      h2 {
+        font-size: 3rem;
+        font-weight: 500;
+      }
+    }
+  }
+}
+
+section.view3,
+section.view31 {
+  width: 100%;
+  padding: 1rem 0.7rem;
+  @include flex-column(0.7rem);
+
+  .top {
+    width: 100%;
+    border-radius: 0.7rem;
+    overflow: hidden;
+    img {
+      width: 100%;
+    }
+  }
+
+  .bottom {
+    width: 100%;
+    @include flex-column(4rem);
+    background-color: #1e1e1e;
+    padding: 1rem 1.7rem;
+    border-radius: 0.7rem;
+
+    .text {
+      @include flex-column(0.7rem);
+
+      h1 {
+        font-size: 2.5rem;
+        line-height: 2.7rem;
+        font-weight: 500;
+        text-transform: uppercase;
+      }
+      .para {
+        @include flex-column(0.2rem);
+        p {
+          font-size: 1.25rem;
+          color: #f4f2edad;
+          line-height: 1.75rem;
+        }
+      }
+    }
+  }
+  .bottom > p {
+    text-transform: uppercase;
+  }
+}
+
+section.view4 {
+  width: 100%;
+  padding: 1rem 0.7rem;
+  @include flex-column(1rem);
+
+
+  .card {
+    @include flex-column(0rem);
+    justify-content: space-between;
+    padding: 1rem;
+    width: 100%;
+    background-image: url(./img/lady3.webp);
+    border-radius:  .7rem;
+    aspect-ratio: 1/1;
+    background-size: cover;
+
+    .icon ,
+    .bottom {
+      background-color: #4c4c4c68;
+      backdrop-filter: blur(1rem);
+      border: 1px solid white;
+      border-radius: 0.7rem;
+      padding: 0.5rem;
+    }
+    .top {
+      display: flex;
+      gap: 0.7rem;
+      justify-content: flex-end;
+    }
+    .icon{
+      width: fit-content;
+      border-radius: 50%;
+      i{
+        font-size: 1.4rem;
+      }
+    }
+
+    .bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      padding: 1rem;
+      border-radius: 0.5rem;
+      h2 {
+        font-size: 1.2rem;
+        font-weight: 200;
       }
     }
   }
@@ -88,8 +226,7 @@ main {
 
 @media (min-width: 900px) {
   main {
-    background-color: #f1a8a8;
-    section {
+    section.view1 {
       flex-direction: row;
 
       .top,
@@ -97,16 +234,92 @@ main {
         width: 50%;
       }
 
-      .bottom{
+      .bottom {
         justify-content: space-between;
         padding: 3rem;
-        .text{
+        .text {
           gap: 1rem;
-          h1{
+          h1 {
             font-size: 3.87rem;
             line-height: 4rem;
           }
         }
+      }
+    }
+    section.view2 {
+      gap: 10rem;
+      .top,
+      .bottom {
+        gap: 10rem;
+        flex-direction: row;
+      }
+      .top,
+      .bottom {
+        .element {
+          h2 {
+            font-size: 4rem;
+          }
+        }
+      }
+    }
+    section.view3 {
+      flex-direction: row-reverse;
+
+      .top,
+      .bottom {
+        width: 50%;
+      }
+      .bottom {
+        justify-content: space-between;
+        padding: 2rem;
+        .text {
+          gap: 1rem;
+          h1 {
+            font-size: 3rem;
+          }
+          .para {
+            flex-direction: row;
+            gap: 1.7rem;
+            p {
+              font-size: 1.1rem;
+              width: 45%;
+            }
+          }
+        }
+      }
+    }
+    section.view31 {
+      flex-direction: row;
+
+      .top,
+      .bottom {
+        width: 50%;
+      }
+      .bottom {
+        justify-content: space-between;
+        padding: 2rem;
+        .text {
+          gap: 1rem;
+          h1 {
+            font-size: 3rem;
+          }
+          .para {
+            flex-direction: row;
+            gap: 1.7rem;
+            p {
+              font-size: 1.1rem;
+              width: 45%;
+            }
+          }
+        }
+      }
+    }
+    section.view4{
+      flex-direction: row;
+      justify-content: space-around;
+      .card{
+        width: 32%;
+
       }
     }
   }
