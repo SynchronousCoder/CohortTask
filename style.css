@@ -1,4 +1,8 @@
 @font-face {
+  font-family: font1;
+  src: url(FoundersGrotesk-Semibold.woff);
+}
+@font-face {
   font-family: font2;
   src: url(NeueMontreal-Regular.woff);
 }
@@ -42,11 +46,15 @@ body {
     color: white;
     padding: 10px;
 }
-#main h1{
+.text{
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%,-50%);
-    color: white;
+    transform: translate(-70%,-50%);
+    color: rgba(255, 255, 255, 0.783);
     font-size: 5rem;
+    line-height: 4.5rem;
+    font-weight: 200;
+    background-color: blue;
 }
+
