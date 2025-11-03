@@ -151,12 +151,79 @@
 // }
 
 // Q.11
-let n = 1;
-for (let i = 1; i < 101; i++) {
-  if (i % 5 === 0) {
-    if (n < 6) {
-      console.log(`The ${n} no. divisible by 5 is ${i}`);
-      n++;
-    }
-  }
-}
+// let n = 1;
+// for (let i = 1; i < 101; i++) {
+//   if (i % 5 === 0) {
+//     if (n < 6) {
+//       console.log(`The ${n} no. divisible by 5 is ${i}`);
+//       n++;
+//     }
+//   }
+// }
+
+//Functions
+
+// function dance(val){
+//     console.log(`${val} is Dancing`);
+// }
+
+// dance("Aryan");
+// dance("Rohan");
+// dance("Sohan");
+
+// //Use of rest operator (...)
+// function name(...val){
+//     console.log(val);
+// }
+// name("Aryan", "Rohan", "Sohan", "Mohan");
+
+//HOF
+// function greet(){
+//     return function(){
+//         console.log("Hello World");
+//     }
+// }
+// greet()();
+
+// let multiply = (a ,b) =>{
+//     return a*b;
+// }
+
+// use rest parameter to accept any no. of score and return total
+// let sum =0;
+// function getScore(...scores){
+//     for(let i =0; i<scores.length; i++){
+//         sum += scores[i];
+//     }
+//     console.log(sum);
+    
+// }
+// getScore(10,20,30,40);
+
+// function abcd(val){
+//     return val();
+// }
+// abcd(function(){
+//     console.log("Hi");
+    
+// });
+
+// function outer(){
+//     let count = 0;
+//     return function(){
+//         count++;
+//         console.log(count);
+//     }
+// }
+
+// let counter = outer();
+// counter();
+// counter();
+
+// function init(){
+//     console.log("Hi");
+// }
+// (function(){
+//     console.log("Hi");
+    
+// })();
