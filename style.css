@@ -55,6 +55,22 @@ body {
     font-size: 5rem;
     line-height: 4.5rem;
     font-weight: 200;
-    background-color: blue;
+    /* background-color: blue; */
 }
 
+.text h1, .one h1{
+  font-size: 8rem;
+}
+.one{
+  display: flex;
+  gap: 30px;
+  margin-top: 40px;
+}
+.one span {
+  font-family: font1;
+  font-size: 13rem;
+  background-image: linear-gradient(90deg, #FF3131, #FF914D);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-style: italic;
+}

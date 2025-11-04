@@ -196,7 +196,7 @@
 //         sum += scores[i];
 //     }
 //     console.log(sum);
-    
+
 // }
 // getScore(10,20,30,40);
 
@@ -205,7 +205,7 @@
 // }
 // abcd(function(){
 //     console.log("Hi");
-    
+
 // });
 
 // function outer(){
@@ -225,5 +225,68 @@
 // }
 // (function(){
 //     console.log("Hi");
-    
+
 // })();
+
+//Function Practice Questions
+
+// Q.1 BMI Calculator
+// function bmi(weight, height){
+//     let bmiValue = (weight)/(height*height);
+//     return bmiValue;
+// }
+// console.log(bmi(68, 1.69).toFixed(2));
+
+// Q.2 Discount Calculator
+// MY APPROACH
+// function discount(price, discount){
+//     return function(){
+//         let save = price*(discount/100);
+//         let value = price - save;
+//         return value
+//     }
+// }
+
+// console.log(discount(560, 12)());
+
+// SIR APPROACH
+// function discount(discount){
+//     return function(price){
+//         return price - (price*(discount/100));
+//     }
+// }
+
+// let ten = discount(10);
+// console.log(ten(1000)); //900
+
+// Q.3
+// function counter(count){
+//     count = 0;
+//     return function(){
+//         return ++count;
+//     }
+// }
+// let c = counter();
+// console.log(c());
+// console.log(c());
+// console.log(c());
+
+// Q.4
+// function double(n){
+//     return n*2;
+// }
+// console.log(double(5));
+
+// Q.5
+(function factorial(n) {
+  let fact = 1;
+
+  if (n === 0 || n === 1) {
+    console.log(1);
+  } else if (n > 1) {
+    for(let i = 1; i<=n; i++){
+        fact *= i;        
+    }
+    console.log(`Factorial of ${n} is ${fact}`);
+  }
+})(5);
