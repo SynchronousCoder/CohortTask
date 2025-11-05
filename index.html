@@ -1,28 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.7.0/fonts/remixicon.css" rel="stylesheet"/>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <div id="main">
-        <!-- <div class="nav">
-            <i class="ri-home-2-line"></i>
-            <i class="ri-mail-line"></i>
-            <i class="ri-store-2-line"></i>
-            <i class="ri-tent-line"></i>
-        </div> -->
-        <img src="hero.png" alt="">
-        <div class="text">
-            <h1>Branding</h1>
-            <div class="one">
-                <h1>&</h1>
-                <span>Design</span>
-            </div>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <section class="intro"></section>
+    <section class="sticky">
+
+      <div class="card-container">
+        
+        <div class="card" id="card-1">
+          <div class="card-front">
+            <img src="row-1-column-1.jpg" alt="" />
+          </div>
+          <div class="card-back">
+            <span>(01)</span>
+            <p>Interactive Web Experiences</p>
+          </div>
         </div>
-    </div>
-</body>
+
+        <div class="card" id="card-2">
+          <div class="card-front">
+            <img src="row-1-column-2.jpg" alt="" />
+          </div>
+          <div class="card-back">
+            <span>(02)</span>
+            <p>Creative Development</p>
+          </div>
+        </div>
+
+        <div class="card" id="card-3">
+          <div class="card-front">
+            <img src="row-1-column-3.jpg" alt="" />
+          </div>
+          <div class="card-back">
+            <span>(03)</span>
+            <p>Brand Strategy</p>
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+    <section class="outro"></section>
+
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"
+      integrity="sha512-NcZdtrT77bJr4STcmsGAESr06BYGE8woZdSdEgqnpyqac7sugNO+Tr4bGwGF3MsnEkGKhU2KL2xh6Ec+BqsaHA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrollTrigger.min.js"
+      integrity="sha512-P2IDYZfqSwjcSjX0BKeNhwRUH8zRPGlgcWl5n6gBLzdi4Y5/0O4zaXrtO4K9TZK6Hn1BenYpKowuCavNandERg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script src="script.js"></script>
+  </body>
 </html>

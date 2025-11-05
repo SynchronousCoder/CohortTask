@@ -75,14 +75,14 @@
 // console.log(`The Final sum of odd no from 1-30: ${sum}`);
 
 //Q.15
-// let count = 0;
-// while(count < 1){
-//     let input = prompt("Enter the no");
-//     if(input%2 === 0){
-//         console.log(input);
-//         count++;
-//     }
-// }
+let count = 0;
+while(count < 1){
+    let input = prompt("Enter the no");
+    if(input%2 === 0){
+        console.log(input);
+        count++;
+    }
+}
 
 //Q.16
 // let i = prompt("Enter the starting no");
@@ -118,22 +118,22 @@
 // console.log(`The no of positive no is ${count}`);
 
 //Q.19
-let i = 1;
-let balance = 1000;
-while(i < 4){
-    let withdraw = prompt(`Amount to withdraw ${i} time`);
+// let i = 1;
+// let balance = 1000;
+// while(i < 4){
+//     let withdraw = prompt(`Amount to withdraw ${i} time`);
     
-    if(balance - withdraw > 0){
-        console.log(`Balance left after ${i} time is ${balance - withdraw}`);
-        balance -= withdraw;
-    }else if(balance - withdraw === 0){
-        console.log("Your account is empty");
-        break;
-    }else{
-        console.log(`Insufficient balance [If you will do it then : ${balance - withdraw}]`);
-        break;
-    }
+//     if(balance - withdraw > 0){
+//         console.log(`Balance left after ${i} time is ${balance - withdraw}`);
+//         balance -= withdraw;
+//     }else if(balance - withdraw === 0){
+//         console.log("Your account is empty");
+//         break;
+//     }else{
+//         console.log(`Insufficient balance [If you will do it then : ${balance - withdraw}]`);
+//         break;
+//     }
 
 
-    i++;
-}
+//     i++;
+// }

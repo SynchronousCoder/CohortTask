@@ -1,11 +1,3 @@
-@font-face {
-  font-family: font1;
-  src: url(FoundersGrotesk-Semibold.woff);
-}
-@font-face {
-  font-family: font2;
-  src: url(NeueMontreal-Regular.woff);
-}
 * {
   margin: 0;
   padding: 0;
@@ -15,62 +7,88 @@ html,
 body {
   height: 100%;
   width: 100%;
-  font-family: font2;
 }
 
-#main{
-    height: calc(100% );
-    width: 100%;
-    background-color: black;
-}
-#main img{
-    height: calc(100% );
-    width: 100%;
-    object-fit: cover;
-}
-#main .nav{
-    height: fit-content;
-    width: fit-content;
-    background-color: rgba(255, 255, 255, 0.356);
-    border-radius: 30px;
-    position: absolute;
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-    top: 50%;
-    transform: translate(30%, -50%);
-    padding: .5rem .1rem;
-}
-#main .nav i{
-    font-size: 2.25rem;
-    color: white;
-    padding: 10px;
-}
-.text{
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-70%,-50%);
-    color: rgba(255, 255, 255, 0.783);
-    font-size: 5rem;
-    line-height: 4.5rem;
-    font-weight: 200;
-    /* background-color: blue; */
+img{
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
 }
 
-.text h1, .one h1{
-  font-size: 8rem;
+section{
+  position: relative;
+  height: 100%;
+  /* width: 100svh; */
+  width: 100%;
+  padding: 2rem;
+  background-color: #0f0f0f;
+  color: #fff;
 }
-.one{
+.sticky{
   display: flex;
-  gap: 30px;
-  margin-top: 40px;
+  justify-content: center;
+  align-items: center;
 }
-.one span {
-  font-family: font1;
-  font-size: 13rem;
-  background-image: linear-gradient(90deg, #FF3131, #FF914D);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  font-style: italic;
+
+.card-container{
+  position: relative;
+  /* scale: 75%; */
+  width: 65%;
+  display: flex;
+  perspective: 1000px;
+  transform: translateY(40px);
+  will-change: width;
 }
+.card{
+  position: relative;
+  flex: 1;
+  aspect-ratio: 16/27;
+  transform-style: preserve-3d;
+  transform-origin: top;
+}
+
+#card1{
+  border-radius: 20px 0px 0px 20px;
+}
+#card3{
+  border-radius: 0px 20px 20px 0px;
+}
+
+.card-front, .card-back{
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  backface-visibility: hidden;
+  border-radius: inherit;
+  overflow: hidden;
+}
+.card-back{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  transform: rotateY(180deg);
+  padding: 2rem;
+}
+.card-back span{
+  position: absolute;
+  font-size: 1.2rem;
+  top: 2rem;
+  left: 2rem;
+  opacity: 0.6;
+}
+.card-back p{
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+#card-1 .card-back{
+  background-color: #b2b2b2;
+  color: #0f0f0f;
+
+}
+#card-2 .card-back{
+  background-color: #ce2017;
+}
+#card-3 .card-back{
+  background-color: #2f2f2f;
+} 
