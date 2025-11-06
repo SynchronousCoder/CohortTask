@@ -61,6 +61,10 @@
 // if(age >= 18 && country === "India") console.log("Eligible for Voting");
 // else console.log("No");
 
+
+
+
+
 //FIBIONACI
 // var n = 9;
 // let a = 0;
@@ -278,15 +282,84 @@
 // console.log(double(5));
 
 // Q.5
-(function factorial(n) {
-  let fact = 1;
+// (function factorial(n) {
+//   let fact = 1;
 
-  if (n === 0 || n === 1) {
-    console.log(1);
-  } else if (n > 1) {
-    for(let i = 1; i<=n; i++){
-        fact *= i;        
-    }
-    console.log(`Factorial of ${n} is ${fact}`);
-  }
-})(5);
+//   if (n === 0 || n === 1) {
+//     console.log(1);
+//   } else if (n > 1) {
+//     for(let i = 1; i<=n; i++){
+//         fact *= i;        
+//     }
+//     console.log(`Factorial of ${n} is ${fact}`);
+//   }
+// })(5);
+
+
+
+
+
+//ARRAY - 8hr
+let fruits = ["Apple", "Banana", "Orange"];
+console.log(fruits[1]);
+
+fruits.push("Mango"); //adds at last
+fruits.unshift("Pineapple"); //adds at first
+
+
+let names = ["Aryan", "Rohan", "Sohan", "Mohan"];
+let nam = names.sort().reverse();
+console.log(nam);
+
+// let n = [10, 5, 20, 15, 30];
+// let newn = n.map(function(val){
+//     return val*val;
+// })
+// console.log(newn);
+
+
+// let n = [5, 12, 8, 20, 3];
+// let newn = n.filter(function(val){
+//     return val > 10;
+// })
+// console.log(newn);
+
+
+// let num = [10,20,30];
+// let newNum = num.reduce(function(acc, val){
+//     return acc + val;
+// },0)
+// console.log(`Sum of array num is : ${newNum}`);
+
+
+// let arr = [12, 15, 3, 8, 20];
+// let ans = arr.find(function(val){
+//     return val < 10;
+// })
+
+// Objects in JS - 8hr
+let obj = {
+  "first-name": "John",
+}
+let {"first-name": firstName} = obj;
+
+let course = {
+  title: "JavaScript",
+  lessons: 50,
+}
+Object.entries(course).forEach(function(val){
+  console.log(val[0] +": "+ val[1]);
+  
+})
+
+let obj1 = {info : {score: 100}}
+let obj2 = JSON.parse(JSON.stringify(obj1));
+obj2.info.score = 90;
+console.log(obj1.info.score);
+console.log(obj2.info.score);
+
+const key = "role";
+let obj3 = {
+  [key]: "admin"
+}
+console.log(obj3);
