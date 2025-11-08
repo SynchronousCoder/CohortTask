@@ -5,90 +5,172 @@
 }
 html,
 body {
+  font-family: 'Courier New', Courier, monospace;
   height: 100%;
   width: 100%;
+  background-color: black ;
 }
 
-img{
-  height: 100%;
-  width: 100%;
-  object-fit: cover;
-}
-
-section{
-  position: relative;
-  height: 100%;
-  /* width: 100svh; */
-  width: 100%;
-  padding: 2rem;
-  background-color: #0f0f0f;
+h1{
+  font-size: 3rem;
+  font-weight: 500;
+  line-height: 1;
   color: #fff;
 }
-.sticky{
-  display: flex;
-  justify-content: center;
-  align-items: center;
+p, .text{
+  color: #fff;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-family: "DM Mono";
+  font-size: .85rem;
+  font-weight: 550;
+  line-height: 1;
+  display: inline-block;
 }
-
-.card-container{
-  position: relative;
-  /* scale: 75%; */
-  width: 65%;
-  display: flex;
-  perspective: 1000px;
-  transform: translateY(40px);
-  will-change: width;
-}
-.card{
-  position: relative;
-  flex: 1;
-  aspect-ratio: 16/27;
-  transform-style: preserve-3d;
-  transform-origin: top;
-}
-
-#card1{
-  border-radius: 20px 0px 0px 20px;
-}
-#card3{
-  border-radius: 0px 20px 20px 0px;
-}
-
-.card-front, .card-back{
-  position: absolute;
-  height: 100%;
+.top,footer{
+  position: fixed;
   width: 100%;
-  backface-visibility: hidden;
-  border-radius: inherit;
+  padding: 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  mix-blend-mode: difference;
+  z-index: 2;
+}
+.top{
+  display: flex;
+  gap: 0.75rem;
+}
+footer{
+  bottom: 0;
+}
+
+.clients{
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-start;
+  gap: 2rem;
   overflow: hidden;
 }
-.card-back{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  transform: rotateY(180deg);
-  padding: 2rem;
-}
-.card-back span{
-  position: absolute;
-  font-size: 1.2rem;
-  top: 2rem;
-  left: 2rem;
-  opacity: 0.6;
-}
-.card-back p{
-  font-size: 2rem;
-  margin-bottom: 1rem;
-}
-#card-1 .card-back{
-  background-color: #b2b2b2;
-  color: #0f0f0f;
 
+.clients-preview{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 65%;
+  height: 75%;
+  z-index: 0;
+  pointer-events: none;
 }
-#card-2 .card-back{
-  background-color: #ce2017;
+.client-img-wrapper{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  clip-path: polygon(50% 50%, 50% 50%, 50% 50%, 50% 50%);
+  will-change: clip-path;
+  overflow: hidden;
 }
-#card-3 .card-back{
-  background-color: #2f2f2f;
+.client-img-wrapper img{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  will-change: transform, opacity;
+}
+
+.client-header p{
+  position: relative;
+  color: #acacac;
+  z-index: 1;
+}
+
+.clients-list{
+  position: relative;
+  width: 80%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  gap: 0.75rem;
+  mix-blend-mode: difference;
+  z-index: 2;
+}
+
+.client-name{
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+}
+
+/* //Under line Animation */
+.client-name::after{
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 0.15rem;
+  background-color: #fff;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 300ms ease-out;
+}
+.cilent-name:hover::after{
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+
+#page2 {
+  height: 100vh;
+  width: 100vw;
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.word {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.word h1 {
+  color: black;
+  font-size: 3rem;
+  margin: 0;
+}
+
+/* Bullet train line */
+.word::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 0.15rem;
+  width: 100%;
+  background-color: black;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s ease;
+}
+
+/* Train enters from left */
+.word:hover::before {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+/* Train exits to right */
+.word:not(:hover)::before {
+  transform: scaleX(0);
+  transform-origin: right;
 } 

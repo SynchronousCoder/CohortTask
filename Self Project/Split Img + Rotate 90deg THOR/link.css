@@ -1,0 +1,51 @@
+@font-face {
+    font-family: face;
+    src: url('sa-sb.woff2');
+}
+@font-face {
+    font-family: foot;
+    font-weight: 200;
+    src: url('bl-b.woff2');
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+html,
+body {
+  height: 100%;
+  width: 100%;
+  background-color: #1f1f1f;
+}
+
+section {
+  height: 100vh;
+  width: 100vw;
+  background-color: #FFFFFF;
+  border-radius: 20px;
+  display: grid;
+  grid-template-rows: 70px 1fr 70px;
+  grid-template-columns: 1fr;
+  grid-template-areas: "top"
+                       "hero"
+                       "bottom";
+}
+
+.top{
+    grid-area: top;
+    background-color: #FF0000;
+}
+.text{
+    font-family: "foot";
+    display: flex;
+}
+.hero{
+    grid-area: hero;
+    background-color: #00FF00;
+}
+
+.bottom{
+    grid-area: bottom;
+    background-color: #0000FF;
+}

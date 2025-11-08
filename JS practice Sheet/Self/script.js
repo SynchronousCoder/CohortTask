@@ -81,106 +81,172 @@
 //   }
 // }
 
+
+
 //Q.3 ATM SIMULATOR USING JS
-let balance = 1000;
-let pin = 1234;
-let enterPin;
-let input;
-let attempt = 0;
+// let balance = 1000;
+// let pin = 1234;
+// let enterPin;
+// let input;
+// let attempt = 0;
 
-//Login into your account
-while (attempt < 3 && enterPin !== pin) {
-  input = prompt(`Enter Your Pin Below - Attempt ${attempt+1}`);
+// //Login into your account
+// while (attempt < 3 && enterPin !== pin) {
+//   input = prompt(`Enter Your Pin Below - Attempt ${attempt+1}`);
 
-  if (input === null || input.trim() === "" || isNaN(input)) {
-    console.error("Pls Write the Pin");
-    continue;
-  }
-  enterPin = Number(input);
-  if (enterPin === pin) {
-    console.log("Succefull, You have accesed your account!!");
-    break;
-  } else {
-    console.error("Incorrect Pin, Try Again!!");
-    attempt++;
-  }
+//   if (input === null || input.trim() === "" || isNaN(input)) {
+//     console.error("Pls Write the Pin");
+//     continue;
+//   }
+//   enterPin = Number(input);
+//   if (enterPin === pin) {
+//     console.log("Succefull, You have accesed your account!!");
+//     break;
+//   } else {
+//     console.error("Incorrect Pin, Try Again!!");
+//     attempt++;
+//   }
 
-  if (attempt === 3) {
-    console.error("Sorry You've used all attempts, Your Account is Locked!!");
-  }
-}
+//   if (attempt === 3) {
+//     console.error("Sorry You've used all attempts, Your Account is Locked!!");
+//   }
+// }
 
-//Choose Action you need to Perform
-if (enterPin === pin) {
-  let action;
-  let num =
-    prompt(`Write Down the Follwong no to perform the following function : 
-    1. Withdraw
-    2. Deposit 
-    3. Check Balance 
-    4. Exit`);
+// //Choose Action you need to Perform
+// if (enterPin === pin) {
+//   let action;
+//   let num =
+//     prompt(`Write Down the Follwong no to perform the following function : 
+//     1. Withdraw
+//     2. Deposit 
+//     3. Check Balance 
+//     4. Exit`);
 
-  if (num === null || num.trim() === "") {
-    console.error("Write the valid No : ");
-  }
-  action = Number(num);
+//   if (num === null || num.trim() === "") {
+//     console.error("Write the valid No : ");
+//   }
+//   action = Number(num);
 
-  // if(action === 4){ console.log("Exited Succesfully, Thanks For Coming");}
+//   // if(action === 4){ console.log("Exited Succesfully, Thanks For Coming");}
 
-  while (action !== 4) {
-    //WithDraw
-    if (action === 1) {
-      let w = prompt("Enter Your Withdraw Amount: ");
-      if (w === null || w.trim() === "") {
-        console.log("Write Down The Balance : ");
-        continue;
-      }
+//   while (action !== 4) {
+//     //WithDraw
+//     if (action === 1) {
+//       let w = prompt("Enter Your Withdraw Amount: ");
+//       if (w === null || w.trim() === "") {
+//         console.log("Write Down The Balance : ");
+//         continue;
+//       }
 
-      let Withdraw = Number(w);
+//       let Withdraw = Number(w);
 
-      if (Withdraw > balance) {
-        console.log("Insufficient Balance");
-      } else if (Withdraw < balance) {
-        balance -= Withdraw;
-        console.log(`Withdrawal Successful. New Balance is: ${balance}`);
-      }
-    } 
-    //Deposit
-    else if (action === 2) {
-      let d = prompt("Enter Your Deposit Amount: ");
-      if (d === null || d.trim() === "") {
-        console.log("Write Down The Balance : ");
-        continue;
-      }
+//       if (Withdraw > balance) {
+//         console.log("Insufficient Balance");
+//       } else if (Withdraw < balance) {
+//         balance -= Withdraw;
+//         console.log(`Withdrawal Successful. New Balance is: ${balance}`);
+//       }
+//     } 
+//     //Deposit
+//     else if (action === 2) {
+//       let d = prompt("Enter Your Deposit Amount: ");
+//       if (d === null || d.trim() === "") {
+//         console.log("Write Down The Balance : ");
+//         continue;
+//       }
 
-      let Deposit = Number(d);
-      if (Deposit > 0) {
-        balance += Deposit;
-        console.log(`Deposit Successful. New Balance is: ${balance}`);
-      } else {
-        console.log("Invalid Deposit Amount");
-      }
-    } 
-    //Check Balance
-    else if (action === 3) {
-      console.log(`Your Current Balance is: ${balance}`);
-    }
+//       let Deposit = Number(d);
+//       if (Deposit > 0) {
+//         balance += Deposit;
+//         console.log(`Deposit Successful. New Balance is: ${balance}`);
+//       } else {
+//         console.log("Invalid Deposit Amount");
+//       }
+//     } 
+//     //Check Balance
+//     else if (action === 3) {
+//       console.log(`Your Current Balance is: ${balance}`);
+//     }
 
-    let num =
-      prompt(`Write Down the Follwong no to perform the following function : 
-    1. Withdraw
-    2. Deposit 
-    3. Check Balance 
-    4. Exit`);
+//     let num =
+//       prompt(`Write Down the Follwong no to perform the following function : 
+//     1. Withdraw
+//     2. Deposit 
+//     3. Check Balance 
+//     4. Exit`);
 
-    if (num === null || num.trim() === "") {
-      console.error("Write the valid No : ");
-    }
-    action = Number(num);
-  }
-}
+//     if (num === null || num.trim() === "") {
+//       console.error("Write the valid No : ");
+//     }
+//     action = Number(num);
+//   }
+// }
 
 //Now q is about task perform karne hai mai 1 2 3 4 likhu and task perform ho in a loop
 //1> mai no enter karunga
 //2> woh no baar check hoga action konsa hai
 //3> action hone ke baad phir no enter karunga
+
+
+
+// 🧮 Q3. Statistics Analyzer
+let i =0;
+let arr = [];
+
+while(i<10){
+  let n = prompt(`Enter the ${i+1} Natural Number`);
+  if(n === null || n.trim() === "" || isNaN(n)){
+    console.error("Pls Enter the Natural No");
+    continue;
+  }
+
+  let num = Number(n);
+  arr.push(num);
+  i++
+}
+
+arr.sort(function(a, b){
+  return a - b; //ascending order
+})
+
+//Sorted Array in Ascending Order:
+console.log(`The Number input by you are : ${arr}`);
+
+//Highest and Lowest
+console.log(`Highest no : ${arr[arr.length - 1]}`);
+console.log(`Lowest no : ${arr[0]}`);
+
+//Odd & Even
+arr.forEach(function(val){
+  if(val % 2 === 0){
+    console.log(`This Number Enter by user is "Even" : ${val}`);
+  }else{
+    console.log(`This Number Enter by user is "Odd" : ${val}`);
+  }
+})
+
+//Counting pos and neg value
+let positive = 0;
+let negative = 0;
+let zero = 0;
+arr.forEach(function(val){
+  if(val > 0){
+    positive++
+  }else if(val ===0){
+    zero++;
+  }else{
+    negative++
+  }
+})
+console.log(`No. Enter by user are positive : ${positive}`);
+console.log(`No. Enter by user are neagtive : ${negative} `);
+console.log(`No. Enter by user are zero : ${zero} `);
+
+//Sum & Average
+let sum = arr.reduce(function(acc, val){
+  return acc + val;
+},0)
+console.log(`The TOTAL sum of user Arr is : ${sum}`);
+
+let avg = sum/(arr.length);
+console.log(`The average of No. enter by user is : ${avg.toFixed(2)}`);
