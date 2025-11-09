@@ -81,8 +81,6 @@
 //   }
 // }
 
-
-
 //Q.3 ATM SIMULATOR USING JS
 // let balance = 1000;
 // let pin = 1234;
@@ -116,10 +114,10 @@
 // if (enterPin === pin) {
 //   let action;
 //   let num =
-//     prompt(`Write Down the Follwong no to perform the following function : 
+//     prompt(`Write Down the Follwong no to perform the following function :
 //     1. Withdraw
-//     2. Deposit 
-//     3. Check Balance 
+//     2. Deposit
+//     3. Check Balance
 //     4. Exit`);
 
 //   if (num === null || num.trim() === "") {
@@ -146,7 +144,7 @@
 //         balance -= Withdraw;
 //         console.log(`Withdrawal Successful. New Balance is: ${balance}`);
 //       }
-//     } 
+//     }
 //     //Deposit
 //     else if (action === 2) {
 //       let d = prompt("Enter Your Deposit Amount: ");
@@ -162,17 +160,17 @@
 //       } else {
 //         console.log("Invalid Deposit Amount");
 //       }
-//     } 
+//     }
 //     //Check Balance
 //     else if (action === 3) {
 //       console.log(`Your Current Balance is: ${balance}`);
 //     }
 
 //     let num =
-//       prompt(`Write Down the Follwong no to perform the following function : 
+//       prompt(`Write Down the Follwong no to perform the following function :
 //     1. Withdraw
-//     2. Deposit 
-//     3. Check Balance 
+//     2. Deposit
+//     3. Check Balance
 //     4. Exit`);
 
 //     if (num === null || num.trim() === "") {
@@ -187,66 +185,129 @@
 //2> woh no baar check hoga action konsa hai
 //3> action hone ke baad phir no enter karunga
 
-
-
 // 🧮 Q3. Statistics Analyzer
-let i =0;
-let arr = [];
+// let i =0;
+// let arr = [];
 
-while(i<10){
-  let n = prompt(`Enter the ${i+1} Natural Number`);
-  if(n === null || n.trim() === "" || isNaN(n)){
-    console.error("Pls Enter the Natural No");
-    continue;
-  }
+// while(i<10){
+//   let n = prompt(`Enter the ${i+1} Natural Number`);
+//   if(n === null || n.trim() === "" || isNaN(n)){
+//     console.error("Pls Enter the Natural No");
+//     continue;
+//   }
 
-  let num = Number(n);
-  arr.push(num);
-  i++
+//   let num = Number(n);
+//   arr.push(num);
+//   i++
+// }
+
+// arr.sort(function(a, b){
+//   return a - b; //ascending order
+// })
+
+// //Sorted Array in Ascending Order:
+// console.log(`The Number input by you are : ${arr}`);
+
+// //Highest and Lowest
+// console.log(`Highest no : ${arr[arr.length - 1]}`);
+// console.log(`Lowest no : ${arr[0]}`);
+
+// //Odd & Even
+// arr.forEach(function(val){
+//   if(val % 2 === 0){
+//     console.log(`This Number Enter by user is "Even" : ${val}`);
+//   }else{
+//     console.log(`This Number Enter by user is "Odd" : ${val}`);
+//   }
+// })
+
+// //Counting pos and neg value
+// let positive = 0;
+// let negative = 0;
+// let zero = 0;
+// arr.forEach(function(val){
+//   if(val > 0){
+//     positive++
+//   }else if(val ===0){
+//     zero++;
+//   }else{
+//     negative++
+//   }
+// })
+// console.log(`No. Enter by user are positive : ${positive}`);
+// console.log(`No. Enter by user are neagtive : ${negative} `);
+// console.log(`No. Enter by user are zero : ${zero} `);
+
+// //Sum & Average
+// let sum = arr.reduce(function(acc, val){
+//   return acc + val;
+// },0)
+// console.log(`The TOTAL sum of user Arr is : ${sum}`);
+
+// let avg = sum/(arr.length);
+// console.log(`The average of No. enter by user is : ${avg.toFixed(2)}`);
+
+//Q3. Quiz App Simulator
+let correct = 0;
+let wrong = 0;
+let test = [
+  {
+    question: `What is let a = "5";
+let b = 2;
+console.log(a + b);
+console.log(a * b);`,
+
+    options: [" 7 and 10 ",
+              " 52 and 10 ", 
+              " 7 and 10 ", 
+              " 80 and 10 "],
+
+    answer: "52 and 10",
+  },
+];
+
+let i = 0;
+
+while (i < test.length) {
+  test.forEach(function (val) {
+    let a = prompt(`${val.question} 
+      
+Write y to see options`);
+
+    if (
+      a === null ||
+      a.trim().toLowerCase() !== "y" ||
+      a.trim() === "" ||
+      isNaN(a)
+    ) {
+      console.error("Please Write y to continue");
+    }
+
+    if (a.trim().toLocaleLowerCase() === "y") {
+      let options = prompt(`${val.options}`);
+
+      if (
+        options === null ||
+        options.trim().toLowerCase() !== "y" ||
+        options.trim() === "" ||
+        isNaN(options)
+      ) {
+        console.error("Please Write correct answer [exact same]");
+      }
+
+      if(options === val.answer){
+        console.log("Your ans is correct");
+        correct++;
+      }else{
+        console.log("Your ans is wrong");
+        wrong++;
+      }
+    }
+  });
+
+  i++;
 }
 
-arr.sort(function(a, b){
-  return a - b; //ascending order
-})
-
-//Sorted Array in Ascending Order:
-console.log(`The Number input by you are : ${arr}`);
-
-//Highest and Lowest
-console.log(`Highest no : ${arr[arr.length - 1]}`);
-console.log(`Lowest no : ${arr[0]}`);
-
-//Odd & Even
-arr.forEach(function(val){
-  if(val % 2 === 0){
-    console.log(`This Number Enter by user is "Even" : ${val}`);
-  }else{
-    console.log(`This Number Enter by user is "Odd" : ${val}`);
-  }
-})
-
-//Counting pos and neg value
-let positive = 0;
-let negative = 0;
-let zero = 0;
-arr.forEach(function(val){
-  if(val > 0){
-    positive++
-  }else if(val ===0){
-    zero++;
-  }else{
-    negative++
-  }
-})
-console.log(`No. Enter by user are positive : ${positive}`);
-console.log(`No. Enter by user are neagtive : ${negative} `);
-console.log(`No. Enter by user are zero : ${zero} `);
-
-//Sum & Average
-let sum = arr.reduce(function(acc, val){
-  return acc + val;
-},0)
-console.log(`The TOTAL sum of user Arr is : ${sum}`);
-
-let avg = sum/(arr.length);
-console.log(`The average of No. enter by user is : ${avg.toFixed(2)}`);
+console.log(`Hence Your ScoreCard : 
+  Correct Ans : ${correct}
+  Wrong Ans: ${wrong}`);
