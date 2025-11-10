@@ -5,151 +5,73 @@
 }
 html,
 body {
-  font-family: 'Courier New', Courier, monospace;
   height: 100%;
   width: 100%;
-  background-color: black ;
+  font-family: sans-serif;
+  background-color: #fff;
+  color: #000;
 }
 
-h1{
-  font-size: 3rem;
-  font-weight: 500;
-  line-height: 1;
-  color: #fff;
-}
-p, .text{
-  color: #fff;
-  text-decoration: none;
-  text-transform: uppercase;
-  font-family: "DM Mono";
-  font-size: .85rem;
-  font-weight: 550;
-  line-height: 1;
-  display: inline-block;
-}
-.top,footer{
-  position: fixed;
+#page1 {
+  height: 100%;
   width: 100%;
-  padding: 2rem;
+  overflow-x: hidden;
+}
+nav {
+  height: 10%;
+  width: 100%;
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
-  mix-blend-mode: difference;
-  z-index: 2;
+  align-items: center;
+  padding: 0 2rem;
 }
-.top{
+nav .link {
   display: flex;
-  gap: 0.75rem;
-}
-footer{
-  bottom: 0;
+  gap: 5px;
+  text-transform: uppercase;
 }
 
-.clients{
-  position: relative;
+#main {
+  height: 80%;
   width: 100%;
-  height: 100vh;
-  padding: 2rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  align-items: flex-start;
-  gap: 2rem;
-  overflow: hidden;
-}
-
-.clients-preview{
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 65%;
-  height: 75%;
-  z-index: 0;
-  pointer-events: none;
-}
-.client-img-wrapper{
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  clip-path: polygon(50% 50%, 50% 50%, 50% 50%, 50% 50%);
-  will-change: clip-path;
-  overflow: hidden;
-}
-.client-img-wrapper img{
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  will-change: transform, opacity;
-}
-
-.client-header p{
   position: relative;
-  color: #acacac;
-  z-index: 1;
+  overflow-x: hidden;
+  padding: 4rem;
+  isolation: isolate; /* Creates a single stacking context */
 }
 
-.clients-list{
-  position: relative;
-  width: 80%;
+.container {
+  width: 75%;
   display: flex;
   flex-wrap: wrap;
-  justify-content: flex-start;
-  gap: 0.75rem;
-  mix-blend-mode: difference;
-  z-index: 2;
-}
-
-.client-name{
+  gap: 15px;
+  line-height: 1.7rem;
+  transform: translateY(50vh);
   position: relative;
-  display: inline-block;
-  cursor: pointer;
-}
-
-/* //Under line Animation */
-.client-name::after{
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  width: 100%;
-  height: 0.15rem;
-  background-color: #fff;
-  transform: scaleX(0);
-  transform-origin: right;
-  transition: transform 300ms ease-out;
-}
-.cilent-name:hover::after{
-  transform: scaleX(1);
-  transform-origin: left;
-}
-
-
-#page2 {
-  height: 100vh;
-  width: 100vw;
-  background-color: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  z-index: 50;
 }
 
 .word {
+  cursor: pointer;
   position: relative;
   display: inline-block;
-  cursor: pointer;
+  z-index: 2; /* directly above image but within same isolate */
 }
-
 .word h1 {
-  color: black;
-  font-size: 3rem;
-  margin: 0;
+  font-size: 2.2rem;
+  color: #080808;
+  mix-blend-mode: difference; /* 👈 text blend property */
+  transition: color 0.3s ease;
+}
+.word.active h1 {
+  color: white; /* works well with dark images */
+  mix-blend-mode: difference;
+}
+.container .word:not(.active) h1 {
+  color: #000;
+  mix-blend-mode: normal;
 }
 
-/* Bullet train line */
 .word::before {
   content: "";
   position: absolute;
@@ -162,15 +84,41 @@ footer{
   transform-origin: left;
   transition: transform 0.4s ease;
 }
-
-/* Train enters from left */
 .word:hover::before {
   transform: scaleX(1);
   transform-origin: left;
 }
-
-/* Train exits to right */
 .word:not(:hover)::before {
   transform: scaleX(0);
   transform-origin: right;
-} 
+}
+
+.img {
+  height: 100vh;
+  width: 100vw;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.15);
+  opacity: 0;
+  border-radius: 10px;
+  overflow: hidden;
+  will-change: transform, opacity;
+  pointer-events: none;
+  z-index: 1; /* behind text but same context */
+  mix-blend-mode: normal; /* keep image normal */
+}
+.img img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  mix-blend-mode: lighten;
+  opacity: 0.9;
+}
+
+footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 2rem;
+}

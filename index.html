@@ -1,78 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Hop Image Effect</title>
     <link rel="stylesheet" href="style.css" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap"
-      rel="stylesheet"
-    />
   </head>
   <body>
-    <section class="intro">
-      <div class="top">
-        <div class="text">
-          <div class="logo">NORD OBJECT</div>
-          <div class="nav">
-            <h3>HOME</h3>
-            <h3>PROJECT</h3>
-            <h3>ABOUT US</h3>
-          </div>
+    <div id="page1">
+      <nav>
+        <h3>NORD OBJECTS</h3>
+        <div class="link">
+          <h3>home</h3>
+          <h3>projects</h3>
+          <h3>about us</h3>
         </div>
+      </nav>
+
+      <div id="main">
+        <!-- image layers (full screen) -->
+      <div class="img" data-index="0">
+        <img src="https://images.unsplash.com/photo-1761872936081-344b9b67cedc?auto=format&fit=crop&q=60&w=600" alt="photo" />
+      </div>
+      <div class="img" data-index="1">
+        <img src="https://images.unsplash.com/photo-1761839259488-2bdeeae794f5?auto=format&fit=crop&q=80&w=1471" alt="photo" />
+      </div>
+      <div class="img" data-index="2">
+        <img src="https://images.unsplash.com/photo-1593456569537-adc63f403fe3?auto=format&fit=crop&q=80&w=1470" alt="photo" />
+      </div>
+      <div class="img" data-index="3">
+        <img src="https://images.unsplash.com/photo-1560345559-3084df508222?auto=format&fit=crop&q=80&w=1470" alt="photo" />
+      </div>
+      <div class="img" data-index="4">
+        <img src="https://images.unsplash.com/photo-1761872936081-344b9b67cedc?auto=format&fit=crop&q=60&w=600" alt="photo" />
       </div>
 
-      <div class="clients">
-        <div class="clients-preview"></div>
-
-        <div class="clients-header">
-          <p>Trusted Us</p>
+        <!-- controls / words — always on top -->
+        <div class="container">
+          <div class="word" data-index="0"><h1>Hello Bachoo!!</h1></div>
+          <div class="word" data-index="1"><h1>America</h1></div>
+          <div class="word" data-index="2"><h1>London</h1></div>
+          <div class="word" data-index="3"><h1>Germany!!</h1></div>
+          <div class="word" data-index="4"><h1>Hello Bachoo!!</h1></div>
         </div>
-
-        <div class="clients-list">
-          <div class="client-name"><h1>Native Instruments,</h1></div>
-          <div class="client-name"><h1>Oura,</h1></div>
-          <div class="client-name"><h1>Nothing,</h1></div>
-          <div class="client-name"><h1>Google,</h1></div>
-          <div class="client-name"><h1>Sonas,</h1></div>
-        </div>
-
       </div>
 
       <footer>
-        <p>ANIMATION</p>
-        <p>CREATED BY ARYAN</p>
+        <p>EXPERIMENT 017</p>
+        <p>CREATED BY ARYAN TYAGI</p>
       </footer>
-    </section>
+    </div>
 
-<div id="page2">
-  <div class="word">
-    <h1>hello</h1>
-  </div>
-    <div class="word">
-    <h1>yoyo</h1>
-  </div>
-    <div class="word">
-    <h1>google</h1>
-  </div>
-    <div class="word">
-    <h1>oneplus+</h1>
-  </div>
-</div>
-
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"
-      integrity="sha512-NcZdtrT77bJr4STcmsGAESr06BYGE8woZdSdEgqnpyqac7sugNO+Tr4bGwGF3MsnEkGKhU2KL2xh6Ec+BqsaHA=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    ></script>
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrollTrigger.min.js"
-      integrity="sha512-P2IDYZfqSwjcSjX0BKeNhwRUH8zRPGlgcWl5n6gBLzdi4Y5/0O4zaXrtO4K9TZK6Hn1BenYpKowuCavNandERg=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"></script>
     <script src="script.js"></script>
   </body>
 </html>
