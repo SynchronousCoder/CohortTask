@@ -1,3 +1,11 @@
+@font-face {
+  font-family: "font1";
+  src: url(bl-b.woff2);
+}
+@font-face {
+  font-family: "font2";
+  src: url(sa-sb.woff2);
+}
 * {
   margin: 0;
   padding: 0;
@@ -24,6 +32,7 @@ nav {
   justify-content: space-between;
   align-items: center;
   padding: 0 2rem;
+  font-family: "font1";
 }
 nav .link {
   display: flex;
@@ -56,6 +65,7 @@ nav .link {
   position: relative;
   display: inline-block;
   z-index: 2; /* directly above image but within same isolate */
+  font-family: "font2";
 }
 .word h1 {
   font-size: 2.2rem;
@@ -79,7 +89,8 @@ nav .link {
   left: 0;
   height: 0.15rem;
   width: 100%;
-  background-color: black;
+  /* background-color: black; */
+  background-color: #fff;
   transform: scaleX(0);
   transform-origin: left;
   transition: transform 0.4s ease;
@@ -121,4 +132,5 @@ footer {
   justify-content: space-between;
   align-items: center;
   padding: 0 2rem;
+  font-family: "font1";
 }

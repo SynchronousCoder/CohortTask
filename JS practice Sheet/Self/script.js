@@ -247,67 +247,125 @@
 // let avg = sum/(arr.length);
 // console.log(`The average of No. enter by user is : ${avg.toFixed(2)}`);
 
+
+
 //Q3. Quiz App Simulator
-let correct = 0;
-let wrong = 0;
-let test = [
-  {
-    question: `What is let a = "5";
-let b = 2;
-console.log(a + b);
-console.log(a * b);`,
+// let correct = 0;
+// let wrong = 0;
+// let test = [
+//   {
+//     question: `What is let a = "5";
+// let b = 2;
+// console.log(a + b);
+// console.log(a * b);`,
 
-    options: [" 7 and 10 ",
-              " 52 and 10 ", 
-              " 7 and 10 ", 
-              " 80 and 10 "],
+//     options: [" 7 and 10 ",
+//               " 52 and 10 ", 
+//               " 7 and 10 ", 
+//               " 80 and 10 "],
 
-    answer: "52 and 10",
-  },
-];
+//     answer: "52 and 10",
+//   },
+// ];
 
-let i = 0;
+// let i = 0;
 
-while (i < test.length) {
-  test.forEach(function (val) {
-    let a = prompt(`${val.question} 
+// while (i < test.length) {
+//   test.forEach(function (val) {
+//     let a = prompt(`${val.question} 
       
-Write y to see options`);
+// Write y to see options`);
 
-    if (
-      a === null ||
-      a.trim().toLowerCase() !== "y" ||
-      a.trim() === "" ||
-      isNaN(a)
-    ) {
-      console.error("Please Write y to continue");
-    }
+//     if (
+//       a === null ||
+//       a.trim().toLowerCase() !== "y" ||
+//       a.trim() === "" ||
+//       isNaN(a)
+//     ) {
+//       console.error("Please Write y to continue");
+//     }
 
-    if (a.trim().toLocaleLowerCase() === "y") {
-      let options = prompt(`${val.options}`);
+//     if (a.trim().toLocaleLowerCase() === "y") {
+//       let options = prompt(`${val.options}`);
 
-      if (
-        options === null ||
-        options.trim().toLowerCase() !== "y" ||
-        options.trim() === "" ||
-        isNaN(options)
-      ) {
-        console.error("Please Write correct answer [exact same]");
-      }
+//       if (
+//         options === null ||
+//         options.trim().toLowerCase() !== "y" ||
+//         options.trim() === "" ||
+//         isNaN(options)
+//       ) {
+//         console.error("Please Write correct answer [exact same]");
+//       }
 
-      if(options === val.answer){
-        console.log("Your ans is correct");
-        correct++;
-      }else{
-        console.log("Your ans is wrong");
-        wrong++;
-      }
-    }
-  });
+//       if(options === val.answer){
+//         console.log("Your ans is correct");
+//         correct++;
+//       }else{
+//         console.log("Your ans is wrong");
+//         wrong++;
+//       }
+//     }
+//   });
 
-  i++;
+//   i++;
+// }
+
+// console.log(`Hence Your ScoreCard : 
+//   Correct Ans : ${correct}
+//   Wrong Ans: ${wrong}`);
+
+
+
+// Employee Salary Manager
+let user = []
+let n = +prompt("Enter No. of User");
+let i;
+let username, dept, s, salary;
+let obj;
+
+for(i=0; i<n; i++){
+  username = prompt(`Enter the NAME of ${i+1} Employee`);
+  dept = prompt(`Enter the DEPARTMENT of ${i+1} Employee`);
+  s = prompt(`Enter the SALARY of ${i+1} Employee`);
+
+  if(s === null ||s.trim()=== "" || isNaN(s)){
+    console.error("Enter the salary again :");
+  }
+
+  salary = Number(s);
+  
+  obj = {
+    Name: `${username}`,
+    Department: `${dept}`,
+    Salary: salary
+  }
+
+  user.push(obj);
 }
 
-console.log(`Hence Your ScoreCard : 
-  Correct Ans : ${correct}
-  Wrong Ans: ${wrong}`);
+console.table(user);
+// console.log(user.Name);
+
+let total = 0;
+let avg;
+let max = -1;
+let min = 10000000;
+
+for(i=0; i<n; i++){
+  total += user[i].Salary;
+
+  avg = (total/n).toFixed(2);
+
+  if(max < user[i].Salary){
+    max = user[i].Salary;
+  }
+
+  if(min > user[i].Salary){
+    min = user[i].Salary;
+  }
+}
+console.log(`Total Salary of Company : ${total}`);
+console.log(`Average Salary of Company : ${avg}`);
+
+console.log(`The Highest Salary is : ${max}`);
+console.log(`The Lowest Salary is : ${min}`);
