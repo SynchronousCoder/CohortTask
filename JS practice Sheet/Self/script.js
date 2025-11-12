@@ -247,8 +247,6 @@
 // let avg = sum/(arr.length);
 // console.log(`The average of No. enter by user is : ${avg.toFixed(2)}`);
 
-
-
 //Q3. Quiz App Simulator
 // let correct = 0;
 // let wrong = 0;
@@ -260,8 +258,8 @@
 // console.log(a * b);`,
 
 //     options: [" 7 and 10 ",
-//               " 52 and 10 ", 
-//               " 7 and 10 ", 
+//               " 52 and 10 ",
+//               " 7 and 10 ",
 //               " 80 and 10 "],
 
 //     answer: "52 and 10",
@@ -272,8 +270,8 @@
 
 // while (i < test.length) {
 //   test.forEach(function (val) {
-//     let a = prompt(`${val.question} 
-      
+//     let a = prompt(`${val.question}
+
 // Write y to see options`);
 
 //     if (
@@ -310,35 +308,64 @@
 //   i++;
 // }
 
-// console.log(`Hence Your ScoreCard : 
+// console.log(`Hence Your ScoreCard :
 //   Correct Ans : ${correct}
 //   Wrong Ans: ${wrong}`);
 
-
-
 // Employee Salary Manager
-let user = []
+let user = [];
 let n = +prompt("Enter No. of User");
 let i;
 let username, dept, s, salary;
 let obj;
 
-for(i=0; i<n; i++){
-  username = prompt(`Enter the NAME of ${i+1} Employee`);
-  dept = prompt(`Enter the DEPARTMENT of ${i+1} Employee`);
-  s = prompt(`Enter the SALARY of ${i+1} Employee`);
+for (i = 0; i < n; i++) {
 
-  if(s === null ||s.trim()=== "" || isNaN(s)){
-    console.error("Enter the salary again :");
+  while (true) {
+    username = prompt(`Enter the NAME of ${i + 1} Employee`);
+
+    if (username === null || username.trim() === "") {
+      console.error("UserName should only contain letters!");
+      continue;
+    }
+    if (!/^[A-Za-z\s]+$/.test(username)) {
+      console.error("UserName should only contain letters!");
+      continue;
+    }
+
+    break;
   }
 
-  salary = Number(s);
-  
+  while (true) {
+    dept = prompt(`Enter the DEPARTMENT of ${i + 1} Employee`);
+
+    if (dept === null || dept.trim() === "") {
+      console.error("UserName should only contain letters!");
+      continue;
+    }
+    if (!/^[A-Za-z\s]+$/.test(dept)) {
+      console.error("UserName should only contain letters!");
+      continue;
+    }
+
+    break;
+  }
+
+  while (true) {
+    s = prompt(`Enter the SALARY of ${i + 1} Employee`);
+    if (s === null || s.trim() === "" || isNaN(s)) {
+      console.error("Invalid Salary!! Write Correct One...");
+    } else {
+      salary = Number(s);
+      break;
+    }
+  }
+
   obj = {
     Name: `${username}`,
     Department: `${dept}`,
-    Salary: salary
-  }
+    Salary: salary,
+  };
 
   user.push(obj);
 }
@@ -348,19 +375,19 @@ console.table(user);
 
 let total = 0;
 let avg;
-let max = -1;
-let min = 10000000;
+let max = -Infinity;
+let min = Infinity;
 
-for(i=0; i<n; i++){
+for (i = 0; i < n; i++) {
   total += user[i].Salary;
 
-  avg = (total/n).toFixed(2);
+  avg = (total / n).toFixed(2);
 
-  if(max < user[i].Salary){
+  if (max < user[i].Salary) {
     max = user[i].Salary;
   }
 
-  if(min > user[i].Salary){
+  if (min > user[i].Salary) {
     min = user[i].Salary;
   }
 }
