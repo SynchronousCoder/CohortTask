@@ -1,0 +1,136 @@
+@font-face {
+  font-family: "font1";
+  src: url(bl-b.woff2);
+}
+@font-face {
+  font-family: "font2";
+  src: url(sa-sb.woff2);
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+html,
+body {
+  height: 100%;
+  width: 100%;
+  font-family: sans-serif;
+  background-color: #fff;
+  color: #000;
+}
+
+#page1 {
+  height: 100%;
+  width: 100%;
+  overflow-x: hidden;
+}
+nav {
+  height: 10%;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 2rem;
+  font-family: "font1";
+}
+nav .link {
+  display: flex;
+  gap: 5px;
+  text-transform: uppercase;
+}
+
+#main {
+  height: 80%;
+  width: 100%;
+  position: relative;
+  overflow-x: hidden;
+  padding: 4rem;
+  isolation: isolate; /* Creates a single stacking context */
+}
+
+.container {
+  width: 75%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  line-height: 1.7rem;
+  transform: translateY(50vh);
+  position: relative;
+  z-index: 50;
+}
+
+.word {
+  cursor: pointer;
+  position: relative;
+  display: inline-block;
+  z-index: 2; /* directly above image but within same isolate */
+  font-family: "font2";
+}
+.word h1 {
+  font-size: 2.2rem;
+  color: #080808;
+  mix-blend-mode: difference; /* 👈 text blend property */
+  transition: color 0.3s ease;
+}
+.word.active h1 {
+  color: white; /* works well with dark images */
+  mix-blend-mode: difference;
+}
+.container .word:not(.active) h1 {
+  color: #000;
+  mix-blend-mode: normal;
+}
+
+.word::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 0.15rem;
+  width: 100%;
+  /* background-color: black; */
+  background-color: #fff;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s ease;
+}
+.word:hover::before {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+.word:not(:hover)::before {
+  transform: scaleX(0);
+  transform-origin: right;
+}
+
+.img {
+  height: 100vh;
+  width: 100vw;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.15);
+  opacity: 0;
+  border-radius: 10px;
+  overflow: hidden;
+  will-change: transform, opacity;
+  pointer-events: none;
+  z-index: 1; /* behind text but same context */
+  mix-blend-mode: normal; /* keep image normal */
+}
+.img img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  mix-blend-mode: lighten;
+  opacity: 0.9;
+}
+
+footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 2rem;
+  font-family: "font1";
+}
