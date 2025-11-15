@@ -1,64 +1,55 @@
-const words = document.querySelectorAll('.word');
-const imgs = document.querySelectorAll('.img');
+const words = document.querySelectorAll(".word");
+const images = document.querySelectorAll(".img");
 
-// helper to hide all images immediately (setup)
-imgs.forEach(img => {
-  gsap.set(img, { scale: 0.15, opacity: 0, zIndex: 10 });
+// Hide all images on start
+gsap.set(images, {
+  opacity: 0,
+  scale: 1.25,
+  zIndex: 0
 });
 
-// on hover — simple, robust logic that prevents flashes when switching quickly
+let activeImg = null;
+
 words.forEach(word => {
-  const idx = word.dataset.index;
-  const target = document.querySelector(`.img[data-index="${idx}"]`);
+  word.addEventListener("mouseenter", () => {
+    const index = word.dataset.index;
+    const img = document.querySelector(`.img[data-index="${index}"]`);
 
-  let showTween, hideTween;
+    if (!img) return;
 
-  word.addEventListener('pointerenter', () => {
-    if (!target) return;
+    // Hide previous image
+    if (activeImg && activeImg !== img) {
+      gsap.to(activeImg, {
+        opacity: 0,
+        scale: 1.25,
+        duration: 0.4,
+        ease: "power2.out"
+      });
+    }
 
-    // stop any hideTween running on target and other imgs
-    imgs.forEach(i => gsap.killTweensOf(i));
+    activeImg = img;
 
-    // bring target visually above other images while animating
-    gsap.set(target, { zIndex: 30 });
-
-    // ensure other images are behind (and not visible)
-    imgs.forEach(i => {
-      if (i !== target) gsap.to(i, { opacity: 0, scale: 0.15, duration: 0.2, ease: 'power2.in' });
-    });
-
-    // animate target to visible (15% -> 75%) with fast start, slow end
-    showTween = gsap.to(target, {
-      scale: 0.75,
-      opacity: 1,
-      duration: 0.55,
-      ease: 'power4.out'
-    });
-    word.classList.add('active');
-  });
-
-  word.addEventListener('pointerleave', () => {
-    if (!target) return;
-
-    // stop any show tween for clean exit
-    gsap.killTweensOf(target);
-
-    // animate target back to hidden
-    hideTween = gsap.to(target, {
-      scale: 0.15,
-      opacity: 0,
-      duration: 0.28,
-      ease: 'power2.in',
-      onComplete: () => {
-        // return zIndex back so stacking stays consistent
-        gsap.set(target, { zIndex: 10 });
+    // Show current image
+    gsap.set(img, { zIndex: 1 });
+    gsap.fromTo(img,
+      { opacity: 0, scale: 1.25 },
+      {
+        opacity: 1,
+        scale: 1,
+        duration: 1,
+        ease: "power4.out"
       }
-    });
-    word.classList.remove('active');
+    );
   });
 
-  // also handle quick switching: when entering another word, ensure previous targets get hidden
-  word.addEventListener('pointermove', () => {
-    // noop — pointermove keeps pointerenter logic responsive; main switching handled above
+  word.addEventListener("mouseleave", () => {
+    if (!activeImg) return;
+
+    gsap.to(activeImg, {
+      opacity: 0,
+      scale: 1.25,
+      duration: 0.5,
+      ease: "power2.out"
+    });
   });
 });
