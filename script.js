@@ -7,10 +7,11 @@ let end = document.querySelector(".game-over");
 //Navbar
 let score = document.querySelector(".score")
 let highScore = document.querySelector(".hs")
+let time = document.querySelector(".time")
 
 let s = 0;
 let hs = localStorage.getItem("hs") || 0;
-let time = `00-00`
+let t = `00-00`
 
 highScore.innerHTML = hs;
 
@@ -23,6 +24,7 @@ let boxs = [];
 let snake = [{ x: 1, y: 1 }];
 let direction = "right";
 
+var timeInterval = null;
 var clear = null;
 var food = {
   x: Math.floor(Math.random() * rows),
@@ -36,7 +38,7 @@ for (let row = 0; row < rows; row++) {
     const box = document.createElement("div");
     box.classList.add("box");
     board.appendChild(box);
-    box.textContent = `${row}-${col}`;
+    // box.textContent = `${row}-${col}`;
 
     boxs[`${row}-${col}`] = box;
   }
@@ -140,6 +142,21 @@ btnstart.addEventListener("click", function () {
   clear = setInterval(() => {
     render();
   }, 300);
+
+  timeInterval = setInterval(() => {
+    let [min, sec] = t.split("-").map(Number);
+
+    
+    if(sec === 59){
+      min += 1;
+      sec = 0;
+    }else{
+      sec += 1;
+    }
+    t = `${min}-${sec}`
+    time.innerText = t;
+    
+  }, 1000);
 });
 
 btnend.addEventListener("click", restartGame);
@@ -147,7 +164,7 @@ btnend.addEventListener("click", restartGame);
 
 function restartGame() {
   s = 0;
-  time = `00-00`
+  t = `00-00`;
   // 1️⃣ STOP OLD INTERVAL (sabse bada fix)
   clearInterval(clear);
 
