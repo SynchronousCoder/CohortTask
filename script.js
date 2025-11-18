@@ -1,198 +1,72 @@
-const board = document.querySelector(".board");
-let btnstart = document.querySelector(".btnStart");
-let btnend = document.querySelector(".btnEnd");
-let open = document.querySelector(".start-game");
-let end = document.querySelector(".game-over");
+var arr = [
+  "Be yourself; everyone else is already taken",
+  "In the middle of every difficulty lies opportunity",
+  "Do not go where the path may lead, go instead where there is no path and leave a trail",
+  "The only thing we have to fear is fear itself",
+  "Injustice anywhere is a threat to justice everywhere",
+  "I am the BEST",
+];
+const fonts = ["cursive", "monospace", "serif", "sans-serif"];
+var count = 0;
+var main = document.querySelector("#main");
+var btn = document.querySelector("button");
 
-//Navbar
-let score = document.querySelector(".score")
-let highScore = document.querySelector(".hs")
-let time = document.querySelector(".time")
+btn.addEventListener("click", function () {
+  count++;
 
-let s = 0;
-let hs = localStorage.getItem("hs") || 0;
-let t = `00-00`
+  console.log(arr.length);
 
-highScore.innerHTML = hs;
+  var num = Math.floor(Math.random() * arr.length);
+  var c1 = Math.random() * 257;
+  var c2 = Math.random() * 257;
+  var c3 = Math.random() * 257;
 
-var h = 60;
-var w = 60;
-var rows = Math.floor(board.clientHeight / h);
-var cols = Math.floor(board.clientWidth / w);
+  var r = Math.random() * 360;
+  var x = Math.random() * 100;
+  var y = Math.random() * 100;
 
-let boxs = [];
-let snake = [{ x: 1, y: 1 }];
-let direction = "right";
+  let h1 = document.createElement("h1");
+  h1.innerHTML = `${arr[num]}`;
+  h1.style.top = y + "%";
+  h1.style.left = x + "%";
+  h1.style.rotate = r + "deg";
+  h1.style.background = `linear-gradient(${r}deg, rgb(${c1},${c2},${c3}), rgb(${c2},${c3},${c1}))`;
+  h1.style.webkitBackgroundClip = "text";
+  h1.style.color = "transparent";
+  h1.style.mixBlendMode = "difference";
 
-var timeInterval = null;
-var clear = null;
-var food = {
-  x: Math.floor(Math.random() * rows),
-  y: Math.floor(Math.random() * cols),
-};
-// console.log("horizontal count", rows);
-// console.log(cols);
+  h1.style.fontFamily = fonts[Math.floor(Math.random() * fonts.length)];
+  h1.style.fontSize = 20 + Math.random() * 40 + "px";
+  main.appendChild(h1);
 
-for (let row = 0; row < rows; row++) {
-  for (let col = 0; col < cols; col++) {
-    const box = document.createElement("div");
-    box.classList.add("box");
-    board.appendChild(box);
-    // box.textContent = `${row}-${col}`;
+  console.log("hello", h1);
 
-    boxs[`${row}-${col}`] = box;
-  }
-}
-
-
-function render() {
-
-  // 1️⃣ SHOW FOOD ON GRID (safe)
-  const foodCell = boxs[`${food.x}-${food.y}`];
-  if (foodCell) foodCell.classList.add("foody");
-
-
-  // 2️⃣ CALCULATE NEXT HEAD POSITION (based on direction)
-  let head = null;
-
-  if (direction === "left") {
-    head = { x: snake[0].x, y: snake[0].y - 1 };
-  } else if (direction === "right") {
-    head = { x: snake[0].x, y: snake[0].y + 1 };
-  } else if (direction === "up") {
-    head = { x: snake[0].x - 1, y: snake[0].y };
-  } else if (direction === "down") {
-    head = { x: snake[0].x + 1, y: snake[0].y };
-  }
-
-
-  // 3️⃣ GAME OVER CHECK — SEQUENCE MAT CHANGE KARNA
-  if (head.x < 0 || head.x >= rows || head.y < 0 || head.y >= cols) {
-    end.style.display = "flex";
-    clearInterval(clear);
-    return;   // BAHUT BADA POINT – render Yahin BAND hona chahiye
+  //Animating entrance
+  if (count % 2 === 0) {
+    gsap.from(h1, {
+      duration: 1,
+      y: 1000,
+      ease: "power2.out",
+    });
+  } else if (count % 3 === 0) {
+    gsap.from(h1, {
+      duration: 1,
+      x: 1000,
+      ease: "power4.out",
+    });
+  } else if (count % 7 === 0) {
+    gsap.from(h1, {
+      duration: 1,
+      x: -1000,
+      ease: "power4.out",
+    });
+  } else {
+    gsap.from(h1, {
+      duration: 1,
+      y: -1000,
+      ease: "power4.out",
+    });
   }
 
-
-  // 4️⃣ REMOVE OLD SNAKE FROM BOARD (safe deletion)
-  snake.forEach((segment) => {
-    const cell = boxs[`${segment.x}-${segment.y}`];
-    if (cell) cell.classList.remove("fill");
-  });
-
-
-  // 5️⃣ UPDATE SNAKE ARRAY (head add, tail remove)
-  snake.unshift(head);
-  snake.pop();
-
-
-  // 6️⃣ DRAW NEW UPDATED SNAKE ON BOARD
-  snake.forEach((segment) => {
-    const cell = boxs[`${segment.x}-${segment.y}`];
-    if (cell) cell.classList.add("fill");
-  });
-
-
-  // 7️⃣ FOOD EAT LOGIC — at the END only
-  if (head.x === food.x && head.y === food.y) {
-
-    s += 10;
-    score.innerHTML = s;
-
-    if(s > hs){
-      hs = s;
-      localStorage.setItem("hs", hs)
-    }
-    // remove eaten food
-    const foodCell = boxs[`${food.x}-${food.y}`];
-    if (foodCell) foodCell.classList.remove("foody");
-
-    // set new food
-    food = {
-      x: Math.floor(Math.random() * rows),
-      y: Math.floor(Math.random() * cols),
-    };
-
-    // show new food
-    const newFood = boxs[`${food.x}-${food.y}`];
-    if (newFood) newFood.classList.add("foody");
-
-    // grow snake (do NOT pop tail)
-    snake.unshift(head);
-  }
-}
-
-
-document.addEventListener("keydown", (event) => {
-  console.log(event.key);
-
-  if (event.key === "ArrowUp") {
-    direction = "up";
-  } else if (event.key === "ArrowDown") {
-    direction = "down";
-  } else if (event.key === "ArrowRight") {
-    direction = "right";
-  } else if (event.key === "ArrowLeft") {
-    direction = "left";
-  }
+  //After Coming
 });
-
-btnstart.addEventListener("click", function () {
-  open.style.display = "none";
-  clear = setInterval(() => {
-    render();
-  }, 300);
-
-  timeInterval = setInterval(() => {
-    let [min, sec] = t.split("-").map(Number);
-
-    
-    if(sec === 59){
-      min += 1;
-      sec = 0;
-    }else{
-      sec += 1;
-    }
-    t = `${min}-${sec}`
-    time.innerText = t;
-    
-  }, 1000);
-});
-
-btnend.addEventListener("click", restartGame);
-
-
-function restartGame() {
-  s = 0;
-  t = `00-00`;
-  // 1️⃣ STOP OLD INTERVAL (sabse bada fix)
-  clearInterval(clear);
-
-
-  // 2️⃣ REMOVE OLD FOOD (safe check)
-  const oldFood = boxs[`${food.x}-${food.y}`];
-  if (oldFood) oldFood.classList.remove("foody");
-
-
-  // 3️⃣ REMOVE OLD SNAKE (safe check)
-  snake.forEach((segment) => {
-    const cell = boxs[`${segment.x}-${segment.y}`];
-    if (cell) cell.classList.remove("fill");
-  });
-
-
-  // 4️⃣ RESET VALUES (direction, snake position, new food)
-  end.style.display = "none"; // hide game over screen
-
-  direction = "right";
-  snake = [{ x: 1, y: 1 }];
-
-  food = {
-    x: Math.floor(Math.random() * rows),
-    y: Math.floor(Math.random() * cols),
-  };
-
-
-  // 5️⃣ START NEW GAME LOOP
-  clear = setInterval(render, 300);
-}
