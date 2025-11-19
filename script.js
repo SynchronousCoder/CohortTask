@@ -36,7 +36,7 @@ btn.addEventListener("click", function () {
   h1.style.mixBlendMode = "difference";
 
   h1.style.fontFamily = fonts[Math.floor(Math.random() * fonts.length)];
-  h1.style.fontSize = 20 + Math.random() * 40 + "px";
+  h1.style.fontSize = 10 + Math.random() * 40 + "px";
   main.appendChild(h1);
 
   console.log("hello", h1);
@@ -69,4 +69,12 @@ btn.addEventListener("click", function () {
   }
 
   //After Coming
+  gsap.to(h1, {
+    duration: 1,
+    x: "+=50",
+    rotationX: "+10", 
+    yoyo: true,
+    repeat: -1,
+    ease: "sine.inOut"
+  })
 });
