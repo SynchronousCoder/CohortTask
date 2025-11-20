@@ -1,0 +1,75 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+html,
+body {
+  height: 100%;
+  width: 100%;
+}
+#page1, #page2, #page3{
+    height: 100%;
+    width: 100%;
+    background-color: #dadada;
+    perspective: 200px;
+}
+#page2{
+    background-color: rgb(25, 25, 25);
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+h1{
+    position: absolute;
+    z-index: -1;
+    color: #fff;
+    text-transform: capitalize;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    width: 80%;
+    text-align: center;
+}
+.box1{
+    height: 38vh;
+    width: 32vw;
+    border-radius: 5px;
+    background-color: cadetblue;
+    transform: rotateZ(1deg);
+    background-image: url(img1.webp);
+    background-position: center;
+    background-size: cover;
+}
+.box2{
+    position: absolute;
+    height: 40vh;
+    width: 33vw;
+    border-radius: 5px;
+    background-color: rgb(141, 95, 160);
+    transform: rotateZ(-7deg);
+    background-image: url(img2.webp);
+    background-position: center;
+    background-size: cover;
+}
+.box3{
+    position: absolute;
+    height: 36vh;
+    width: 28vw;
+    border-radius: 5px;
+    background-color: rgb(140, 160, 95);
+    transform: rotateZ(5deg);
+    background-image: url(img3.webp);
+    background-position: center;
+    background-size: cover;
+}
+.box4{
+    position: absolute;
+    height: 38vh;
+    width: 32vw;
+    border-radius: 5px;
+    background-color: rgb(160, 95, 95);
+    transform: rotateZ(-10deg);
+    background-image: url(img4.webp);
+    background-position: center;
+    background-size: cover;
+}
