@@ -1,0 +1,11 @@
+1 first a fall what we need to do is install few packages :
+npm init -y
+npm i express
+npm i nodemon
+npm i ejs
+
+2 write basic code for converting frontend data to backend data
+
+need do 2 things :
+Files ka count read karna hai
+File Creation + Jab submit karu toh redirect to "/"
