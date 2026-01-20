@@ -101,22 +101,36 @@
 //     - Yehi structure baad mein callback hell banta hai
 
 //ans:
-function loginUser(user, cb){
+function loginUser(cb){
+    console.log("Login into Account...");
     setTimeout(() => {
+        user= {
+            name: "Aren",
+            id: 12
+        }
         cb(user);
     }, 1000);
 }
 function fetchPermissions(userID, cb){
+    console.log("Fetching permissions...");
     setTimeout(() => {
-        cb([1,2,3])
+        permission = ["Captcha", "Password", "2FA"]
+        cb(permission)
     }, 1000);
 }
-function loadDashboard(cb){
+function loadDashboard(permission, cb){
+    console.log("Permission Given!!, Loading Ur Dashboard...");
     setTimeout(() => {
-        console.log("Dashboard loaded");
+        console.log("✅ Dashboard loaded");
     }, 1000);
 }
+
 loginUser(function(details){
-    console.log(details);
+    console.log(`${details.name} - ${details.id} Account Logined`);
+    fetchPermissions(details.id, function(permission){
+        console.log(permission);
+        loadDashboard(permission, function(){
+        })
+    })
 })
 //     ---
