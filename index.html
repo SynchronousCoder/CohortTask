@@ -1,27 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <style>
-        *{
-            * {
-              margin: 0;
-              padding: 0;
-              box-sizing: border-box;
-            }
-            html,
-            body {
-              height: 100%;
-              width: 100%;
-              background-color: rgb(16, 16, 16);
-            }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <title>Figma Style Editor</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+
+  <!-- TOP TOOLBAR -->
+  <div id="toolbar">
+    <button id="add-rect">Add Rectangle</button>
+    <button id="add-text">Add Text</button>
+  </div>
+
+  <!-- MAIN LAYOUT -->
+  <div id="editor">
     
-    <script src="script.js"></script>
+    <!-- Layers Panel -->
+    <div id="layers">
+      <h3>Layers</h3>
+      <ul id="layers-list"></ul>
+    </div>
+
+    <!-- Canvas -->
+    <div id="canvas"></div>
+
+    <!-- Properties Panel -->
+    <div id="properties">
+      <h3>Properties</h3>
+      <p>Select an element</p>
+    </div>
+
+  </div>
+
+  <script src="script.js"></script>
 </body>
 </html>
