@@ -12,7 +12,6 @@ app.post("/notes", (req, res) => {
 })
 
 app.get("/notes", (req, res) => {
-    notes.push(res);
     res.send(notes);
 })
 app.listen(3000, () => {
