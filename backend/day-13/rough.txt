@@ -1,0 +1,5 @@
+1. auth.routes ko elegible bana hai for to create api here too...
+2. normal coding of api creation
+3. check for email
+4. download 2 package jwt+cookie => generate the signature and also generate token
+5. figure out something after that
