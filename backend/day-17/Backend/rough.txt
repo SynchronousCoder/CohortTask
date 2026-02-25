@@ -1,0 +1,2 @@
+//why user : userId likha ? = bcz jab mai post create krr raha hu uske response mai 3 chize bhej rahah hu caption url and id toh mai unmai se kisi bhi ek ko access kr sakta hu and mai userkiId ko access karkai post fundout krna chata hu ek particular user ke
+//why? post.user = same reason as above jab post create ho rahi hai toh 3 chize mil rahi hai and usse compare krr rahe hai joh post mai userkiId hai from joh user ne jab login kara tha and joh user collection mai phele baar registartion karne ke baad kya id gayi thi!!
