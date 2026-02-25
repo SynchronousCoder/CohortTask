@@ -1,6 +1,8 @@
 const postModel = require("../models/post.model");
 const ImageKit = require("@imagekit/nodejs");
 const { toFile } = require("@imagekit/nodejs");
+
+//Uploading post while using ImageKit
 async function uploadPostController(req, res) {
   const { caption, imgUrl } = req.body;
   console.log(caption, req.file);
@@ -26,10 +28,12 @@ async function uploadPostController(req, res) {
     post
   })
 }
+
+//Fetching out all the post of the users
 async function getAllPost(req, res) {
   const userId = req.user.id
   const post = await postModel.find({
-    user: userId
+    user: userId                     //bcz while creating the post we are sending user: userId
   })
 
   if(!post){
@@ -44,11 +48,29 @@ async function getAllPost(req, res) {
   })
 }
 
+//Fetching the particular post data on basis of Id
 async function getPostDetailsController(req, res) {
   const userId = req.user.id
+  const postId = req.params.postId
+
+  const post = await postModel.findOne({
+    _id: postId,
+    user: userId
+  })
+  if(!post){
+    return res.stauts(404).json({
+      message: "User haven't created any post"
+    })
+  }
+
+  return res.status(200).json({
+    message: "Post Accessed Succesfully",
+    post
+  })
 }
 
 module.exports = {
   uploadPostController,
-  getAllPost
+  getAllPost,
+  getPostDetailsController
 };
