@@ -81,7 +81,22 @@ async function loginUser(req, res) {
   });
 }
 
+//Get the details of Logined User
+async function getMeController(req, res){
+  const id = req.user.id
+
+  const user = await userModel.findById(id)
+
+  res.status(200).json({
+    user: {
+      username: user.username,
+      email: user.email,
+      bio: user.bio
+    }
+  })
+}
 module.exports = {
   registerUser,
   loginUser,
+  getMeController
 };

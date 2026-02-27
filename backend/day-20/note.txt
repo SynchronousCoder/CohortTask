@@ -1,0 +1,5 @@
+we need to imply 4 level archtitcture for REACT folder:
+1.UI-laver
+2.Hooks-layer: used to manage both State + Service Layer
+3.State-layer: handling all the important states of data and loading etc here
+4.Services- API layer: all the backend api are imported here
