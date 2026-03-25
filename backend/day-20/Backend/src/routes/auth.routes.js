@@ -9,4 +9,6 @@ authRouter.post("/login", controller.loginUser);
 
 //
 authRouter.get("/get-me", identifyUser, controller.getMeController)
+
+
 module.exports = authRouter;

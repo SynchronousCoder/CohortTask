@@ -1,5 +1,0 @@
-import { useContext } from "react";
-import { AuthContext } from "../auth.context";
-
-const context = useContext(AuthContext);
-return context

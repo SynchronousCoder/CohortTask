@@ -119,6 +119,8 @@ async function likePostController(req, res) {
   }
 }
 
+
+//Fetcching the post
 module.exports = {
   createPostController,
   getPostController,

@@ -1,0 +1,217 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&display=swap');
+@import url('https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background: #0a0a0a;
+  font-family: 'DM Sans', sans-serif;
+  overflow-y: auto;
+}
+
+// YEH ADD KAR — root fix
+#root {
+  min-height: 100%;
+  overflow-y: auto;
+}
+
+.post {
+  width: 100%;
+  max-width: 468px;
+  background: #2d2d2d;
+  border: 1px solid #1f1f1f;
+  border-radius: 12px;
+  overflow: hidden;
+
+  // TOP
+  .top {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 14px;
+
+    .pfp-wrap {
+      position: relative;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      padding: 2px;
+      background: linear-gradient(135deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+      flex-shrink: 0;
+
+      img {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 2px solid #111;
+      }
+    }
+
+    .user-info {
+      flex: 1;
+
+      h1 {
+        font-size: 13.5px;
+        font-weight: 600;
+        color: #f0f0f0;
+        letter-spacing: 0.01em;
+      }
+
+      span {
+        font-size: 11px;
+        color: #555;
+      }
+    }
+
+    .more-btn {
+      background: none;
+      border: none;
+      color: #888;
+      cursor: pointer;
+      padding: 4px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      transition: color 0.2s;
+
+      &:hover {
+        color: #f0f0f0;
+      }
+
+      i {
+        font-size: 20px;
+      }
+    }
+  }
+
+  // POST IMAGE
+  .post-img {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    background: #0d0d0d;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.4s ease;
+
+      &:hover {
+        transform: scale(1.02);
+      }
+    }
+  }
+
+  // ACTIONS
+  .actions {
+    display: flex;
+    align-items: center;
+    padding: 10px 14px 6px;
+    gap: 4px;
+
+    .action-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 6px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.15s ease, color 0.2s;
+      color: #d0d0d0;
+
+      i {
+        font-size: 22px;
+        line-height: 1;
+      }
+
+      &:hover {
+        transform: scale(1.15);
+      }
+
+      &.like-btn {
+        padding-left: 0;
+
+        &.liked {
+          color: #ed4956;
+        }
+
+        &:hover {
+          color: #ed4956;
+        }
+      }
+
+      &.comment-btn:hover {
+        color: #a8a8ff;
+      }
+
+      &.share-btn:hover {
+        color: #58d68d;
+      }
+    }
+
+    .spacer {
+      flex: 1;
+    }
+
+    .save-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 6px;
+      display: flex;
+      align-items: center;
+      color: #d0d0d0;
+      transition: transform 0.15s ease, color 0.2s;
+
+      i {
+        font-size: 22px;
+      }
+
+      &.saved {
+        color: #f0f0f0;
+      }
+
+      &:hover {
+        transform: scale(1.15);
+        color: #f0f0f0;
+      }
+    }
+  }
+
+  // LIKES
+  .likes {
+    padding: 0 14px 6px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #e0e0e0;
+  }
+
+  // CAPTION
+  .lower {
+    padding: 4px 14px 14px;
+
+    p {
+      font-size: 13.5px;
+      line-height: 1.55;
+      color: #b0b0b0;
+
+      .username {
+        font-weight: 600;
+        color: #e8e8e8;
+        margin-right: 6px;
+      }
+    }
+  }
+}

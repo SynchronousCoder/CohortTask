@@ -37,7 +37,11 @@ main{
 
     .toggleAuthForm{
         color: #bd0c23;
-        cursor: pointer;
         text-decoration: none;
+        transition: all .5s ease;
+    }
+    .toggleAuthForm:hover{
+        cursor: pointer;
+        color: #ff5c72aa;
     }
 }

@@ -1,6 +1,7 @@
 const postModel = require("../models/post.model");
 const ImageKit = require("@imagekit/nodejs");
 const { toFile } = require("@imagekit/nodejs");
+const mongoose = require("mongoose")
 
 //Uploading post while using ImageKit
 async function uploadPostController(req, res) {
@@ -53,6 +54,13 @@ async function getPostDetailsController(req, res) {
   const userId = req.user.id
   const postId = req.params.postId
 
+  // ✅ ID validation pehle
+  if (!mongoose.Types.ObjectId.isValid(postId)) {
+    return res.status(400).json({
+      message: "Invalid post ID"
+    });
+  }
+
   const post = await postModel.findOne({
     _id: postId,
     user: userId
@@ -69,8 +77,18 @@ async function getPostDetailsController(req, res) {
   })
 }
 
+async function getFeedController(req, res){
+  const posts = await postModel.find().populate("user")
+
+  return res.status(200).json({
+    message: "Posts fetched successfully",
+    posts
+  })
+}
+
 module.exports = {
   uploadPostController,
   getAllPost,
-  getPostDetailsController
+  getPostDetailsController,
+  getFeedController
 };

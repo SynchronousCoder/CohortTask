@@ -9,6 +9,7 @@ async function registerUser(req, res) {
   const isUserAlreadyExist = await userModel.findOne({
     $or: [{ username }, { email }],
   });
+
   if (isUserAlreadyExist) {
     return res.status(401).json({
       message:
@@ -45,7 +46,7 @@ async function loginUser(req, res) {
 
   const user = await userModel.findOne({
     $or: [{ username }, { email }],
-  });
+  }).select("+password");
 
   if (!user) {
     return res.status(404).json({
@@ -95,8 +96,10 @@ async function getMeController(req, res){
     }
   })
 }
+
+
 module.exports = {
   registerUser,
   loginUser,
-  getMeController
+  getMeController,
 };
