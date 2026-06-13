@@ -1,17 +1,32 @@
 const jwt = require("jsonwebtoken");
+const redis = require("../config/cache");
 
-function authMiddleware(req, res, next){
-    const token = req.cookies.token;
+async function authMiddleware(req, res, next) {
+  const token = req.cookies.token;
 
-    if(!token){
-        return res.status(401).json({
-            message: "Unauthorized User"
-        })
-    }
+  if (!token) {
+    return res.status(401).json({
+      message: "Unauthorized User",
+    });
+  }
 
+  const isTokenBlacklisted = await redis.get(token);
+  if (isTokenBlacklisted) {
+    return res.status(401).json({
+      message: "Invalid Token",
+    });
+  }
+
+  try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
+    req.user = decoded;
 
-    req.user = {
-
-    }
+    next();
+  } catch (err) {
+    return res.status(401).json({
+      message: "Invalid Token",
+    });
+  }
 }
+
+module.exports = authMiddleware;

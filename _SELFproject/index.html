@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AWERI FOOD — Artisan Pickles</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --deep:#060f06;
+  --green:#0f2810;
+  --mid:#1a4a1a;
+  --gold:#c9a84c;
+  --gold2:#e8c96a;
+  --cream:#f5f0e8;
+  --white:#fff;
+}
+
+html,body{
+  width:100%;
+  background:var(--deep);
+  color:var(--white);
+  font-family:'Cormorant Garamond',serif;
+  overflow-x:hidden;
+  cursor:none;
+}
+
+/* ── CURSOR ────────────────────────────────── */
+#cur{position:fixed;width:8px;height:8px;background:var(--gold);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);mix-blend-mode:difference;}
+#cur2{position:fixed;width:34px;height:34px;border:1px solid rgba(201,168,76,.45);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width .18s,height .18s;}
+
+/* ── NAV ────────────────────────────────────── */
+nav{
+  position:fixed;top:0;left:0;width:100%;
+  padding:1.6rem 3.5rem;
+  display:flex;justify-content:space-between;align-items:center;
+  z-index:500;
+  background:linear-gradient(to bottom,rgba(6,15,6,.85) 0%,transparent 100%);
+}
+.logo{font-family:'Playfair Display',serif;font-size:1.55rem;font-weight:900;letter-spacing:3px;color:#fff;text-decoration:none;}
+.logo span{color:var(--gold);}
+.nav-links{display:flex;gap:2.2rem;list-style:none;}
+.nav-links a{color:rgba(255,255,255,.65);text-decoration:none;font-size:.75rem;letter-spacing:2px;text-transform:uppercase;transition:color .3s;}
+.nav-links a:hover{color:var(--gold);}
+
+/* ── PROGRESS BAR ───────────────────────────── */
+#pbar{position:fixed;top:0;left:0;height:2px;background:var(--gold);z-index:9990;width:0;pointer-events:none;}
+
+/* ── SCROLL CONTAINER ───────────────────────── */
+/*
+  Layout logic:
+  - Canvas (Three.js) is FIXED, takes full viewport — this is the jar
+  - Text panels are in the normal scroll flow on the RIGHT side
+  - The scroll container is tall (500vh) to give scrub room
+  - Each text block is positioned to show at the right scroll offset
+*/
+
+#scroll-wrap{
+  position:relative;
+  height:500vh;
+}
+
+/* ── STICKY SHELL (holds the fixed-feel layout) */
+.sticky{
+  position:sticky;
+  top:0;
+  height:100vh;
+  overflow:hidden;
+  pointer-events:none;
+}
+
+/* The right-side text column (always right half) */
+#text-col{
+  position:absolute;
+  top:0; right:0;
+  width:44%;
+  height:100%;
+  display:flex;
+  align-items:center;
+  padding:0 5vw 0 2vw;
+  pointer-events:none;
+}
+
+/* Individual text blocks — stack them, GSAP fades them */
+.tblock{
+  position:absolute;
+  top:50%;
+  right:5vw;
+  width:100%;
+  max-width:440px;
+  transform:translateY(-50%);
+  opacity:0;
+  pointer-events:none;
+}
+
+.tag{
+  display:inline-block;
+  font-size:.7rem;letter-spacing:4px;text-transform:uppercase;
+  color:var(--gold);margin-bottom:1.3rem;
+  padding:.38rem 1rem;
+  border:1px solid rgba(201,168,76,.35);border-radius:40px;
+}
+
+h1{font-family:'Playfair Display',serif;font-size:clamp(2.6rem,4.5vw,4.4rem);font-weight:900;line-height:1.06;margin-bottom:1.1rem;}
+h2{font-family:'Playfair Display',serif;font-size:clamp(2rem,3.5vw,3.4rem);font-weight:700;line-height:1.1;margin-bottom:1.1rem;}
+em{font-style:italic;color:var(--gold);}
+hr.g{border:none;border-top:1px solid rgba(201,168,76,.28);margin:1.1rem 0;}
+p.body{font-size:1.08rem;font-weight:300;line-height:1.78;color:rgba(255,255,255,.7);margin-bottom:1.6rem;}
+
+.cta{
+  display:inline-flex;align-items:center;gap:.7rem;
+  background:var(--gold);color:var(--deep);
+  padding:.85rem 2rem;font-size:.75rem;font-weight:700;
+  letter-spacing:2px;text-transform:uppercase;text-decoration:none;
+  border-radius:60px;pointer-events:all;cursor:none;
+  box-shadow:0 8px 30px rgba(201,168,76,.3);
+  transition:transform .3s,box-shadow .3s;
+}
+.cta:hover{transform:translateY(-3px);box-shadow:0 16px 50px rgba(201,168,76,.42);}
+
+.stats{display:flex;gap:2.4rem;margin-top:.8rem;}
+.stat .num{font-family:'Playfair Display',serif;font-size:2.4rem;font-weight:900;color:var(--gold);line-height:1;}
+.stat .label{font-size:.7rem;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.45);margin-top:.25rem;}
+
+.pills{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:1.2rem;}
+.pill{font-size:.68rem;letter-spacing:2px;text-transform:uppercase;padding:.38rem .9rem;border:1px solid rgba(201,168,76,.38);border-radius:36px;color:var(--gold);}
+
+/* ── THREE.JS CANVAS ────────────────────────── */
+/* Canvas sits BEHIND everything but in the VIEWPORT, NOT background */
+#three-canvas{
+  position:fixed;
+  top:0;left:0;
+  width:56%;  /* left half only */
+  height:100%;
+  z-index:10; /* above page bg, below text panels */
+  pointer-events:none;
+}
+
+/* Text column must be above canvas */
+#text-col{z-index:20;}
+
+/* ── SECTION DOTS ───────────────────────────── */
+#dots{
+  position:fixed;right:1.8rem;top:50%;
+  transform:translateY(-50%);
+  display:flex;flex-direction:column;gap:.85rem;
+  z-index:600;
+}
+.dot{width:7px;height:7px;border-radius:50%;border:1px solid rgba(255,255,255,.3);transition:all .3s;}
+.dot.on{background:var(--gold);border-color:var(--gold);transform:scale(1.4);}
+
+/* ── LOADER ─────────────────────────────────── */
+#loader{
+  position:fixed;inset:0;background:var(--deep);z-index:9999;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.8rem;
+  transition:opacity .7s,visibility .7s;
+}
+#loader.out{opacity:0;visibility:hidden;}
+#loader-logo{font-family:'Playfair Display',serif;font-size:2.8rem;font-weight:900;color:var(--gold);letter-spacing:6px;}
+#lbar-wrap{width:180px;height:1px;background:rgba(255,255,255,.1);}
+#lbar{height:100%;background:var(--gold);width:0;transition:width .06s linear;}
+
+/* ── GRAIN ──────────────────────────────────── */
+.grain{position:fixed;inset:0;z-index:5;pointer-events:none;opacity:.035;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size:200px;}
+
+@media(max-width:900px){
+  #three-canvas{width:100%;opacity:.5;}
+  #text-col{width:100%;padding:0 5vw;}
+  .tblock{right:auto;left:50%;transform:translate(-50%,-50%);background:rgba(6,15,6,.7);padding:1.5rem;border-radius:12px;}
+  .nav-links{display:none;}
+}
+</style>
+</head>
+<body>
+
+<!-- Cursor -->
+<div id="cur"></div>
+<div id="cur2"></div>
+
+<!-- Loader -->
+<div id="loader">
+  <div id="loader-logo">AWERI</div>
+  <div id="lbar-wrap"><div id="lbar"></div></div>
+</div>
+
+<!-- Grain -->
+<div class="grain"></div>
+
+<!-- Progress -->
+<div id="pbar"></div>
+
+<!-- Nav -->
+<nav>
+  <a href="#" class="logo">AWERI <span>FOOD</span></a>
+  <ul class="nav-links">
+    <li><a href="#">Story</a></li>
+    <li><a href="#">Products</a></li>
+    <li><a href="#">Process</a></li>
+    <li><a href="#">Shop</a></li>
+  </ul>
+</nav>
+
+<!-- Section dots -->
+<div id="dots">
+  <div class="dot on"></div>
+  <div class="dot"></div>
+  <div class="dot"></div>
+  <div class="dot"></div>
+</div>
+
+<!-- THREE.JS CANVAS (left half, fixed) -->
+<canvas id="three-canvas"></canvas>
+
+<!-- SCROLL WRAP -->
+<div id="scroll-wrap">
+  <div class="sticky">
+
+    <!-- RIGHT TEXT COLUMN -->
+    <div id="text-col">
+
+      <!-- Block 0: Hero -->
+      <div class="tblock" id="tb0">
+        <div class="tag">Since 2018 · Himachal Pradesh</div>
+        <h1>The Taste<br>of <em>Tradition</em></h1>
+        <hr class="g">
+        <p class="body">Handcrafted pickles aged in time-honored recipes from the hills of Himachal. No preservatives, no shortcuts — pure, bold flavor in every jar.</p>
+        <a href="#" class="cta">
+          Explore Collection
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+      </div>
+
+      <!-- Block 1: Origin -->
+      <div class="tblock" id="tb1">
+        <div class="tag">Our Roots</div>
+        <h2>Born in the<br><em>Himalayan Hills</em></h2>
+        <hr class="g">
+        <p class="body">Every jar carries the story of Himachal Pradesh — its mineral-rich soil, crisp mountain air, and generations of pickle-making wisdom passed down through families.</p>
+        <div class="stats">
+          <div class="stat"><div class="num">7+</div><div class="label">Years Crafting</div></div>
+          <div class="stat"><div class="num">12</div><div class="label">Varieties</div></div>
+          <div class="stat"><div class="num">0</div><div class="label">Preservatives</div></div>
+        </div>
+      </div>
+
+      <!-- Block 2: Ingredients -->
+      <div class="tblock" id="tb2">
+        <div class="tag">What's Inside</div>
+        <h2>Only What<br><em>Nature Gives</em></h2>
+        <hr class="g">
+        <p class="body">Sourced from local Himachali farmers. Seasonal produce hand-picked at peak ripeness, cold-pressed mustard oil, and hand-ground spice blends — nothing else.</p>
+        <div class="pills">
+          <span class="pill">Mustard Seeds</span>
+          <span class="pill">Fenugreek</span>
+          <span class="pill">Turmeric</span>
+          <span class="pill">Asafoetida</span>
+          <span class="pill">Rock Salt</span>
+          <span class="pill">Red Chilli</span>
+          <span class="pill">Cold Press Oil</span>
+        </div>
+      </div>
+
+      <!-- Block 3: Shop -->
+      <div class="tblock" id="tb3">
+        <div class="tag">Ready to taste?</div>
+        <h2>Bring Himachal<br>to Your <em>Table</em></h2>
+        <hr class="g">
+        <p class="body">Free delivery on orders above ₹499. Packed in eco-friendly glass jars — no refrigeration needed before opening. Ships across India in 3–5 days.</p>
+        <a href="#" class="cta">
+          Shop Now
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+      </div>
+
+    </div><!-- /text-col -->
+  </div><!-- /sticky -->
+</div><!-- /scroll-wrap -->
+
+<!-- SCRIPTS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+<script>
+/* ══════════════════════════════════════════════
+   LOADER
+══════════════════════════════════════════════ */
+const lbar = document.getElementById('lbar');
+let lpct = 0;
+const lint = setInterval(()=>{
+  lpct += Math.random()*20;
+  if(lpct>=100){lpct=100;clearInterval(lint);}
+  lbar.style.width=lpct+'%';
+},70);
+
+/* ══════════════════════════════════════════════
+   CURSOR
+══════════════════════════════════════════════ */
+const cur=document.getElementById('cur'), cur2=document.getElementById('cur2');
+let mx=window.innerWidth/2, my=window.innerHeight/2, rx=mx, ry=my;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px';});
+(function ringAnim(){rx+=(mx-rx)*.1;ry+=(my-ry)*.1;cur2.style.left=rx+'px';cur2.style.top=ry+'px';requestAnimationFrame(ringAnim);})();
+
+/* ══════════════════════════════════════════════
+   THREE.JS — PICKLE JAR
+══════════════════════════════════════════════ */
+const canvas=document.getElementById('three-canvas');
+const W=()=>canvas.clientWidth, H=()=>canvas.clientHeight;
+
+const renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true});
+renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+renderer.setSize(W(),H());
+renderer.shadowMap.enabled=true;
+renderer.shadowMap.type=THREE.PCFSoftShadowMap;
+
+const scene=new THREE.Scene();
+const camera=new THREE.PerspectiveCamera(45,W()/H(),.1,100);
+camera.position.set(0,0,6.5);
+
+window.addEventListener('resize',()=>{
+  renderer.setSize(W(),H());
+  camera.aspect=W()/H();
+  camera.updateProjectionMatrix();
+});
+
+/* ── LIGHTS ── */
+scene.add(new THREE.AmbientLight(0xfff8e0,.55));
+
+const key=new THREE.DirectionalLight(0xfff5e0,2.2);
+key.position.set(4,5,4);
+key.castShadow=true;
+scene.add(key);
+
+const fill=new THREE.DirectionalLight(0x2d8a3a,.9);
+fill.position.set(-4,1,3);
+scene.add(fill);
+
+const rim=new THREE.DirectionalLight(0xc9a84c,1.4);
+rim.position.set(0,-3,-4);
+scene.add(rim);
+
+const pt=new THREE.PointLight(0xc9a84c,1.8,12);
+pt.position.set(2,2,3);
+scene.add(pt);
+
+/* ── MATERIALS ── */
+const glassMat=new THREE.MeshPhysicalMaterial({
+  color:0x1e6622,metalness:.05,roughness:.08,
+  transmission:.9,thickness:.5,
+  transparent:true,opacity:.85,
+  side:THREE.DoubleSide,depthWrite:false,
+});
+
+const lidMat=new THREE.MeshStandardMaterial({
+  color:0xc9a84c,metalness:.75,roughness:.2,
+});
+
+const lidDarkMat=new THREE.MeshStandardMaterial({
+  color:0x9a7830,metalness:.85,roughness:.15,
+});
+
+const contentMat=new THREE.MeshStandardMaterial({
+  color:0x4a8a20,roughness:.9,transparent:true,opacity:.92,
+});
+
+/* ── BUILD LABEL TEXTURE ── */
+const lc2d=document.createElement('canvas');
+lc2d.width=512;lc2d.height=512;
+const ctx=lc2d.getContext('2d');
+// cream background
+ctx.fillStyle='#f3ede0';ctx.fillRect(0,0,512,512);
+// outer border
+ctx.strokeStyle='rgba(26,60,26,.25)';ctx.lineWidth=8;ctx.strokeRect(14,14,484,484);
+// gold inner border
+ctx.strokeStyle='rgba(201,168,76,.5)';ctx.lineWidth=3;ctx.strokeRect(24,24,464,464);
+// decorative top/bottom lines
+ctx.strokeStyle='rgba(201,168,76,.4)';ctx.lineWidth=1.5;
+ctx.beginPath();ctx.moveTo(50,90);ctx.lineTo(462,90);ctx.stroke();
+ctx.beginPath();ctx.moveTo(50,418);ctx.lineTo(462,418);ctx.stroke();
+// brand
+ctx.fillStyle='#1a3c1a';ctx.font='900 82px Georgia,serif';ctx.textAlign='center';
+ctx.fillText('AWERI',256,80);
+ctx.fillStyle='#c9a84c';ctx.font='22px Georgia,serif';ctx.letterSpacing='6px';
+ctx.fillText('F O O D',256,128);
+ctx.letterSpacing='0px';
+// divider
+ctx.fillStyle='rgba(26,60,26,.3)';ctx.fillRect(130,148,252,1.5);
+// pickle illustration — simple circles as pickles
+const drawPickle=(x,y,r)=>{
+  ctx.fillStyle='#3d7a1a';ctx.beginPath();ctx.ellipse(x,y,r,r*.45,0,0,Math.PI*2);ctx.fill();
+  ctx.fillStyle='#5a9a2a';ctx.beginPath();ctx.ellipse(x,y,r*.72,r*.3,0,0,Math.PI*2);ctx.fill();
+  ctx.fillStyle='rgba(100,160,40,.4)';ctx.beginPath();ctx.ellipse(x-r*.2,y,r*.25,r*.18,-.3,0,Math.PI*2);ctx.fill();
+};
+drawPickle(140,240,42);drawPickle(256,220,50);drawPickle(372,240,44);
+drawPickle(200,300,38);drawPickle(316,298,40);
+// mustard dots
+ctx.fillStyle='#c9a84c';
+[[170,190],[230,185],[300,192],[360,188],[256,348],[196,352],[310,345]].forEach(([x,y])=>{
+  ctx.beginPath();ctx.arc(x,y,4,0,Math.PI*2);ctx.fill();
+});
+// text
+ctx.fillStyle='#2d5a1a';ctx.font='italic 28px Georgia,serif';ctx.textAlign='center';
+ctx.fillText('Artisan Pickles',256,390);
+ctx.fillStyle='rgba(80,60,20,.6)';ctx.font='16px Georgia,serif';ctx.letterSpacing='2px';
+ctx.fillText('HIMACHAL PRADESH  ·  EST 2018',256,435);
+ctx.letterSpacing='0px';
+ctx.fillStyle='rgba(26,60,26,.35)';ctx.font='12px Georgia,serif';
+ctx.fillText('HANDCRAFTED · NO PRESERVATIVES · 100% NATURAL',256,472);
+const labelTex=new THREE.CanvasTexture(lc2d);
+
+const labelMat=new THREE.MeshStandardMaterial({map:labelTex,roughness:.75,metalness:0});
+
+/* ── JAR GROUP ── */
+const jar=new THREE.Group();
+scene.add(jar);
+
+// Glass body
+const bodyGeo=new THREE.CylinderGeometry(.74,.70,2.3,64,1,true);
+jar.add(new THREE.Mesh(bodyGeo,glassMat));
+
+// Bottom
+const botGeo=new THREE.CircleGeometry(.70,64);
+const bot=new THREE.Mesh(botGeo,glassMat);
+bot.rotation.x=-Math.PI/2;bot.position.y=-1.15;jar.add(bot);
+
+// Neck
+const neckGeo=new THREE.CylinderGeometry(.53,.74,.38,64);
+const neck=new THREE.Mesh(neckGeo,glassMat);
+neck.position.y=1.34;jar.add(neck);
+
+// Rim bead
+const rimGeo=new THREE.TorusGeometry(.53,.048,16,64);
+const rimMesh=new THREE.Mesh(rimGeo,lidMat);
+rimMesh.position.y=1.53;jar.add(rimMesh);
+
+// Lid body
+const lidGeo=new THREE.CylinderGeometry(.58,.58,.20,64);
+const lidMesh=new THREE.Mesh(lidGeo,lidMat);
+lidMesh.position.y=1.66;jar.add(lidMesh);
+
+// Lid top cap (slight dome via sphere slice)
+const domeGeo=new THREE.SphereGeometry(.57,64,18,0,Math.PI*2,0,.19*Math.PI);
+const domeMesh=new THREE.Mesh(domeGeo,lidMat);
+domeMesh.position.y=1.75;jar.add(domeMesh);
+
+// Lid edge ring
+const lringGeo=new THREE.TorusGeometry(.55,.018,8,64);
+const lringMesh=new THREE.Mesh(lringGeo,lidDarkMat);
+lringMesh.position.y=1.57;jar.add(lringMesh);
+
+// Label
+const labelGeo=new THREE.CylinderGeometry(.745,.705,1.18,64,1,true,0,Math.PI*1.72);
+const labelMesh=new THREE.Mesh(labelGeo,labelMat);
+labelMesh.position.y=-.05;jar.add(labelMesh);
+
+// Pickle content fill (visible through glass)
+const fillGeo=new THREE.CylinderGeometry(.62,.58,1.85,48);
+jar.add(new THREE.Mesh(fillGeo,contentMat));
+
+// Floating pickle slices
+const sliceMat=new THREE.MeshStandardMaterial({color:0x5a9a22,roughness:.85,transparent:true,opacity:.9});
+const slices=[];
+for(let i=0;i<7;i++){
+  const sg=new THREE.CylinderGeometry(.26,.26,.055,32);
+  const sm=new THREE.Mesh(sg,sliceMat);
+  sm.position.set((Math.random()-.5)*.55,-1.0+i*.3+(Math.random()-.5)*.08,(Math.random()-.5)*.55);
+  sm.rotation.z=(Math.random()-.5)*.5;sm.rotation.x=(Math.random()-.5)*.4;
+  jar.add(sm);slices.push(sm);
+}
+
+// Particles (spice dust)
+const pcnt=80;
+const pgeo=new THREE.BufferGeometry();
+const pp=new Float32Array(pcnt*3);
+for(let i=0;i<pcnt;i++){pp[i*3]=(Math.random()-.5)*5;pp[i*3+1]=(Math.random()-.5)*5;pp[i*3+2]=(Math.random()-.5)*3;}
+pgeo.setAttribute('position',new THREE.BufferAttribute(pp,3));
+const pts=new THREE.Points(pgeo,new THREE.PointsMaterial({color:0xc9a84c,size:.035,transparent:true,opacity:.4}));
+scene.add(pts);
+
+/* ── INITIAL JAR POSE ──
+   Jar is visible from the start, positioned in left half of its canvas.
+   Scroll will move it.
+*/
+jar.position.set(0, 0, 0);
+jar.rotation.y = 0.25;
+jar.scale.setScalar(1);
+
+/* ══════════════════════════════════════════════
+   GSAP ScrollTrigger — jar animation
+══════════════════════════════════════════════ */
+gsap.registerPlugin(ScrollTrigger);
+
+/* We animate jar properties directly via scrub.
+   Each section is 25% of scroll progress (4 sections over 500vh, first 100vh is hero which shows at scroll 0).
+   
+   Scroll map:
+   0%    → Section 0 (hero) — jar centered in left half, upright
+   0-25% → Section 0→1 transition
+   25%   → Section 1 (origin) — jar tilted, rotated to show side
+   25-50%→ Section 1→2 transition
+   50%   → Section 2 (ingredients) — jar fully spun, angled
+   50-75%→ Section 2→3 transition  
+   75%   → Section 3 (shop) — jar centered, large, celebratory spin complete
+*/
+
+const tl = gsap.timeline({
+  scrollTrigger:{
+    trigger:'#scroll-wrap',
+    start:'top top',
+    end:'bottom bottom',
+    scrub:1.5, // smooth scrub
+    onUpdate(self){
+      document.getElementById('pbar').style.width=(self.progress*100)+'%';
+      // dot nav
+      const idx=Math.min(3,Math.floor(self.progress*4));
+      document.querySelectorAll('.dot').forEach((d,i)=>d.classList.toggle('on',i===idx));
+      // text fades
+      const p=self.progress;
+      textFade(p);
+    }
+  }
+});
+
+// ── JAR MOVEMENT ──────────────────────────────
+// All positions are in 3D space within the left-half canvas.
+// x: left(-) / right(+) within left canvas — keep negative to stay left
+// y: up/down
+// rotY: spin around vertical axis
+// scale: size change
+
+// Section 0 → hero: jar center-left, gentle tilt
+tl
+  // Sec 0 → 1: rise slightly, start spin right
+  .to(jar.position,{x:-.15,y:.3,z:.2, duration:1,ease:'power2.inOut'},0)
+  .to(jar.rotation,{y:Math.PI*.7,x:.06,z:-.04, duration:1,ease:'power2.inOut'},0)
+  .to(jar.scale,{x:1.05,y:1.05,z:1.05, duration:1},0)
+
+  // Sec 1 → 2: jar tilts more, bigger spin
+  .to(jar.position,{x:.2,y:-.25,z:.1, duration:1,ease:'power2.inOut'},1)
+  .to(jar.rotation,{y:Math.PI*1.8,x:-.08,z:.05, duration:1.2,ease:'power1.inOut'},1)
+  .to(jar.scale,{x:1.08,y:1.08,z:1.08, duration:1},1)
+  .to(pt,{intensity:2.4, duration:1},1)
+
+  // Sec 2 → 3: full spin, slightly larger
+  .to(jar.position,{x:-.1,y:.15,z:.3, duration:1,ease:'power2.inOut'},2)
+  .to(jar.rotation,{y:Math.PI*3,x:.04,z:-.03, duration:1.4,ease:'power1.inOut'},2)
+  .to(jar.scale,{x:1.14,y:1.14,z:1.14, duration:1},2)
+  .to(pt,{intensity:3.0,color:0xe8c96a, duration:1},2)
+
+  // Sec 3: celebratory — complete spin, centered, bold
+  .to(jar.position,{x:0,y:0,z:.5, duration:1,ease:'power3.out'},3)
+  .to(jar.rotation,{y:Math.PI*4.2,x:0,z:0, duration:1.2,ease:'power2.inOut'},3)
+  .to(jar.scale,{x:1.22,y:1.22,z:1.22, duration:1,ease:'back.out(1.2)'},3)
+  .to(pt,{intensity:4,color:0xf0d070, duration:1},3);
+
+/* ── TEXT FADE LOGIC ── */
+const tblocks=[
+  document.getElementById('tb0'),
+  document.getElementById('tb1'),
+  document.getElementById('tb2'),
+  document.getElementById('tb3'),
+];
+
+// Show block based on scroll progress
+// 0–0.2: block 0 fully visible, fading out by 0.22
+// 0.23–0.45: block 1
+// 0.48–0.70: block 2
+// 0.72–1.0:  block 3
+const ranges=[
+  [0,.0,.18,.22],    // [block, fadeInStart, fullVisible, fadeOutEnd]
+  [1,.22,.34,.48],
+  [2,.48,.60,.74],
+  [3,.74,.85,1.01],
+];
+
+// Show block 0 immediately
+gsap.set(tblocks[0],{opacity:1,y:0});
+
+function textFade(p){
+  ranges.forEach(([i,fi,fv,fo],idx)=>{
+    const el=tblocks[i];
+    let op;
+    if(p<fi) op=0;
+    else if(p<fv) op=(p-fi)/(fv-fi);
+    else if(p<fo) op=1;
+    else op=Math.max(0,1-(p-fo)/0.06);
+    // Also slide in/out slightly
+    const yoff=p<fi?18:p>=fo?-14:0;
+    el.style.opacity=op;
+    el.style.transform=`translateY(calc(-50% + ${yoff}px))`;
+  });
+  // Block 0 is special: starts at 1
+  if(p<ranges[0][2]){
+    tblocks[0].style.opacity=Math.max(0,1-(p/ranges[0][3]));
+    const yoff=-(p/ranges[0][3])*14;
+    tblocks[0].style.transform=`translateY(calc(-50% + ${yoff}px))`;
+  }
+}
+
+/* ══════════════════════════════════════════════
+   MOUSE PARALLAX — subtle camera tilt
+══════════════════════════════════════════════ */
+let tmx=0,tmy=0,lmx=0,lmy=0;
+document.addEventListener('mousemove',e=>{
+  tmx=(e.clientX/window.innerWidth-.5)*.4;
+  tmy=(e.clientY/window.innerHeight-.5)*.3;
+});
+
+/* ══════════════════════════════════════════════
+   RENDER LOOP
+══════════════════════════════════════════════ */
+const clock=new THREE.Clock();
+function render(){
+  requestAnimationFrame(render);
+  const t=clock.getElapsedTime();
+
+  // Gentle idle wobble (very small so it doesn't fight GSAP)
+  jar.position.y+=Math.sin(t*.7)*.0006;
+
+  // Slices gently rotate
+  slices.forEach((s,i)=>{s.rotation.y=t*.25+i*.6;});
+
+  // Particle drift
+  pts.rotation.y=t*.025;pts.rotation.x=t*.015;
+
+  // Mouse parallax: move camera slightly
+  lmx+=(tmx-lmx)*.055;lmy+=(tmy-lmy)*.055;
+  camera.position.x=lmx*.6;
+  camera.position.y=-lmy*.4;
+  camera.lookAt(0,0,0);
+
+  // Orbiting key light
+  key.position.x=4+Math.sin(t*.25)*.6;
+  key.position.z=4+Math.cos(t*.25)*.6;
+
+  renderer.render(scene,camera);
+}
+render();
+
+/* ══════════════════════════════════════════════
+   LAUNCH
+══════════════════════════════════════════════ */
+window.addEventListener('load',()=>{
+  setTimeout(()=>{
+    document.getElementById('loader').classList.add('out');
+    // Intro entrance: jar comes from slightly below
+    gsap.from(jar.position,{y:-1.2,duration:1.4,ease:'back.out(1.5)',delay:.3});
+    gsap.from(jar.scale,{x:.4,y:.4,z:.4,duration:1.2,ease:'back.out(1.6)',delay:.3});
+  },1000);
+});
+</script>
+</body>
+</html>

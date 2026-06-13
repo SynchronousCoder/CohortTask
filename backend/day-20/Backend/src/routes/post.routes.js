@@ -13,16 +13,24 @@ postRouter.post("/", identifyUser, upload.single("chacha"), controller.uploadPos
 //fetching out and seeing all the post of the logined user
 postRouter.get("/", identifyUser, controller.getAllPost)
 
+//getting details of a particulat post
+// postRouter.get("/:postId", identifyUser, controller.getPostDetailsController)
+
+
 /**
  * @route GET /api/post/feed
- * @description get all the post created in the DB
+ * @description create a edge collection of liked post
  * @access private
  */
 postRouter.get("/feed", identifyUser, controller.getFeedController)
 
 
-//getting details of a particulat post
-postRouter.get("/:postId", identifyUser, controller.getPostDetailsController)
+/**
+ * @route GET /api/post/like/:id
+ * @description get all the post created in the DB
+ * @access private
+ */
+postRouter.get("/like/:postId", identifyUser, controller.likePostController)
 
 
 module.exports = postRouter;

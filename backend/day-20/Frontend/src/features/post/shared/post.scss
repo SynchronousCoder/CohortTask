@@ -1,5 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&display=swap');
-@import url('https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css');
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&display=swap");
+@import url("https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css");
 
 * {
   margin: 0;
@@ -7,43 +7,56 @@
   box-sizing: border-box;
 }
 
-html, body {
+html,
+body {
   height: 100%;
-  margin: 0;
-  padding: 0;
-  background: #0a0a0a;
-  font-family: 'DM Sans', sans-serif;
+  background: #080810;
+  font-family: "DM Sans", sans-serif;
   overflow-y: auto;
 }
 
-// YEH ADD KAR — root fix
 #root {
   min-height: 100%;
   overflow-y: auto;
 }
 
+// ── POST CARD ──────────────────────────────────────────────
 .post {
   width: 100%;
   max-width: 468px;
-  background: #2d2d2d;
-  border: 1px solid #1f1f1f;
-  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 20px;
   overflow: hidden;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  transition:
+    transform 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.3s ease,
+    border-color 0.3s ease;
+  animation: postIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
 
-  // TOP
+  &:hover {
+    transform: translateY(-3px);
+    border-color: rgba(167, 139, 250, 0.2);
+    box-shadow:
+      0 12px 48px rgba(0, 0, 0, 0.4),
+      0 0 0 1px rgba(167, 139, 250, 0.08);
+  }
+
+  // ── TOP BAR
   .top {
     display: flex;
     align-items: center;
     gap: 10px;
-    padding: 12px 14px;
+    padding: 14px 16px;
 
     .pfp-wrap {
-      position: relative;
-      width: 36px;
-      height: 36px;
+      width: 38px;
+      height: 38px;
       border-radius: 50%;
       padding: 2px;
-      background: linear-gradient(135deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+      background: linear-gradient(135deg, #a78bfa, #ec4899, #06b6d4);
       flex-shrink: 0;
 
       img {
@@ -51,7 +64,8 @@ html, body {
         height: 100%;
         border-radius: 50%;
         object-fit: cover;
-        border: 2px solid #111;
+        border: 2px solid #080810;
+        display: block;
       }
     }
 
@@ -61,29 +75,32 @@ html, body {
       h1 {
         font-size: 13.5px;
         font-weight: 600;
-        color: #f0f0f0;
+        color: #f0eaff;
         letter-spacing: 0.01em;
       }
 
       span {
         font-size: 11px;
-        color: #555;
+        color: rgba(255, 255, 255, 0.3);
       }
     }
 
     .more-btn {
       background: none;
       border: none;
-      color: #888;
+      color: rgba(255, 255, 255, 0.35);
       cursor: pointer;
-      padding: 4px;
+      padding: 6px;
       border-radius: 50%;
       display: flex;
       align-items: center;
-      transition: color 0.2s;
+      transition:
+        color 0.2s,
+        background 0.2s;
 
       &:hover {
-        color: #f0f0f0;
+        color: #f0eaff;
+        background: rgba(255, 255, 255, 0.07);
       }
 
       i {
@@ -92,44 +109,82 @@ html, body {
     }
   }
 
-  // POST IMAGE
+  // ── IMAGE
   .post-img {
     width: 100%;
     aspect-ratio: 1 / 1;
     overflow: hidden;
-    background: #0d0d0d;
+    background: #0d0d18;
+    position: relative;
 
     img {
       width: 100%;
       height: 100%;
       object-fit: cover;
       display: block;
-      transition: transform 0.4s ease;
+      transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+    }
 
-      &:hover {
-        transform: scale(1.02);
-      }
+    &:hover img {
+      transform: scale(1.03);
+    }
+
+    // Subtle gradient overlay bottom
+    &::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        transparent 55%,
+        rgba(8, 8, 16, 0.45) 100%
+      );
+      pointer-events: none;
     }
   }
-
-  // ACTIONS
+  // ── ICONS
+  .icons {
+    padding-inline: 1rem;
+    padding-top: 0.25rem;
+    .left {
+      display: flex;
+      gap: 0.5rem;
+    }
+    svg {
+      width: 1.25rem;
+      aspect-ratio: 1/1;
+    }
+    button {
+      color: white;
+      background-color: transparent;
+      border: none;
+      outline: none;
+    }
+    .like {
+      color: #ec4899;
+    }
+  }
+  // ── ACTIONS
   .actions {
     display: flex;
     align-items: center;
     padding: 10px 14px 6px;
-    gap: 4px;
+    gap: 2px;
 
     .action-btn {
       background: none;
       border: none;
       cursor: pointer;
-      padding: 6px;
+      padding: 7px;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: transform 0.15s ease, color 0.2s;
-      color: #d0d0d0;
+      color: rgba(255, 255, 255, 0.65);
+      transition:
+        transform 0.15s ease,
+        color 0.2s,
+        background 0.2s;
 
       i {
         font-size: 22px;
@@ -137,27 +192,25 @@ html, body {
       }
 
       &:hover {
-        transform: scale(1.15);
+        transform: scale(1.18);
+        background: rgba(255, 255, 255, 0.06);
       }
 
       &.like-btn {
-        padding-left: 0;
-
+        padding-left: 2px;
         &.liked {
-          color: #ed4956;
+          color: #ec4899;
         }
-
         &:hover {
-          color: #ed4956;
+          color: #ec4899;
         }
       }
 
       &.comment-btn:hover {
-        color: #a8a8ff;
+        color: #a78bfa;
       }
-
       &.share-btn:hover {
-        color: #58d68d;
+        color: #06b6d4;
       }
     }
 
@@ -169,49 +222,64 @@ html, body {
       background: none;
       border: none;
       cursor: pointer;
-      padding: 6px;
+      padding: 7px;
+      border-radius: 50%;
       display: flex;
       align-items: center;
-      color: #d0d0d0;
-      transition: transform 0.15s ease, color 0.2s;
+      color: rgba(255, 255, 255, 0.65);
+      transition:
+        transform 0.15s ease,
+        color 0.2s,
+        background 0.2s;
 
       i {
         font-size: 22px;
       }
 
       &.saved {
-        color: #f0f0f0;
+        color: #f0eaff;
       }
-
       &:hover {
-        transform: scale(1.15);
-        color: #f0f0f0;
+        transform: scale(1.18);
+        color: #f0eaff;
+        background: rgba(255, 255, 255, 0.06);
       }
     }
   }
 
-  // LIKES
+  // ── LIKES
   .likes {
-    padding: 0 14px 6px;
+    padding: 0 16px 5px;
     font-size: 13px;
     font-weight: 600;
-    color: #e0e0e0;
+    color: rgba(255, 255, 255, 0.85);
   }
 
-  // CAPTION
+  // ── CAPTION
   .lower {
-    padding: 4px 14px 14px;
+    padding: 4px 16px 16px;
 
     p {
       font-size: 13.5px;
-      line-height: 1.55;
-      color: #b0b0b0;
+      line-height: 1.6;
+      color: rgba(255, 255, 255, 0.5);
 
       .username {
         font-weight: 600;
-        color: #e8e8e8;
+        color: #e2d9f3;
         margin-right: 6px;
       }
     }
+  }
+}
+
+@keyframes postIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
