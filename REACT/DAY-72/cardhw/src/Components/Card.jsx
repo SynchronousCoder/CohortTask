@@ -2,7 +2,7 @@ import React from "react";
 
 const Card = (props) => {
   const user = props.user;
-  console.log(user.images[0]);
+  console.log(user);
   return (
     <div>
       <div className="card h-[27rem] w-[27rem] bg-amber-50 rounded-2xl p-1 overflow-hidden">
