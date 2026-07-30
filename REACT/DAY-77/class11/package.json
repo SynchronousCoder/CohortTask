@@ -1,5 +1,5 @@
 {
-  "name": "class7",
+  "name": "class11",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -10,10 +10,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@tailwindcss/vite": "^4.3.1",
+    "@tailwindcss/vite": "^4.3.2",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
-    "tailwindcss": "^4.3.1"
+    "tailwindcss": "^4.3.2"
   },
   "devDependencies": {
     "@eslint/js": "^9.33.0",
