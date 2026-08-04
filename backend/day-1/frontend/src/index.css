@@ -1,0 +1,289 @@
+/* Global reset and base */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  height: 100%;
+  width: 100%;
+  background: radial-gradient(1200px 600px at 10% 10%, #071018 0%, #000000 40%), #000;
+  color: #e6f7ff;
+  font-family: "Inter", "Segoe UI", "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.4;
+}
+
+/* Page wrapper */
+.notes-wrapper {
+  max-width: 1100px;
+  margin: 2.5rem auto;
+  padding: 1.5rem;
+}
+
+/* Heading */
+.notes-heading {
+  font-size: 2.2rem;
+  color: #00f0ff;
+  letter-spacing: 0.6px;
+  margin-bottom: 1.25rem;
+  text-align: center;
+  text-shadow: 0 6px 24px rgba(0, 240, 255, 0.08), 0 0 8px rgba(0, 240, 255, 0.12);
+}
+
+/* Form area */
+.form-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1.75rem;
+  padding: 0.5rem;
+}
+
+.note-form {
+  display: flex;
+  gap: 0.9rem;
+  align-items: center;
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  padding: 0.6rem;
+  border-radius: 12px;
+  box-shadow: 0 6px 30px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.02);
+  backdrop-filter: blur(6px);
+}
+
+/* Inputs */
+.form-input {
+  width: 220px;
+  padding: 0.7rem 0.9rem;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.06);
+  background: linear-gradient(180deg, #0f1416, #0b0d0e);
+  color: #e6f7ff;
+  outline: none;
+  transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+  font-size: 0.95rem;
+  box-shadow: 0 6px 18px rgba(0, 240, 255, 0.03);
+}
+
+.form-input::placeholder {
+  color: rgba(230, 247, 255, 0.45);
+}
+
+.form-input:focus {
+  /* transform: translateY(-3px); */
+  border-color: rgba(0, 240, 255, 0.6);
+  box-shadow: 0 8px 30px rgba(0, 240, 255, 0.12);
+}
+
+/* Submit button */
+.submit-btn {
+  padding: 0.72rem 1.1rem;
+  border-radius: 10px;
+  border: none;
+  background: linear-gradient(90deg, #00f0ff, #00b3ff);
+  color: #001217;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 8px 30px rgba(0, 176, 255, 0.18);
+  transition: transform 180ms ease, box-shadow 180ms ease, opacity 180ms ease;
+  font-size: 0.95rem;
+}
+
+.submit-btn:hover {
+  /* transform: translateY(-4px); */
+  box-shadow: 0 18px 40px rgba(0, 176, 255, 0.28);
+}
+
+/* Notes container (cards grid) */
+.container,
+.notes-container {
+  display: flex;
+  justify-content: center;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+  padding: 1rem 0.5rem;
+}
+
+/* Card */
+.card,
+.note-card {
+  width: 300px;
+  min-height: 150px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  border-radius: 14px;
+  padding: 1.25rem;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.03);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.6), 0 6px 18px rgba(0, 240, 255, 0.03);
+  transition: transform 260ms cubic-bezier(.2,.9,.3,1), box-shadow 260ms ease, border-color 260ms ease;
+}
+
+/* Neon accent stripe */
+.card::before,
+.note-card::before {
+  content: "";
+  position: absolute;
+  left: -40%;
+  top: -40%;
+  width: 180%;
+  height: 180%;
+  background: radial-gradient(circle at 20% 20%, rgba(0,240,255,0.06), transparent 12%),
+              radial-gradient(circle at 80% 80%, rgba(0,120,255,0.03), transparent 12%);
+  transform: rotate(12deg);
+  pointer-events: none;
+}
+
+/* Hover effect */
+.card:hover,
+.note-card:hover {
+  /* transform: translateY(-12px) scale(1.02); */
+  box-shadow: 0 26px 60px rgba(0,0,0,0.7), 0 18px 40px rgba(0, 176, 255, 0.14);
+  border-color: rgba(0,240,255,0.12);
+}
+
+/* Title and description */
+.card-title,
+.note-title {
+  font-size: 1.25rem;
+  color: #bffcff;
+  margin-bottom: 0.6rem;
+  letter-spacing: 0.2px;
+  text-shadow: 0 6px 18px rgba(0, 240, 255, 0.06);
+  font-weight: 700;
+}
+
+.card-desc,
+.note-desc {
+  font-size: 0.98rem;
+  color: #dbeff6;
+  opacity: 0.95;
+  margin-bottom: 1rem;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+/* Delete button */
+.delete-btn{
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.8rem;
+  border-radius: 10px;
+  border: none;
+  background: linear-gradient(90deg, #ff6b6b, #ff3b3b);
+  color: #fff;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 160ms ease, box-shadow 160ms ease, opacity 160ms ease;
+  box-shadow: 0 8px 24px rgba(255, 59, 59, 0.14);
+}
+.edit-btn {
+  margin-left: 0.5rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.8rem;
+  border-radius: 10px;
+  border: none;
+  background: linear-gradient(90deg, #15ff00, #3cff00);
+  color: #252525;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 160ms ease, box-shadow 160ms ease, opacity 160ms ease;
+  box-shadow: 0 8px 24px rgba(0,176,255,0.14);
+}
+
+/* Hover effect */
+.edit-btn:hover {
+  box-shadow: 0 18px 40px rgba(21, 255, 0, 0.28);
+  transform: translateY(-2px);
+}
+
+/* Remove underline from Link inside button */
+.edit-btn a {
+  text-decoration: none;   /* ❌ removes underline */
+  color: inherit;          /* inherits button text color */
+  font-weight: inherit;
+}
+.delete-btn:hover {
+  /* transform: translateY(-4px); */
+  box-shadow: 0 18px 40px rgba(255, 59, 59, 0.22);
+}
+
+/* Responsive tweaks */
+@media (max-width: 900px) {
+  .form-input { width: 160px; }
+  .card, .note-card { width: 92%; max-width: 420px; }
+  .note-form { flex-wrap: wrap; gap: 0.6rem; justify-content: center; }
+}
+
+@media (max-width: 480px) {
+  .notes-heading { font-size: 1.6rem; }
+  .form-input { width: 100%; }
+  .note-form { padding: 0.5rem; }
+  .submit-btn { width: 100%; }
+}
+
+/* Edit wrapper */
+.edit-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: 2.5rem;
+  padding: 1rem;
+}
+
+/* Edit form */
+.edit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  padding: 1.5rem;
+  border-radius: 14px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.02);
+  backdrop-filter: blur(6px);
+  width: 100%;
+  max-width: 420px;
+}
+
+/* Inputs */
+.edit-input {
+  padding: 0.8rem 1rem;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.06);
+  background: linear-gradient(180deg, #0f1416, #0b0d0e);
+  color: #e6f7ff;
+  outline: none;
+  transition: border-color 180ms ease, box-shadow 180ms ease;
+  font-size: 0.95rem;
+}
+
+.edit-input::placeholder {
+  color: rgba(230, 247, 255, 0.45);
+}
+
+.edit-input:focus {
+  border-color: rgba(0, 240, 255, 0.6);
+  box-shadow: 0 8px 30px rgba(0, 240, 255, 0.12);
+}
+
+/* Update button */
+.update-btn {
+  padding: 0.8rem 1.2rem;
+  border-radius: 10px;
+  border: none;
+  background: linear-gradient(90deg, #00f0ff, #00b3ff);
+  color: #001217;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 8px 30px rgba(0, 176, 255, 0.18);
+  transition: transform 180ms ease, box-shadow 180ms ease;
+  font-size: 0.95rem;
+}
+
+.update-btn:hover {
+  box-shadow: 0 18px 40px rgba(0, 176, 255, 0.28);
+  transform: translateY(-2px);
+}
