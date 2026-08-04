@@ -7,7 +7,7 @@ const Create = (props) => {
   const [desc, setDesc] = useState("");
   async function handleSubmit(e) {
     e.preventDefault();
-    await axios.post("http://localhost:3000/api/notes", {
+    await axios.post("https://cohorttask.onrender.com/api/notes", {
       title: title,
       description: desc,
     });
@@ -20,7 +20,7 @@ const Create = (props) => {
       <form
         className="note-form"
         method="POST"
-        action="http://localhost:3000/api/notes"
+        action="https://cohorttask.onrender.com/api/notes"
         onSubmit={handleSubmit}
       >
         <input
