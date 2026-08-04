@@ -11,7 +11,7 @@ const Edit = () => {
   let { id } = useParams();
 
   async function loadNotes() {
-    const res = await axios.get("http://localhost:3000/api/notes");
+    const res = await axios.get(" https://cohorttask.onrender.com/api/notes");
     const singleNote = await res.data.note.find((n) => n._id === id);
     if (singleNote) {
       setTitle(singleNote.title);
@@ -22,7 +22,7 @@ const Edit = () => {
 
   async function handelSubmit(e) {
     e.preventDefault();
-    await axios.patch(`http://localhost:3000/api/notes/${id}`, {
+    await axios.patch(` https://cohorttask.onrender.com/api/notes/${id}`, {
       title: title,
       description: desc,
     });

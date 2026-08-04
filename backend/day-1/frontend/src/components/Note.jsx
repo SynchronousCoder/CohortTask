@@ -7,13 +7,13 @@ const Note = () => {
   const [notes, setNotes] = useState([]);
 
   async function loadNotes() {
-    const notes = await axios.get("http://localhost:3000/api/notes");
+    const notes = await axios.get(" https://cohorttask.onrender.com/api/notes");
     // console.log(notes.data.note);
     setNotes(notes.data.note);
   }
 
   async function deleteNotes(id) {
-    await axios.delete(`http://localhost:3000/api/notes/${id}`);
+    await axios.delete(` https://cohorttask.onrender.com/api/notes/${id}`);
   }
 
   useEffect(() => {
