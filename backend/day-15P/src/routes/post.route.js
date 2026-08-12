@@ -19,5 +19,6 @@ postRouter.get("/", controller.fetchPostController);
  * - return detail about specific post with the id. also check whether the post
 belongs to the user that the request come from 
  */
-postRouter.get("/details/:postId", controller.getPostDetails);
+postRouter.get("/details/:postId", controller.getPostDetailsController);
+
 module.exports = postRouter;
