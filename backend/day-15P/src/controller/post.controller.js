@@ -10,7 +10,10 @@ const imagekit = new ImageKit({
   privateKey: process.env.IMAGEKIT_PRIVATE_KEY,
 });
 
-async function createPost(req, res) {
+/**
+ * Creating the post
+ */
+async function createPostController(req, res) {
   const token = req.cookies.token;
 
   if (!token) {
@@ -36,7 +39,7 @@ async function createPost(req, res) {
   const post = await postModel.create({
     caption: req.body.caption,
     imgUrl: img.url,
-    user: user._id
+    user: user._id,
   });
 
   res.status(201).json({
@@ -45,6 +48,39 @@ async function createPost(req, res) {
   });
 }
 
+/**
+ * Fetching all post
+ */
+async function fetchPostController(req, res) {
+  const token = req.cookies.token;
+  if (!token) {
+    res.status(404).json({
+      message: "Token not found",
+    });
+  }
+  const decoded = jwt.verify(token, process.env.JWT_SECRET);
+  if (!decoded) {
+    res.status(409).json({
+      message: "Unauthorized User",
+    });
+  }
+  let userId = decoded.id
+
+  const post = await postModel.find({user: userId});
+  console.log(`All the post by ${decoded.username}`, post)
+
+}
+
+/**
+ * 
+ */
+async function getPostDetails(req, res) {
+  
+}
+
+
 module.exports = {
-  createPost,
+  createPostController,
+  fetchPostController,
+  getPostDetails
 };
