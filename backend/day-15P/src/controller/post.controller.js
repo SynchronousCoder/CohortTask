@@ -14,19 +14,9 @@ const imagekit = new ImageKit({
  * Creating the post
  */
 async function createPostController(req, res) {
-  const token = req.cookies.token;
 
-  if (!token) {
-    res.status(409).json({
-      message: "Please login again, token expired",
-    });
-  }
 
-  let decoded = jwt.verify(token, process.env.JWT_SECRET);
-
-  const user = await userModel.findById(decoded.id);
-
-  console.log(req.body.caption, req.file, token, decoded.id, user);
+  console.log(req.body.caption, req.file, token, req.user.id);
 
   const img = await imagekit.files.upload({
     file: await toFile(Buffer.from(req.file.buffer), "file"),
@@ -39,7 +29,7 @@ async function createPostController(req, res) {
   const post = await postModel.create({
     caption: req.body.caption,
     imgUrl: img.url,
-    user: user._id,
+    user: req.user.id,
   });
 
   res.status(201).json({
@@ -52,47 +42,21 @@ async function createPostController(req, res) {
  * Fetching all post (of the particular user only)
  */
 async function fetchPostController(req, res) {
-  const token = req.cookies.token;
-  if (!token) {
-    res.status(404).json({
-      message: "Token not found",
-    });
-  }
-  const decoded = jwt.verify(token, process.env.JWT_SECRET);
-  if (!decoded) {
-    res.status(409).json({
-      message: "Unauthorized User",
-    });
-  }
-  let userId = decoded.id;
+
+
+  let userId = req.user.id;
 
   const post = await postModel.find({ user: userId });
-  console.log(`All the post by ${decoded.username}`, post);
+  console.log(`All the post by ${req.user.username}`, post);
 }
 
 /**
  * Fetching the particular post if user created that
  */
 async function getPostDetailsController(req, res) {
-  const token = req.cookies.token;
-  if (!token) {
-    res.status(409).json({
-      message: "Unauthorized User",
-    });
-  }
-
-  let decoded;
-  try {
-    decoded = jwt.verify(token, process.env.JWT_SECRET);
-  } catch (error) {
-    res.status(409).json({
-      message: "Unauthorized Token Can't fetch the post",
-      error,
-    });
-  }
 
   const postId = req.params.postId;
-  const userId = decoded.id;
+  const userId = req.user.id;
 
   // console.log(decoded);
 
@@ -117,6 +81,38 @@ async function getPostDetailsController(req, res) {
     post,
   });
 }
+// async function getPostDetailsController(req, res) {
+//   const token = req.cookies.token
+//   let decoded
+//   try {
+//     decoded = jwt.verify(token, process.env.JWT_SECRET)
+//   } catch (error) {
+//     res.status(409).json({
+//       message: "Unauthorized User",
+//       error
+//     })
+//   }
+//   console.log(decoded)
+
+//   const userId = decoded.id
+//   const postId = req.params.postId
+
+//   const post = await postModel.findById(postId)
+//   console.log(post.user)
+
+//   const verifyPostUser = post.user.toString() === userId
+
+//   if(!verifyPostUser){
+//     res.status(409).json({
+//       message: "Unauthroized user, You can't view this post"
+//     })
+//   }
+
+//   res.status(200).json({
+//     message: "Post fetched successfully",
+//     post
+//   })
+// }
 
 module.exports = {
   createPostController,
