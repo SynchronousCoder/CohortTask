@@ -4,6 +4,7 @@ const controller = require("../controller/post.controller");
 const multer = require("multer");
 const identifyUser = require("../middlewares/auth.middleware");
 const upload = multer({ storage: multer.memoryStorage() });
+
 /**
  * POST /api/posts/
  */
