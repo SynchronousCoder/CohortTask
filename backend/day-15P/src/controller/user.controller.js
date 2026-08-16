@@ -1,53 +1,62 @@
-const followModel = require("../models/follow.model")
+const followModel = require("../models/follow.model");
+const userModel = require("../models/user.model");
 
-/**
- * Following Feature
- */
-async function followUser(req, res) {
-    const follower = req.user.id
-    const followee = req.params.id
+async function followController(req, res) {
+  const follower = req.user.username;
+  const followee = req.params.username;
 
-    if(followee === follower){
-        res.status(400).json({
-            message: "You can't follow yourself"
-        })
-    }
+  if (follower === followee) {
+    res.status(400).json({
+      message: "You can't follow yourself",
+    });
+  }
 
-    const follow = await followModel.create({
-        follower: follower,
-        followee: followee
-    })
+  const isUserExist = await userModel.findOne({
+    username: followee,
+  });
 
-    res.status(200).json({
-        message: "Followed succesfully",
-        follow
-    })
+  if (!isUserExist) {
+    return res.status(404).json({
+      message: "User you want follow Doesn't Found",
+    });
+  }
+  console.log("USER => ", isUserExist);
+  const follow = await followModel.create({
+    follower: follower,
+    followee: followee,
+  });
+
+  res.status(200).json({
+    message: `Following ${followee} user Successfully`,
+    follow,
+  });
 }
 
-/**
- * 
- */
-async function unFollowUser(req, res) {
-    const follower = req.user.id
-    const followee = req.params.id
+async function unFollowController(req, res) {
+  const follower = req.user.username;
+  const followee = req.params.username;
 
-    const follow = await followModel.findOneAndDelete({
-        follower: follower,
-        followee: followee
-    })
+  const isUserExist = await userModel.findOne({
+    username: followee,
+  });
 
-    if(!follow){
-        res.status(404).json({
-            message: "No user found to unfollow"
-        })
-    }
+  if (!isUserExist) {
+    return res.status(404).json({
+      message: "User you want follow Doesn't Found",
+    });
+  }
 
-    res.status(200).json({
-        message: "Unfollowed Successfully"
-    })
+  const unFollow = await followModel.findOneAndDelete({
+    follower: follower,
+    followee: followee
+  });
+  
+  res.status(200).json({
+    message: `You unfollowed ${followee} user`,
+  });
 }
 
 module.exports = {
-    followUser,
-    unFollowUser
-}
+  followController,
+  unFollowController
+};
