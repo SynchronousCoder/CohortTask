@@ -5,6 +5,7 @@ const ImageKit = require("@imagekit/nodejs");
 const { toFile } = require("@imagekit/nodejs");
 const userModel = require("../models/user.model");
 const postModel = require("../models/post.model");
+const likeModel = require("../models/like.model");
 
 const imagekit = new ImageKit({
   privateKey: process.env.IMAGEKIT_PRIVATE_KEY,
@@ -14,8 +15,6 @@ const imagekit = new ImageKit({
  * Creating the post
  */
 async function createPostController(req, res) {
-
-
   console.log(req.body.caption, req.file, token, req.user.id);
 
   const img = await imagekit.files.upload({
@@ -42,8 +41,6 @@ async function createPostController(req, res) {
  * Fetching all post (of the particular user only)
  */
 async function fetchPostController(req, res) {
-
-
   let userId = req.user.id;
 
   const post = await postModel.find({ user: userId });
@@ -54,7 +51,6 @@ async function fetchPostController(req, res) {
  * Fetching the particular post if user created that
  */
 async function getPostDetailsController(req, res) {
-
   const postId = req.params.postId;
   const userId = req.user.id;
 
@@ -114,8 +110,45 @@ async function getPostDetailsController(req, res) {
 //   })
 // }
 
+/**
+ * Liking a post by /postId
+ */
+async function likePostController(req, res) {
+  const username = req.user.username;
+  const postId = req.params.postId; //recieve id here
+
+  const isPostExist = await postModel.findById(postId);
+
+  if (!isPostExist) {
+    return res.status(404).json({
+      message: "Not such post is found",
+    });
+  }
+
+  const alreadyLikedPost = await likeModel.findOne({
+    post: postId,
+    user: username,
+  });
+
+  if (alreadyLikedPost) {
+    return res.status(400).json({
+      message: "Post is already liked",
+    });
+  }
+
+  const like = await likeModel.create({
+    post: postId,
+    user: username,
+  });
+
+  res.status(200).json({
+    message: `Post liked successfully`,
+  });
+}
+
 module.exports = {
   createPostController,
   fetchPostController,
   getPostDetailsController,
+  likePostController,
 };

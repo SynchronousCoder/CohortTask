@@ -23,4 +23,9 @@ belongs to the user that the request come from
  */
 postRouter.get("/details/:postId", identifyUser,controller.getPostDetailsController);
 
+/**
+ * GER /api/posts/like/postId
+ */
+postRouter.get("/like/:postId", identifyUser, controller.likePostController)
+
 module.exports = postRouter;
