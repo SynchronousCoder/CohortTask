@@ -1,7 +1,8 @@
 import { Route, Routes } from "react-router-dom"
-import Login from "./Features/auth/Login"
-import Register from "./Features/auth/Register"
-import Home from "./Features/home/Home"
+import Login from "./Features/auth/pages/Login"
+import Register from "./Features/auth/pages/Register"
+import Hero from "./Features/hero/Hero"
+import Home from "./Features/auth/pages/Home"
 
 
 function App() {
@@ -9,9 +10,10 @@ function App() {
   return (
     <>
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<Hero />} />
         <Route path="/login" element={<Login />}/>
         <Route path="/register" element={<Register />}/>
+        <Route path="/home" element={<Home />}/>
       </Routes>
     </>
   )

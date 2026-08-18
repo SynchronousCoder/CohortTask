@@ -51,8 +51,8 @@ async function registerController(req, res) {
     });
   }
 
-  const hash = await bcrypt.hash(password, 10)
-  
+  const hash = await bcrypt.hash(password, 10);
+
   const user = await userModel.create({
     username,
     email,
@@ -77,11 +77,11 @@ async function registerController(req, res) {
   });
 }
 async function loginController(req, res) {
-  const { email, password } = req.body;
-  const user = await userModel.findOne({ email });
+  const { username, email, password } = req.body;
+  const user = await userModel.findOne({ $or: [{ username }, { email }] });
 
   if (!user) {
-    res.status(404).json({ message: "Please register, Email not found" });
+    res.status(404).json({ message: `Please register, User not found` });
   } else {
     console.log(user);
   }
@@ -114,18 +114,7 @@ async function loginController(req, res) {
 }
 
 async function getMeController(req, res) {
-  const token = req.cookies.token;
-  console.log(token);
-  if (!token) {
-    res.status(404).json({
-      message: "Please Login Again",
-    });
-  }
-
-  const decoded = jwt.verify(token, process.env.JWT_SECRET);
-  console.log(decoded.id);
-
-  const user = await userModel.findById(decoded.id);
+  const user = await userModel.findById(req.user.id);
 
   if (!user) {
     res.status(404).json({
