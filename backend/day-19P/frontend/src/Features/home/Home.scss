@@ -1,0 +1,717 @@
+.home {
+  position: relative;
+  width: 100%;
+  min-height: 100svh;
+
+  overflow: hidden;
+
+  background:
+    radial-gradient(
+      ellipse 65% 80% at 76% 48%,
+      rgba(255, 255, 255, 0.045),
+      transparent 65%
+    ),
+    radial-gradient(
+      ellipse 70% 90% at 10% 70%,
+      rgba(255, 255, 255, 0.018),
+      transparent 70%
+    ),
+    #050505;
+
+  color: #f5f5f5;
+
+  font-family:
+    Arial,
+    Helvetica,
+    sans-serif;
+
+
+  /* =====================================================
+     AMBIENT LIGHT
+  ===================================================== */
+
+  &__ambient {
+    position: absolute;
+    z-index: 0;
+
+    width: 650px;
+    height: 650px;
+
+    left: 55%;
+    top: 30%;
+
+    transform: translate(-50%, -50%);
+
+    border-radius: 50%;
+
+    background:
+      radial-gradient(
+        circle,
+        rgba(255, 255, 255, 0.07),
+        rgba(255, 255, 255, 0.025) 25%,
+        transparent 70%
+      );
+
+    filter: blur(45px);
+
+    pointer-events: none;
+  }
+
+
+  /* =====================================================
+     NOISE
+  ===================================================== */
+
+  &__noise {
+    position: absolute;
+    inset: 0;
+
+    z-index: 10;
+
+    pointer-events: none;
+
+    opacity: 0.055;
+
+    background-image:
+      url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.8'/%3E%3C/svg%3E");
+  }
+
+
+  /* =====================================================
+     3D WORLD
+  ===================================================== */
+
+  &__world {
+    position: absolute;
+
+    inset: -8% -5% -8% 20%;
+
+    z-index: 1;
+
+    pointer-events: none;
+
+    /*
+      IMPORTANT:
+
+      Canvas is transparent.
+
+      There is NO rectangular "3D section".
+      The 3D world simply exists inside
+      the same black environment.
+    */
+
+    opacity: 0.92;
+
+    canvas {
+      width: 100% !important;
+      height: 100% !important;
+    }
+  }
+
+
+  /* =====================================================
+     NAVIGATION
+  ===================================================== */
+
+  &__nav {
+    position: relative;
+
+    z-index: 20;
+
+    width: 100%;
+
+    padding: 8px 45px 28px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    border-top: 1px solid
+      rgba(255, 255, 255, 0.04);
+
+    border-bottom: 1px solid
+      rgba(255, 255, 255, 0.07);
+  }
+
+
+  &__logo {
+    color: #fff;
+
+    text-decoration: none;
+
+    font-size: 21px;
+    font-weight: 800;
+
+    letter-spacing: -1.2px;
+
+    span {
+      opacity: 0.35;
+    }
+  }
+
+
+  &__nav-links {
+    display: flex;
+
+    gap: 42px;
+
+    a {
+      position: relative;
+
+      color:
+        rgba(255, 255, 255, 0.52);
+
+      text-decoration: none;
+
+      font-size: 13px;
+
+      transition:
+        color 0.3s ease;
+
+      &:hover {
+        color: #fff;
+      }
+    }
+  }
+
+
+  &__actions {
+    display: flex;
+    align-items: center;
+
+    gap: 26px;
+  }
+
+
+  &__login {
+    color: #fff;
+
+    text-decoration: none;
+
+    font-size: 13px;
+
+    transition: opacity 0.3s ease;
+
+    &:hover {
+      opacity: 0.55;
+    }
+  }
+
+
+  &__signup {
+    color: #050505;
+
+    background: #fff;
+
+    padding: 12px 23px;
+
+    border-radius: 100px;
+
+    text-decoration: none;
+
+    font-size: 12px;
+    font-weight: 700;
+
+    transition:
+      transform 0.35s ease,
+      box-shadow 0.35s ease;
+
+    &:hover {
+      transform: translateY(-2px);
+
+      box-shadow:
+        0 15px 40px
+        rgba(255, 255, 255, 0.14);
+    }
+  }
+
+
+  /* =====================================================
+     HERO
+  ===================================================== */
+
+  &__hero {
+    position: relative;
+
+    z-index: 5;
+
+    min-height:
+      calc(100svh - 82px);
+
+    display: flex;
+    align-items: center;
+
+    padding:
+      20px 7vw 100px;
+  }
+
+
+  &__content {
+    position: relative;
+
+    z-index: 8;
+
+    width: 58%;
+  }
+
+
+  &__eyebrow {
+    display: flex;
+    align-items: center;
+
+    gap: 13px;
+
+    margin-bottom: 30px;
+
+    color:
+      rgba(255, 255, 255, 0.46);
+
+    font-size: 10px;
+
+    letter-spacing: 3.2px;
+
+    span {
+      width: 36px;
+      height: 1px;
+
+      background:
+        rgba(255, 255, 255, 0.7);
+    }
+  }
+
+
+  /* =====================================================
+     TYPOGRAPHY
+  ===================================================== */
+
+  h1 {
+    position: relative;
+
+    margin: 0;
+
+    font-size:
+      clamp(72px, 9.4vw, 155px);
+
+    line-height: 0.82;
+
+    font-weight: 800;
+
+    letter-spacing: -0.078em;
+
+    color: #f6f6f6;
+
+    /*
+      Small shadow integrates typography
+      into the same depth field.
+    */
+
+    text-shadow:
+      0 0 50px
+      rgba(255, 255, 255, 0.025);
+
+    em {
+      color: transparent;
+
+      -webkit-text-stroke:
+        1px rgba(255, 255, 255, 0.58);
+
+      font-style: normal;
+
+      /*
+        Makes outline text slightly
+        transparent to the world behind it.
+      */
+
+      opacity: 0.72;
+    }
+  }
+
+
+  &__content > p {
+    max-width: 390px;
+
+    margin:
+      38px 0 31px;
+
+    color:
+      rgba(255, 255, 255, 0.47);
+
+    font-size: 15px;
+
+    line-height: 1.7;
+  }
+
+
+  /* =====================================================
+     CTA
+  ===================================================== */
+
+  &__cta-row {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+
+    gap: 27px;
+  }
+
+
+  &__cta {
+    display: flex;
+    align-items: center;
+
+    gap: 28px;
+
+    padding:
+      16px 19px 16px 25px;
+
+    color: #050505;
+
+    background: #fff;
+
+    border-radius: 100px;
+
+    text-decoration: none;
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+    letter-spacing: 1.3px;
+
+    text-transform: uppercase;
+
+    transition:
+      transform 0.35s ease,
+      box-shadow 0.35s ease;
+
+    &:hover {
+      transform:
+        translateY(-4px);
+
+      box-shadow:
+        0 20px 60px
+        rgba(255, 255, 255, 0.15);
+
+      .home__cta-arrow {
+        transform:
+          rotate(45deg);
+      }
+    }
+  }
+
+
+  &__cta-arrow {
+    width: 29px;
+    height: 29px;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 50%;
+
+    background: #050505;
+
+    color: #fff;
+
+    transition:
+      transform 0.35s ease;
+  }
+
+
+  &__hint {
+    color:
+      rgba(255, 255, 255, 0.25);
+
+    font-size: 10px;
+
+    letter-spacing: 1px;
+  }
+
+
+  /* =====================================================
+     FLOATING SOCIAL ELEMENTS
+  ===================================================== */
+
+  &__floating {
+    position: absolute;
+
+    z-index: 12;
+
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+
+    padding:
+      11px 15px;
+
+    background:
+      rgba(8, 8, 8, 0.48);
+
+    border:
+      1px solid
+      rgba(255, 255, 255, 0.09);
+
+    backdrop-filter:
+      blur(14px);
+
+    border-radius: 11px;
+
+    box-shadow:
+      0 20px 70px
+      rgba(0, 0, 0, 0.35);
+
+    strong {
+      display: block;
+
+      font-size: 11px;
+    }
+
+    small {
+      display: block;
+
+      color:
+        rgba(255, 255, 255, 0.35);
+
+      font-size: 8px;
+    }
+
+
+    &--one {
+      left: 52%;
+      top: 38%;
+    }
+
+
+    &--two {
+      right: 8%;
+      bottom: 28%;
+
+      gap: 8px;
+    }
+
+
+    &--three {
+      right: 7%;
+      top: 18%;
+    }
+  }
+
+
+  .avatar {
+    width: 28px;
+    height: 28px;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 50%;
+
+    background: #fff;
+
+    color: #050505;
+
+    font-size: 10px;
+    font-weight: 800;
+  }
+
+
+  .pulse {
+    width: 7px;
+    height: 7px;
+
+    border-radius: 50%;
+
+    background: #fff;
+
+    box-shadow:
+      0 0 18px
+      rgba(255, 255, 255, 0.9);
+  }
+
+
+  /* =====================================================
+     BOTTOM
+  ===================================================== */
+
+  &__bottom {
+    position: absolute;
+
+    z-index: 20;
+
+    left: 7vw;
+    right: 7vw;
+
+    bottom: 28px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 45px;
+
+    > div {
+      display: flex;
+      align-items: center;
+
+      gap: 10px;
+
+      span {
+        color:
+          rgba(255, 255, 255, 0.22);
+
+        font-size: 9px;
+      }
+
+      p {
+        margin: 0;
+
+        color:
+          rgba(255, 255, 255, 0.38);
+
+        font-size: 10px;
+      }
+    }
+  }
+
+
+  &__scroll {
+    margin-left: auto;
+
+    width: 36px;
+    height: 36px;
+
+    display: grid;
+    place-items: center;
+
+    border:
+      1px solid
+      rgba(255, 255, 255, 0.12);
+
+    border-radius: 50%;
+
+    color: #fff !important;
+
+    font-size: 15px !important;
+  }
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 900px) {
+
+  .home {
+
+    &__world {
+      inset:
+        10% -35% -5% 10%;
+
+      opacity: 0.62;
+    }
+
+
+    &__nav {
+      padding:
+        20px;
+    }
+
+
+    &__nav-links {
+      display: none;
+    }
+
+
+    &__actions {
+      gap: 14px;
+    }
+
+
+    &__hero {
+      min-height:
+        calc(100svh - 70px);
+
+      padding:
+        30px 20px 100px;
+
+      align-items: flex-start;
+    }
+
+
+    &__content {
+      width: 100%;
+
+      padding-top: 35px;
+    }
+
+
+    h1 {
+      font-size:
+        clamp(65px, 18vw, 110px);
+    }
+
+
+    &__content > p {
+      max-width: 300px;
+
+      margin:
+        30px 0;
+    }
+
+
+    &__floating {
+
+      transform:
+        scale(0.78);
+
+      &--one {
+        left: 18%;
+        top: 43%;
+      }
+
+      &--two {
+        right: 5%;
+        bottom: 27%;
+      }
+
+      &--three {
+        right: 4%;
+        top: 19%;
+      }
+    }
+
+
+    &__bottom {
+
+      left: 20px;
+      right: 20px;
+
+      bottom: 18px;
+
+      gap: 15px;
+
+      > div:not(:last-child) {
+        display: none;
+      }
+    }
+  }
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .home {
+
+    &__signup,
+    &__cta,
+    &__cta-arrow {
+      transition: none;
+    }
+  }
+}
