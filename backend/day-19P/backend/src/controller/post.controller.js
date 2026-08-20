@@ -146,9 +146,22 @@ async function likePostController(req, res) {
   });
 }
 
+/**
+ * Fetching all post
+ */
+async function getAllPostController(req, res) {
+  const posts = await postModel.find({});
+
+  res.status(200).json({
+    message: "All post fetched successfully",
+    posts,
+  });
+}
+
 module.exports = {
   createPostController,
   fetchPostController,
   getPostDetailsController,
   likePostController,
+  getAllPostController,
 };

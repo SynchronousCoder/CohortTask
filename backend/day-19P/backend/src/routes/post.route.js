@@ -24,8 +24,14 @@ belongs to the user that the request come from
 postRouter.get("/details/:postId", identifyUser,controller.getPostDetailsController);
 
 /**
- * GER /api/posts/like/postId
+ * GET /api/posts/like/postId
  */
 postRouter.get("/like/:postId", identifyUser, controller.likePostController)
+
+/**
+ * GET /api/posts/all [protected]
+ * user can only watch post if loggined
+ */
+postRouter.get("/all", identifyUser, controller.getAllPostController)
 
 module.exports = postRouter;
