@@ -2,7 +2,7 @@ import { Route, Routes } from "react-router-dom"
 import Login from "./Features/auth/pages/Login"
 import Register from "./Features/auth/pages/Register"
 import Hero from "./Features/hero/Hero"
-import Home from "./Features/auth/pages/Home"
+import Home from "./Features/post/pages/Home"
 
 
 function App() {

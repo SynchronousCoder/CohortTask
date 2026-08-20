@@ -1,0 +1,1298 @@
+/* =========================================================
+   NØVA — SOCIAL FEED
+   DARK / EDITORIAL / CINEMATIC
+========================================================= */
+
+.posts {
+  position: relative;
+
+  width: 100%;
+  min-height: 100svh;
+
+  overflow-x: hidden;
+
+  background:
+    radial-gradient(
+      ellipse 65% 45% at 50% -5%,
+      rgba(255, 255, 255, 0.055),
+      transparent 65%
+    ),
+    radial-gradient(
+      ellipse 50% 70% at 100% 45%,
+      rgba(255, 255, 255, 0.018),
+      transparent 70%
+    ),
+    radial-gradient(
+      ellipse 45% 60% at 0% 85%,
+      rgba(255, 255, 255, 0.018),
+      transparent 70%
+    ),
+    #050505;
+
+  color: #f5f5f5;
+
+  font-family:
+    Arial,
+    Helvetica,
+    sans-serif;
+
+  isolation: isolate;
+
+
+  /* =====================================================
+     ATMOSPHERIC LIGHT
+  ===================================================== */
+
+  &::before {
+    content: "";
+
+    position: fixed;
+
+    width: 700px;
+    height: 700px;
+
+    top: -300px;
+    left: 50%;
+
+    transform:
+      translateX(-50%);
+
+    border-radius: 50%;
+
+    background:
+      radial-gradient(
+        circle,
+        rgba(255, 255, 255, 0.045),
+        transparent 68%
+      );
+
+    filter: blur(70px);
+
+    pointer-events: none;
+
+    z-index: -2;
+
+    animation:
+      ambientMove 12s ease-in-out infinite alternate;
+  }
+
+
+  /* =====================================================
+     NOISE
+  ===================================================== */
+
+  &::after {
+    content: "";
+
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 20;
+
+    pointer-events: none;
+
+    opacity: 0.045;
+
+    background-image:
+      url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.8'/%3E%3C/svg%3E");
+  }
+}
+
+
+/* =========================================================
+   MAIN FEED
+========================================================= */
+
+.posts__main {
+  position: relative;
+
+  z-index: 2;
+
+  width: min(700px, 92%);
+
+  margin: 0 auto;
+
+  padding:
+    45px 0 120px;
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.posts__header {
+  position: relative;
+
+  margin-bottom: 65px;
+
+  padding-bottom: 18px;
+}
+
+
+.posts__header-top {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  margin-bottom: 18px;
+}
+
+
+.posts__eyebrow {
+  color:
+    rgba(255, 255, 255, 0.34);
+
+  font-size: 8px;
+
+  font-weight: 700;
+
+  letter-spacing: 3px;
+}
+
+
+.posts__status {
+  position: relative;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 7px;
+
+  color:
+    rgba(255, 255, 255, 0.32);
+
+  font-size: 8px;
+
+  letter-spacing: 2px;
+
+
+  &::before {
+    content: "";
+
+    width: 5px;
+    height: 5px;
+
+    border-radius: 50%;
+
+    background: #fff;
+
+    box-shadow:
+      0 0 12px
+      rgba(255, 255, 255, 0.7);
+
+    animation:
+      livePulse 2s ease-in-out infinite;
+  }
+}
+
+
+.posts__title {
+  margin: 0;
+
+  color: #f5f5f5;
+
+  font-size:
+    clamp(55px, 7vw, 88px);
+
+  line-height: 0.85;
+
+  font-weight: 800;
+
+  letter-spacing: -0.075em;
+
+  text-transform: uppercase;
+
+
+  span {
+    color:
+      rgba(255, 255, 255, 0.32);
+  }
+}
+
+
+.posts__header-line {
+  position: absolute;
+
+  left: 0;
+  right: 0;
+
+  bottom: 0;
+
+  height: 1px;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.18),
+      rgba(255, 255, 255, 0.05),
+      transparent
+    );
+}
+
+
+/* =========================================================
+   FEED
+========================================================= */
+
+.posts__feed {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 95px;
+}
+
+
+/* =========================================================
+   POST
+========================================================= */
+
+.posts__item {
+  position: relative;
+
+  width: 100%;
+
+  animation:
+    postReveal 0.8s
+    cubic-bezier(0.2, 0.8, 0.2, 1)
+    both;
+
+
+  /*
+    Each post gets a slightly different
+    reveal delay without React logic.
+  */
+
+  &:nth-child(2) {
+    animation-delay: 0.08s;
+  }
+
+  &:nth-child(3) {
+    animation-delay: 0.16s;
+  }
+
+  &:nth-child(4) {
+    animation-delay: 0.24s;
+  }
+
+  &:nth-child(5) {
+    animation-delay: 0.32s;
+  }
+
+
+  /*
+    Atmospheric glow behind every post
+  */
+
+  &::before {
+    content: "";
+
+    position: absolute;
+
+    width: 80%;
+
+    height: 50%;
+
+    left: 10%;
+
+    bottom: 8%;
+
+    background:
+      radial-gradient(
+        ellipse,
+        rgba(255, 255, 255, 0.045),
+        transparent 70%
+      );
+
+    filter: blur(60px);
+
+    opacity: 0;
+
+    z-index: -1;
+
+    transition:
+      opacity 0.8s ease;
+  }
+
+
+  &:hover::before {
+    opacity: 1;
+  }
+}
+
+
+/* =========================================================
+   USER INFORMATION
+========================================================= */
+
+.posts__top {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  margin-bottom: 18px;
+}
+
+
+.posts__identity {
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+}
+
+
+.posts__avatar {
+  position: relative;
+
+  width: 38px;
+  height: 38px;
+
+  display: grid;
+
+  place-items: center;
+
+  border-radius: 50%;
+
+  background:
+    linear-gradient(
+      145deg,
+      #ffffff 0%,
+      #d2d2d2 35%,
+      #555 100%
+    );
+
+  color: #050505;
+
+  font-size: 11px;
+
+  font-weight: 900;
+
+  box-shadow:
+    0 0 0 1px
+      rgba(255, 255, 255, 0.16),
+    0 5px 25px
+      rgba(255, 255, 255, 0.06);
+
+  transition:
+    transform 0.4s ease,
+    box-shadow 0.4s ease;
+
+
+  &::after {
+    content: "";
+
+    position: absolute;
+
+    inset: -4px;
+
+    border:
+      1px solid
+      rgba(255, 255, 255, 0.08);
+
+    border-radius: 50%;
+
+    opacity: 0;
+
+    transform: scale(0.8);
+
+    transition:
+      opacity 0.4s ease,
+      transform 0.4s ease;
+  }
+}
+
+
+.posts__item:hover {
+
+  .posts__avatar {
+    transform:
+      translateY(-2px);
+
+    box-shadow:
+      0 8px 30px
+      rgba(255, 255, 255, 0.1);
+  }
+
+  .posts__avatar::after {
+    opacity: 1;
+
+    transform: scale(1);
+  }
+}
+
+
+.posts__user {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 4px;
+}
+
+
+.posts__username {
+  color: #f5f5f5;
+
+  font-size: 12px;
+
+  font-weight: 600;
+
+  letter-spacing: 0.1px;
+}
+
+
+.posts__meta {
+  color:
+    rgba(255, 255, 255, 0.28);
+
+  font-size: 8px;
+
+  letter-spacing: 1.3px;
+}
+
+
+/* =========================================================
+   MORE BUTTON
+========================================================= */
+
+.posts__more {
+  width: 35px;
+  height: 35px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 3px;
+
+  border: 0;
+
+  background: transparent;
+
+  cursor: pointer;
+
+  opacity: 0.35;
+
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease;
+
+
+  span {
+    width: 3px;
+    height: 3px;
+
+    border-radius: 50%;
+
+    background: #fff;
+
+    transition:
+      transform 0.3s ease;
+  }
+
+
+  &:hover {
+    opacity: 1;
+
+    transform:
+      rotate(90deg);
+  }
+}
+
+
+/* =========================================================
+   CAPTION
+========================================================= */
+
+.posts__caption-wrap {
+  position: relative;
+
+  padding:
+    0 0 20px;
+}
+
+
+.posts__caption {
+  position: relative;
+
+  margin: 0;
+
+  max-width: 600px;
+
+  color:
+    rgba(255, 255, 255, 0.88);
+
+  font-size:
+    clamp(20px, 2.2vw, 29px);
+
+  line-height: 1.16;
+
+  font-weight: 500;
+
+  letter-spacing: -0.9px;
+
+  transition:
+    color 0.4s ease,
+    transform 0.4s ease;
+}
+
+
+.posts__item:hover {
+
+  .posts__caption {
+    color: #fff;
+
+    transform:
+      translateX(3px);
+  }
+}
+
+
+/* =========================================================
+   MEDIA
+========================================================= */
+
+.posts__media {
+  position: relative;
+
+  width: 100%;
+
+  overflow: hidden;
+
+  background: #080808;
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.11);
+
+  border-radius: 3px;
+
+  box-shadow:
+    0 35px 100px
+      rgba(0, 0, 0, 0.48),
+    0 0 0 1px
+      rgba(255, 255, 255, 0.015);
+
+  isolation: isolate;
+
+
+  /*
+    Thin cinematic frame
+  */
+
+  &::before {
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    z-index: 2;
+
+    pointer-events: none;
+
+    border:
+      1px solid
+      rgba(255, 255, 255, 0.04);
+
+    opacity: 0.7;
+  }
+}
+
+
+.posts__image {
+  position: relative;
+
+  z-index: 1;
+
+  display: block;
+
+  width: 100%;
+
+  height: auto;
+
+  min-height: 430px;
+
+  max-height: 760px;
+
+  object-fit: cover;
+
+  background: #080808;
+
+  filter:
+    saturate(0.82)
+    contrast(1.03)
+    brightness(0.94);
+
+  transform:
+    scale(1.001);
+
+  transition:
+    transform 1.2s
+      cubic-bezier(0.16, 1, 0.3, 1),
+    filter 0.8s ease;
+}
+
+
+.posts__item:hover {
+
+  .posts__image {
+    transform:
+      scale(1.025);
+
+    filter:
+      saturate(0.92)
+      contrast(1.04)
+      brightness(1);
+  }
+}
+
+
+/* =========================================================
+   IMAGE LIGHT SWEEP
+========================================================= */
+
+.posts__media-shine {
+  position: absolute;
+
+  z-index: 3;
+
+  top: 0;
+  left: -120%;
+
+  width: 70%;
+  height: 100%;
+
+  pointer-events: none;
+
+  transform:
+    skewX(-20deg);
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.07),
+      transparent
+    );
+
+  transition:
+    left 1.2s
+    cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+
+.posts__item:hover {
+
+  .posts__media-shine {
+    left: 150%;
+  }
+}
+
+
+/* =========================================================
+   IMAGE INDEX
+========================================================= */
+
+.posts__media-index {
+  position: absolute;
+
+  z-index: 5;
+
+  right: 15px;
+  bottom: 14px;
+
+  padding:
+    7px 10px;
+
+  color:
+    rgba(255, 255, 255, 0.58);
+
+  background:
+    rgba(0, 0, 0, 0.32);
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.1);
+
+  backdrop-filter:
+    blur(14px);
+
+  font-size: 8px;
+
+  letter-spacing: 1.5px;
+}
+
+
+/* =========================================================
+   SOCIAL ACTIONS
+========================================================= */
+
+.posts__actions {
+  position: relative;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  padding:
+    14px 4px 12px;
+
+  border-bottom:
+    1px solid
+    rgba(255, 255, 255, 0.075);
+}
+
+
+.posts__action {
+  position: relative;
+
+  width: 44px;
+  height: 42px;
+
+  display: grid;
+
+  place-items: center;
+
+  border: none;
+
+  outline: none;
+
+  background: transparent;
+
+  cursor: pointer;
+
+  color:
+    rgba(255, 255, 255, 0.55);
+
+  transition:
+    transform 0.35s
+      cubic-bezier(0.2, 0.8, 0.2, 1),
+    color 0.3s ease;
+
+
+  &::before {
+    display: block;
+
+    font-size: 21px;
+
+    line-height: 1;
+
+    font-weight: 300;
+
+    transition:
+      transform 0.35s ease,
+      filter 0.35s ease;
+  }
+
+
+  &::after {
+    content: "";
+
+    position: absolute;
+
+    width: 4px;
+    height: 4px;
+
+    bottom: 3px;
+
+    border-radius: 50%;
+
+    background: #fff;
+
+    opacity: 0;
+
+    transform:
+      scale(0);
+
+    transition:
+      opacity 0.3s ease,
+      transform 0.3s ease;
+  }
+
+
+  &:hover {
+    color: #fff;
+
+    transform:
+      translateY(-2px);
+
+    &::before {
+      transform:
+        scale(1.12);
+
+      filter:
+        drop-shadow(
+          0 0 8px
+          rgba(255, 255, 255, 0.3)
+        );
+    }
+
+    &::after {
+      opacity: 0.5;
+
+      transform:
+        scale(1);
+    }
+  }
+
+
+  &:active {
+    transform:
+      scale(0.88);
+  }
+
+
+  &:focus-visible {
+    outline:
+      1px solid
+      rgba(255, 255, 255, 0.4);
+
+    outline-offset: 3px;
+  }
+}
+
+
+/* =========================================================
+   HEART
+========================================================= */
+
+.posts__action--like {
+
+  &::before {
+    content: "♡";
+  }
+
+
+  &:hover::before {
+    content: "♥";
+
+    animation:
+      heartBeat 0.5s ease;
+  }
+}
+
+
+/* =========================================================
+   COMMENT
+========================================================= */
+
+.posts__action--comment {
+
+  &::before {
+    content: "◯";
+
+    font-size: 19px;
+
+    position: relative;
+  }
+
+
+  /*
+    Tiny speech-tail illusion
+  */
+
+  &:hover::before {
+    transform:
+      scale(1.12)
+      rotate(-8deg);
+  }
+}
+
+
+/* =========================================================
+   SHARE
+========================================================= */
+
+.posts__action--share {
+
+  &::before {
+    content: "↗";
+
+    font-size: 23px;
+
+    font-weight: 300;
+  }
+
+
+  &:hover::before {
+    transform:
+      translate(2px, -3px)
+      scale(1.1);
+  }
+}
+
+
+/* =========================================================
+   SAVE
+========================================================= */
+
+.posts__action--save {
+
+  &::before {
+    content: "♧";
+
+    font-size: 24px;
+
+    transform:
+      rotate(180deg);
+  }
+
+
+  &:hover::before {
+    transform:
+      rotate(180deg)
+      scale(1.12);
+  }
+}
+
+
+/* =========================================================
+   POST FOOTER
+========================================================= */
+
+.posts__bottom {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  padding-top: 11px;
+
+
+  span {
+    color:
+      rgba(255, 255, 255, 0.2);
+
+    font-size: 8px;
+
+    letter-spacing: 1.6px;
+  }
+
+
+  span:last-child {
+    opacity: 0.65;
+  }
+}
+
+
+/* =========================================================
+   LOADING
+========================================================= */
+
+.posts__loading {
+  min-height: 450px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 15px;
+
+  color:
+    rgba(255, 255, 255, 0.3);
+
+  font-size: 9px;
+
+  letter-spacing: 2px;
+
+  text-transform: uppercase;
+}
+
+
+.posts__loading-ring {
+  width: 34px;
+  height: 34px;
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.12);
+
+  border-top-color:
+    rgba(255, 255, 255, 0.8);
+
+  border-radius: 50%;
+
+  animation:
+    loadingRotate 1s
+    linear infinite;
+}
+
+
+/* =========================================================
+   ANIMATIONS
+========================================================= */
+
+@keyframes ambientMove {
+
+  0% {
+    transform:
+      translateX(-50%)
+      translateY(0)
+      scale(1);
+  }
+
+  100% {
+    transform:
+      translateX(-50%)
+      translateY(80px)
+      scale(1.12);
+  }
+}
+
+
+@keyframes livePulse {
+
+  0%,
+  100% {
+    opacity: 0.3;
+
+    transform:
+      scale(0.8);
+  }
+
+  50% {
+    opacity: 1;
+
+    transform:
+      scale(1.15);
+  }
+}
+
+
+@keyframes postReveal {
+
+  from {
+    opacity: 0;
+
+    transform:
+      translateY(35px);
+  }
+
+  to {
+    opacity: 1;
+
+    transform:
+      translateY(0);
+  }
+}
+
+
+@keyframes heartBeat {
+
+  0% {
+    transform:
+      scale(1);
+  }
+
+  40% {
+    transform:
+      scale(1.3);
+  }
+
+  70% {
+    transform:
+      scale(0.92);
+  }
+
+  100% {
+    transform:
+      scale(1);
+  }
+}
+
+
+@keyframes loadingRotate {
+
+  to {
+    transform:
+      rotate(360deg);
+  }
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 800px) {
+
+  .posts__main {
+    width: min(650px, 90%);
+
+    padding:
+      40px 0 90px;
+  }
+
+
+  .posts__feed {
+    gap: 75px;
+  }
+
+
+  .posts__image {
+    min-height: 340px;
+  }
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 520px) {
+
+  .posts__main {
+    width: 100%;
+
+    padding:
+      25px 0 70px;
+  }
+
+
+  .posts__header {
+    margin:
+      0 18px 42px;
+  }
+
+
+  .posts__title {
+    font-size: 58px;
+  }
+
+
+  .posts__feed {
+    gap: 65px;
+  }
+
+
+  .posts__top {
+    padding:
+      0 18px;
+
+    margin-bottom: 15px;
+  }
+
+
+  .posts__caption-wrap {
+    padding:
+      0 18px 16px;
+  }
+
+
+  .posts__caption {
+    font-size: 19px;
+
+    letter-spacing: -0.5px;
+  }
+
+
+  .posts__media {
+    border-left: none;
+    border-right: none;
+
+    border-radius: 0;
+  }
+
+
+  .posts__image {
+    min-height: 300px;
+
+    max-height: 650px;
+  }
+
+
+  .posts__actions {
+    padding:
+      12px 14px 10px;
+  }
+
+
+  .posts__action {
+    width: 42px;
+    height: 40px;
+  }
+
+
+  .posts__bottom {
+    padding:
+      10px 18px 0;
+  }
+
+
+  .posts__ambient {
+    &--one {
+      width: 400px;
+      height: 400px;
+    }
+
+    &--two {
+      width: 250px;
+      height: 250px;
+    }
+  }
+}
+
+
+/* =========================================================
+   VERY SMALL DEVICES
+========================================================= */
+
+@media (max-width: 360px) {
+
+  .posts__title {
+    font-size: 50px;
+  }
+
+
+  .posts__caption {
+    font-size: 18px;
+  }
+
+
+  .posts__action {
+    width: 38px;
+  }
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .posts::before,
+  .posts__status::before,
+  .posts__item,
+  .posts__loading-ring,
+  .posts__action--like::before {
+    animation: none;
+  }
+
+
+  .posts__image,
+  .posts__action,
+  .posts__caption,
+  .posts__avatar {
+    transition: none;
+  }
+}
