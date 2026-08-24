@@ -4,12 +4,12 @@ import "../styles/style.scss";
 import Header from "../components/header";
 import Post from "../components/Post";
 
-const Home = () => {
-  const { handleAllPost, loading, posts } = postAuth();
+const Feed = () => {
+  const { handleAllPost, loading, posts, feeds } = postAuth();
 
   useEffect(() => {
     handleAllPost();
-    console.log(posts);
+    // console.log(feeds);
   }, []);
 
   return (
@@ -25,8 +25,9 @@ const Home = () => {
             </div>
           )}
 
-          {posts &&
-            posts.map((post, idx) => {
+          {feeds &&
+            feeds.map((post, idx) => {
+              console.log(post)
               return (
                 <Post post={post} user={post.user} idx={idx} key={idx} />
               );
@@ -37,4 +38,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Feed;

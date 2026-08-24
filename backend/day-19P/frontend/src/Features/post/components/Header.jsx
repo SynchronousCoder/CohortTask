@@ -1,9 +1,13 @@
-import React from 'react'
+import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const Header = () => {
+  const navigate = useNavigate()
+
   return (
-    <div>
-              <header className="posts__header">
+    <>
+      <div>
+        <header className="posts__header">
           <div className="posts__header-top">
             <span className="posts__eyebrow">NØVA / FEED</span>
 
@@ -16,8 +20,13 @@ const Header = () => {
 
           <div className="posts__header-line" />
         </header>
-    </div>
-  )
-}
 
-export default Header
+        <button onClick={() => {
+          navigate("/create-post")
+        }}> Create Post</button>
+      </div>
+    </>
+  );
+};
+
+export default Header;

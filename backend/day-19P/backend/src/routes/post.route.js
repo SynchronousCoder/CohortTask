@@ -29,9 +29,9 @@ postRouter.get("/details/:postId", identifyUser,controller.getPostDetailsControl
 postRouter.get("/like/:postId", identifyUser, controller.likePostController)
 
 /**
- * GET /api/posts/all [protected]
+ * GET /api/posts/feed [protected]
  * user can only watch post if loggined
  */
-postRouter.get("/all", identifyUser, controller.getAllPostController)
+postRouter.get("/feed", identifyUser, controller.getAllPostController)
 
 module.exports = postRouter;

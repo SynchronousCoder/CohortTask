@@ -15,7 +15,7 @@ const imagekit = new ImageKit({
  * Creating the post
  */
 async function createPostController(req, res) {
-  console.log(req.body.caption, req.file, token, req.user.id);
+  console.log(req.body.caption, req.file, req.user.id);
 
   const img = await imagekit.files.upload({
     file: await toFile(Buffer.from(req.file.buffer), "file"),
@@ -151,7 +151,7 @@ async function likePostController(req, res) {
  */
 async function getAllPostController(req, res) {
   const posts = await Promise.all(
-    (await postModel.find({}).populate("user").lean()).map(async (post) => {
+    (await postModel.find({}).sort({_id: -1}).populate("user").lean()).map(async (post) => {
       const isLiked = await likeModel.findOne({
         post: post._id,
         user: req.user.username,
