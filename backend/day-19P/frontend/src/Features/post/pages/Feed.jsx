@@ -5,7 +5,7 @@ import Header from "../components/header";
 import Post from "../components/Post";
 
 const Feed = () => {
-  const { handleAllPost, loading, posts, feeds } = postAuth();
+  const { handleAllPost, handleLike, handleUnLike, loading, posts, feeds } = postAuth();
 
   useEffect(() => {
     handleAllPost();
@@ -27,9 +27,9 @@ const Feed = () => {
 
           {feeds &&
             feeds.map((post, idx) => {
-              console.log(post)
+              // console.log(post)
               return (
-                <Post post={post} user={post.user} idx={idx} key={idx} />
+                <Post post={post} user={post.user} idx={idx} handleLike={handleLike} handleUnLike={handleUnLike} key={idx}/>
               );
             })}
         </section>

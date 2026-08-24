@@ -1,8 +1,6 @@
 import React from "react";
 
-const Post = ({ post, user, idx }) => {
-  // console.log(post, idx);
-
+const Post = ({ post, user, idx, handleLike, handleUnLike }) => {
   return (
     <div key={idx}>
       <article className="posts__item" key={idx}>
@@ -51,27 +49,32 @@ const Post = ({ post, user, idx }) => {
           </span>
         </div>
 
+        {/* ACTIONS */}
+
         <div className="posts__actions">
           <button
-            className={`posts__action posts__action--like ${post.isLiked ? "liked" : ""}`}
+            onClick={() => { post.isLiked ? handleUnLike(post._id) : handleLike(post._id) }}
+            className={`posts__action posts__action--like ${
+              post.isLiked ? "liked ri-heart-fill" : "ri-heart-line"
+            }`}
             aria-label="Like"
             type="button"
           />
 
           <button
-            className="posts__action posts__action--comment"
+            className="posts__action posts__action--comment ri-chat-3-line"
             aria-label="Comment"
             type="button"
           />
 
           <button
-            className="posts__action posts__action--share"
+            className="posts__action posts__action--share ri-send-plane-line"
             aria-label="Share"
             type="button"
           />
 
           <button
-            className="posts__action posts__action--save"
+            className="posts__action posts__action--save ri-bookmark-line"
             aria-label="Save"
             type="button"
           />

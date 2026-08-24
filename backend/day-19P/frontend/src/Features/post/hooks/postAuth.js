@@ -1,6 +1,6 @@
 import { useContext, useEffect } from "react";
 import { PostContext } from "../post.context";
-import { getAllPost, createPost } from "../services/post.api";
+import { getAllPost, createPost, likePost, unLikePost } from "../services/post.api";
 const postAuth = () => {
   const context = useContext(PostContext);
   const { feeds, setFeeds, posts, setPosts, loading, setLoading } = context;
@@ -32,11 +32,23 @@ const postAuth = () => {
     }
   }
 
+  async function handleLike(postId) {
+    await likePost(postId)
+    await handleAllPost()
+    console.log("post liked", postId)
+  }
+
+  async function handleUnLike(postId) {
+    await unLikePost(postId)
+    await handleAllPost()
+    console.log("post unliked", postId)
+  }
+
   useEffect(() => {
     handleAllPost();
   }, []);
   
-  return { handleAllPost, handleCreatePost, loading, posts, feeds };
+  return { handleAllPost, handleCreatePost, handleLike, handleUnLike, loading, posts, feeds };
 };
 
 export default postAuth;

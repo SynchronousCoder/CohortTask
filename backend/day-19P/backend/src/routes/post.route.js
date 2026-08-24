@@ -29,6 +29,11 @@ postRouter.get("/details/:postId", identifyUser,controller.getPostDetailsControl
 postRouter.get("/like/:postId", identifyUser, controller.likePostController)
 
 /**
+ * GET /api/posts/unlike/postId
+ */
+postRouter.get("/unlike/:postId", identifyUser, controller.unLikePostController)
+
+/**
  * GET /api/posts/feed [protected]
  * user can only watch post if loggined
  */
