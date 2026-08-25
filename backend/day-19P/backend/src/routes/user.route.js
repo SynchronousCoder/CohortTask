@@ -6,8 +6,21 @@ const followRouter = express.Router()
 
 /**
  * GET api/users/follower
+ * This used to check no.of follower Exist
  */
 followRouter.get("/follower", identifyUser, controller.checkFollowerController)
+
+/**
+ * GET api/users/follower
+ * This used to check no.of following by loggined user
+ */
+followRouter.get("/following", identifyUser, controller.checkFollowingController)
+
+/**
+ * GET api/users/follower
+ * This used to check no.of following by loggined user
+ */
+followRouter.get("/unfollowing", identifyUser, controller.checkUnFollowingController)
 
 /**
  * GET /api/users/follow/request

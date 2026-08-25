@@ -8,7 +8,7 @@ export const useAuth = () => {
   const context = useContext(AuthContext);
   const { user, setUser, loading, setLoading } = context;
 
-  async function handleRegister() {
+  async function handleRegister(username, email, password) {
     setLoading(true);
 
     try {

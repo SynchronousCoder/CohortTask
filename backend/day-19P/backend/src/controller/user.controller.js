@@ -70,6 +70,7 @@ async function checkFollowerController(req, res) {
 
     const followers = await followModel.find({
         followee: followeeUsername,
+        status: "accepted"
     })
 
     if(!followers){
@@ -82,6 +83,82 @@ async function checkFollowerController(req, res) {
         message: "Follower list fetched successfuly",
         followers
     })
+}
+
+/**
+ * CHECK THE FOLLOWING COUNT
+ */
+async function checkFollowingController(req, res) {
+    const followerUsername = req.user.username
+
+    const following = await followModel.find({
+        follower: followerUsername,
+    })
+
+    if(!following){
+        return res.status(404).json({
+            message: "No following exist till now, Follow someone"
+        })
+    }
+
+    return res.status(200).json({
+        message: "Follower list fetched successfuly",
+        following
+    })
+}
+
+/**
+ * 
+ */
+async function checkUnFollowingController(req, res) {
+  const username = req.user.username
+  
+  //people i follow
+  const following = await followModel.find({
+    follower: username
+  })
+
+  //people following me
+  const followers = await followModel.find({
+    followee: username
+  })
+  
+  // Extract usernames
+  const followingUsername = following.map(
+    (follow) => follow.followee
+  )
+
+  const followerUsername = followers.map(
+    (followers) => followers.follower
+  )
+  
+  const connectedUsers = [
+    ...new Set([
+      ...followingUsername,
+      ...followerUsername,
+    ])
+  ]
+
+    console.log("CURRENT USER:", username);
+    console.log("FOLLOWING:", followingUsername);
+    console.log("FOLLOWERS:", followerUsername);
+    console.log("CONNECTED:", connectedUsers);
+
+    // People with whom there is no follow relationship
+    const unfollowing = await userModel.find({
+        username: {
+            $nin: [
+                username,
+                ...connectedUsers
+            ]
+        }
+    });
+
+
+  return res.status(200).json({
+    message: "Data fetched Successfully",
+    unfollowing
+  })
 }
 
 /**
@@ -190,6 +267,8 @@ module.exports = {
   followController,
   unFollowController,
   checkFollowerController,
+  checkFollowingController,
+  checkUnFollowingController,
   checkFollowRequest,
   acceptFollowRequest,
   rejectingFollowRequest
