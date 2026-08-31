@@ -5,9 +5,7 @@ const redis = require("../config/cache")
 async function identifyUser(req, res, next) {
   const token = req.cookies.token;
 
-  const isTokenBlackListed = await blackListModel.findOne({
-    token
-  })
+  const isTokenBlackListed = await redis.get(token)
 
   if(isTokenBlackListed){
     return res.status(401).json({

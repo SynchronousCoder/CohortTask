@@ -1,7 +1,7 @@
 const userModel = require("../models/auth.model");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const blackListModel = require("../models/blacklist.model");
+const redis = require("../config/cache");
 
 /**
  *
@@ -79,49 +79,52 @@ async function loginController(req, res) {
     { expiresIn: "3d" },
   );
 
-  res.cookie("token", token)
+  res.cookie("token", token);
 
   res.status(200).json({
     message: "User Loggined Successfully",
-    user:{
-        id: user._id,
-        username: user.username,
-        email: user.email
+    user: {
+      id: user._id,
+      username: user.username,
+      email: user.email,
     },
-    token
-  })
+    token,
+  });
 }
 
 /**
- * 
+ *
  */
 async function logoutController(req, res) {
-  const token = req.cookies.token
+  const token = req.cookies.token;
 
-  const blackListToken = await blackListModel.create({
-    token: token
-  })
+  const blackListToken = await redis.set(
+    token,
+    Date.now().toString(),
+    "EX",
+    60 * 60,
+  );
 
-  res.clearCookie("token")
+  res.clearCookie("token");
 
   res.status(200).json({
     message: "Logout Successfully",
-    blackListToken
-  })
+    blackListToken,
+  });
 }
 
 /**
- * 
+ *
  */
 async function homeController(req, res) {
   res.status(200).json({
-    message: "ACEESS SUCCESSFUL, NO TOKEN IS BLACKLISTED"
-  })
+    message: "ACEESS SUCCESSFUL, NO TOKEN IS BLACKLISTED",
+  });
 }
 
 module.exports = {
   registerController,
   loginController,
   logoutController,
-  homeController
+  homeController,
 };

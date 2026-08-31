@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { detect, init } from "../utils/utils";
-
+import "../styles/style.scss"
 export default function FaceExpression({ onClick = () => {} }) {
   const videoRef = useRef(null);
   const landmarkerRef = useRef(null);
@@ -29,7 +29,7 @@ export default function FaceExpression({ onClick = () => {} }) {
   }
 
   return (
-    <div style={{ textAlign: "center" }}>
+    <div className="face-expression">
       <video
         ref={videoRef}
         style={{ width: "400px", borderRadius: "12px" }}
