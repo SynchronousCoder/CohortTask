@@ -23,6 +23,6 @@ authRouter.get("/logout", identifyUser, controller.logoutController)
 /**
  * 
  */
-authRouter.get("/", identifyUser, controller.homeController)
+authRouter.get("/get-me", identifyUser, controller.getMeController)
 
 module.exports = authRouter;

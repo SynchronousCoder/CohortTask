@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { detect, init } from "../utils/utils";
-import "../styles/style.scss"
+import "../styles/style.scss";
+
 export default function FaceExpression({ onClick = () => {} }) {
   const videoRef = useRef(null);
   const landmarkerRef = useRef(null);
@@ -9,34 +10,64 @@ export default function FaceExpression({ onClick = () => {} }) {
   const [expression, setExpression] = useState("Detecting...");
 
   useEffect(() => {
-    init({ landmarkerRef, videoRef, streamRef });
+    let mounted = true;
+
+    async function start() {
+      if (!mounted) return;
+
+      await init({
+        landmarkerRef,
+        videoRef,
+        streamRef,
+      });
+    }
+
+    start();
 
     return () => {
+      mounted = false;
+
       if (landmarkerRef.current) {
         landmarkerRef.current.close();
+        landmarkerRef.current = null;
       }
 
-      if (videoRef.current?.srcObject) {
-        videoRef.current.srcObject.getTracks().forEach((track) => track.stop());
+      if (streamRef.current) {
+        streamRef.current
+          .getTracks()
+          .forEach((track) => track.stop());
+
+        streamRef.current = null;
       }
     };
   }, []);
 
-  async function handleClick() {
-    const expression = detect({ landmarkerRef, videoRef, setExpression });
-    console.log(expression);
-    onClick(expression);
+  function handleClick() {
+    detect({
+      landmarkerRef,
+      videoRef,
+      setExpression,
+    });
   }
 
   return (
     <div className="face-expression">
       <video
         ref={videoRef}
-        style={{ width: "400px", borderRadius: "12px" }}
+        autoPlay
+        muted
         playsInline
+        style={{
+          width: "400px",
+          borderRadius: "12px",
+        }}
       />
+
       <h2>{expression}</h2>
-      <button onClick={handleClick}>Detect expression</button>
+
+      <button onClick={handleClick}>
+        Detect expression
+      </button>
     </div>
   );
 }

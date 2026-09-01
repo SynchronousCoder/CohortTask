@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 const redis = require("../config/cache");
 
 /**
- *
+ * Used in registration process of user
  */
 async function registerController(req, res) {
   const { username, email, password } = req.body;
@@ -49,12 +49,12 @@ async function registerController(req, res) {
 }
 
 /**
- *
+ * Used in login process of user
  */
 async function loginController(req, res) {
   const { username, email, password } = req.body;
 
-  const user = await userModel.findOne({ $or: [{ username }, { email }] });
+  const user = await userModel.findOne({ $or: [{ username }, { email }] }).select("+password")
 
   if (!user) {
     return res.status(404).json({
@@ -93,7 +93,7 @@ async function loginController(req, res) {
 }
 
 /**
- *
+ * Used in logout process of user
  */
 async function logoutController(req, res) {
   const token = req.cookies.token;
@@ -116,15 +116,18 @@ async function logoutController(req, res) {
 /**
  *
  */
-async function homeController(req, res) {
-  res.status(200).json({
-    message: "ACEESS SUCCESSFUL, NO TOKEN IS BLACKLISTED",
-  });
+async function getMeController(req, res) {
+  const user = await userModel.findById(req.user.id)
+
+   res.status(200).json({
+    message: "User fetched successfully",
+    user
+   })
 }
 
 module.exports = {
   registerController,
   loginController,
   logoutController,
-  homeController,
+  getMeController,
 };

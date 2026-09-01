@@ -12,7 +12,7 @@ const Protected = ({ children }) => {
   if (!user) {
     navigate("/login");
   }
-    return children;
+  return children;
 };
 
 export default Protected;
