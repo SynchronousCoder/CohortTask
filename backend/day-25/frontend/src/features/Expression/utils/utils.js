@@ -1,13 +1,6 @@
-import {
-  FaceLandmarker,
-  FilesetResolver,
-} from "@mediapipe/tasks-vision";
+import { FaceLandmarker, FilesetResolver } from "@mediapipe/tasks-vision";
 
-export const init = async ({
-  landmarkerRef,
-  videoRef,
-  streamRef,
-}) => {
+export const init = async ({ landmarkerRef, videoRef, streamRef }) => {
   try {
     if (!videoRef.current) {
       console.error("Video element is not available");
@@ -15,33 +8,26 @@ export const init = async ({
     }
 
     const vision = await FilesetResolver.forVisionTasks(
-      "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@latest/wasm"
+      "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@latest/wasm",
     );
 
-    landmarkerRef.current =
-      await FaceLandmarker.createFromOptions(
-        vision,
-        {
-          baseOptions: {
-            modelAssetPath:
-              "https://storage.googleapis.com/mediapipe-models/face_landmarker/face_landmarker/float16/latest/face_landmarker.task",
-          },
+    landmarkerRef.current = await FaceLandmarker.createFromOptions(vision, {
+      baseOptions: {
+        modelAssetPath:
+          "https://storage.googleapis.com/mediapipe-models/face_landmarker/face_landmarker/float16/latest/face_landmarker.task",
+      },
 
-          outputFaceBlendshapes: true,
-          runningMode: "VIDEO",
-          numFaces: 1,
-        }
-      );
+      outputFaceBlendshapes: true,
+      runningMode: "VIDEO",
+      numFaces: 1,
+    });
 
-    streamRef.current =
-      await navigator.mediaDevices.getUserMedia({
-        video: true,
-      });
+    streamRef.current = await navigator.mediaDevices.getUserMedia({
+      video: true,
+    });
 
     if (!videoRef.current) {
-      streamRef.current
-        .getTracks()
-        .forEach((track) => track.stop());
+      streamRef.current.getTracks().forEach((track) => track.stop());
 
       return;
     }
@@ -68,11 +54,7 @@ export const init = async ({
   }
 };
 
-export function detect({
-  videoRef,
-  landmarkerRef,
-  setExpression,
-}) {
+export function detect({ videoRef, landmarkerRef, setExpression }) {
   if (!landmarkerRef.current || !videoRef.current) {
     return;
   }
@@ -83,22 +65,18 @@ export function detect({
     return;
   }
 
-  const results =
-    landmarkerRef.current.detectForVideo(
-      video,
-      performance.now()
-    );
+  const results = landmarkerRef.current.detectForVideo(
+    video,
+    performance.now(),
+  );
 
   if (results.faceBlendshapes?.length > 0) {
-    const blendshapes =
-      results.faceBlendshapes[0].categories;
+    const blendshapes = results.faceBlendshapes[0].categories;
 
     const getScore = (name) => {
       return (
-        blendshapes.find(
-          (blendshape) =>
-            blendshape.categoryName === name
-        )?.score || 0
+        blendshapes.find((blendshape) => blendshape.categoryName === name)
+          ?.score || 0
       );
     };
 
@@ -111,26 +89,18 @@ export function detect({
     const frownLeft = getScore("mouthFrownLeft");
     const frownRight = getScore("mouthFrownRight");
 
-    let currentExpression = "Neutral 😐";
+    let currentExpression = "neutral";
 
-    if (
-      smileLeft > 0.5 &&
-      smileRight > 0.5
-    ) {
-      currentExpression = "Happy 😄";
-    } else if (
-      jawOpen > 0.1 &&
-      browUp > 0.1
-    ) {
-      currentExpression = "Surprised 😲";
-    } else if (
-      frownLeft > 0.01 &&
-      frownRight > 0.01
-    ) {
-      currentExpression = "Sad 😢";
+    if (smileLeft > 0.5 && smileRight > 0.5) {
+      currentExpression = "happy";
+    } else if (jawOpen > 0.1 && browUp > 0.1) {
+      currentExpression = "surprised";
+    } else if (frownLeft > 0.01 && frownRight > 0.01) {
+      currentExpression = "sad";
     }
 
     setExpression(currentExpression);
+    return currentExpression;
   } else {
     setExpression("No face detected");
   }

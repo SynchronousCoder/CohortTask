@@ -33,9 +33,7 @@ export default function FaceExpression({ onClick = () => {} }) {
       }
 
       if (streamRef.current) {
-        streamRef.current
-          .getTracks()
-          .forEach((track) => track.stop());
+        streamRef.current.getTracks().forEach((track) => track.stop());
 
         streamRef.current = null;
       }
@@ -43,11 +41,12 @@ export default function FaceExpression({ onClick = () => {} }) {
   }, []);
 
   function handleClick() {
-    detect({
+    const expression = detect({
       landmarkerRef,
       videoRef,
       setExpression,
     });
+    onClick(expression);
   }
 
   return (
@@ -65,9 +64,7 @@ export default function FaceExpression({ onClick = () => {} }) {
 
       <h2>{expression}</h2>
 
-      <button onClick={handleClick}>
-        Detect expression
-      </button>
+      <button onClick={handleClick}>Detect expression</button>
     </div>
   );
 }
