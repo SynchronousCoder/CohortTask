@@ -8,20 +8,22 @@ async function uploadSong(req, res) {
 
   const tags = id3.read(songBuffer);
 
-  //   console.log("=>",tags.image);
+  console.log("=>", tags.title);
 
   const [songFile, posterFile] = await Promise.all([
-    storageService.uploadFile({
+    storageService.uploadSong({
       buffer: songBuffer,
-      filename: tags.title + ".mp3",
+      fileName: tags.title + ".mp3",
       folder: "/moodify/songs",
     }),
-    storageService.uploadFile({
+    storageService.uploadSong({
       buffer: tags.image.imageBuffer,
-      filename: tags.title + ".jpg",
+      fileName: tags.title + ".jpg",
       folder: "/moodify/posters",
     }),
   ]);
+
+  console.log("=>", songFile, posterFile, songBuffer);
 
   const song = await songModel.create({
     url: songFile.url,
@@ -38,9 +40,10 @@ async function uploadSong(req, res) {
 
 async function getSong(req, res) {
   const { mood } = req.query;
-  const song = await songModel.findOne({
-    mood,
-  });
+  const [song] = await songModel.aggregate([
+    { $match: { mood } }, // mood ke basis pe filter
+    { $sample: { size: 1 } }, // ek random document pick karega
+  ]);
 
   res.status(200).json({
     message: "song fetched successfully.",

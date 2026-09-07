@@ -12,7 +12,7 @@ app.use(
     credentials: true,
   }),
 );
-
+app.use(express.static("./public"));
 /**
  * Routes Import
  */

@@ -39,6 +39,8 @@ async function uploadSong({buffer, fileName,folder=""}) {
     fileName: fileName,
     folder
   })
+
+  return song
 }
 
 module.exports = {
