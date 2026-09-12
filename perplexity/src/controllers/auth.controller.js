@@ -42,7 +42,7 @@ async function register(req, res) {
         `,
   });
 
-  res.status(201).json({
+  return res.status(201).json({
     message: "user created successfully",
     user: {
       id: user._id,
@@ -62,26 +62,65 @@ async function verifyEmail(req, res) {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     const user = await userModel.findOne({ email: decoded.email });
 
+    console.log("ok", user);
     if (!user) {
       return res.status(404).json({
         message: "User not found, pls verify your account",
       });
     }
 
-    user.verified = true;
-    await user.save();
+    /**
+     * Writing Logic for user can verify only once, if click on same screen will see something else
+     */
+    let html = null;
 
-    const html = `
-        <h1>Email Verified Successfully!</h1>
-        <p>Your email has been verified. You can now log in to your account.</p>
-        <a href="http://${process.env.URL}/login">Go to Login</a>
-    `;
+    if (user.verified) {
+      html = `
+    <div style="font-family: Arial, sans-serif; text-align: center; padding: 20px;">
+      <h1 style="color: #22c55e;">✅ Email Already Verified</h1>
+      <p style="font-size: 16px; color: #555;">
+        Your email address has already been successfully verified.
+      </p>
+      <p style="font-size: 16px; color: #555;">
+        You can now log in to your account and continue using our services.
+      </p>
+    </div>
+  `;
+    } else {
+      user.verified = true;
+      await user.save();
+      html = `
+  <div style="max-width:600px;margin:50px auto;padding:40px;background:#111827;border-radius:16px;font-family:Arial,sans-serif;text-align:center;border:1px solid #374151;">
+  
+     <h1 style="color:#22c55e;margin-bottom:20px;">
+         ✅ Email Verified Successfully!
+     </h1>
+  
+     <p style="font-size:16px;color:#d1d5db;line-height:1.6;margin:25px 0;">
+         Your email has been verified successfully. You can now access your account.
+     </p>
+  
+     <a
+         href="http://${process.env.URL}/api/auth/login"
+         style="
+             display:inline-block;
+             padding:14px 28px;
+             background:#3b82f6;
+             color:#ffffff;
+             text-decoration:none;
+             border-radius:8px;word-break:break-all;font-size:14px;">
+         http://${process.env.URL}/login
+     </p>
+  
+  </div>
+  `;
+    }
 
     return res.send(html);
   } catch (error) {
     return res.status(400).json({
       message: "Invalid or expired token",
-      err: err.message,
+      error: error.message,
     });
   }
 }
@@ -135,6 +174,57 @@ async function login(req, res) {
   });
 }
 
+async function resend(req, res) {
+  const { username, email, password } = req.body; // ya req.query, jaisa tum bhejte ho
 
+  try {
+    if (!email) {
+      return res.status(400).json({
+        message: "Email is required",
+      });
+    }
 
-export default { register, verifyEmail, login };
+    const user = await userModel.findOne({ email });
+
+    if (!user) {
+      return res.status(404).json({
+        message: "User not found, please sign up first",
+      });
+    }
+
+    if (user.verified) {
+      return res.status(400).json({
+        message: "Email already verified, please login",
+      });
+    }
+
+    // naya token banao (signup ke time jaisa banaya tha)
+    const token = jwt.sign({ email: user.email }, process.env.JWT_SECRET);
+
+    const verifyLink = `http://${process.env.URL}/api/auth/verify-email?token=${token}`;
+    // signup wala mail bhejne ka function yaha call karo
+    // maan lo tumhara function ka naam sendEmail for verification hai
+    await sendEmail({
+      to: user.email,
+      subject: "Verify your email - Perplexity",
+      html: `
+    <p>Hi ${user.username},</p>
+    <p>Please verify your email address by clicking the link below:</p>
+    <a href="${verifyLink}">Verify Email</a>
+    <p>If you did not create an account, please ignore this email.</p>
+    <p>Best regards,<br>The Perplexity Team</p>
+  `,
+    });
+
+    return res.status(200).json({
+      message: "Verification email resent successfully",
+    });
+  } catch (error) {
+    return res.status(500).json({
+      message: "Something went wrong",
+      error: error.message,
+    });
+  }
+}
+
+export default { register, verifyEmail, login, resend };

@@ -17,8 +17,13 @@ authRouter.post("/register", registerValidator, controller.register);
 authRouter.get("/verify-email", controller.verifyEmail);
 
 /**
- * POST
+ * POST api/auth/login
  */
 authRouter.post("/login", controller.login)
+
+/**
+ * 
+ */
+authRouter.get("/resend", controller.resend)
 
 export default authRouter;
