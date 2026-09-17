@@ -11,4 +11,5 @@ app.listen(PORT, () => {
 });
 
 connectDB();
+
 main();

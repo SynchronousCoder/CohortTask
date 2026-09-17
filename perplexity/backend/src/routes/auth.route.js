@@ -1,6 +1,7 @@
 import { Router } from "express";
 import controller from "../controllers/auth.controller.js";
 import {registerValidator}  from "../validators/auth.validator.js";
+import identifyUser from "../middleware/auth.middleware.js";
 
 const authRouter = Router();
 
@@ -25,5 +26,10 @@ authRouter.post("/login", controller.login)
  * 
  */
 authRouter.get("/resend", controller.resend)
+
+/**
+ * 
+ */
+authRouter.get("/get-me", identifyUser, controller.getMe)
 
 export default authRouter;

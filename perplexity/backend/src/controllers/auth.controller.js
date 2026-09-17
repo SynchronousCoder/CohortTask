@@ -128,7 +128,7 @@ async function verifyEmail(req, res) {
 async function login(req, res) {
   const { email, password } = req.body;
 
-  const user = await userModel.findOne({ email });
+  const user = await userModel.findOne({ email }).select("+password");
 
   if (!user) {
     return res.status(400).json({
@@ -227,4 +227,15 @@ async function resend(req, res) {
   }
 }
 
-export default { register, verifyEmail, login, resend };
+async function getMe(req, res) {
+  const user = req.user;
+
+  const currentUser = await userModel.findOne({ email: user.email }).populate();
+
+  res.status(200).json({
+    message: "User fetched successfully",
+    currentUser,
+  });
+}
+
+export default { register, verifyEmail, login, resend, getMe };
