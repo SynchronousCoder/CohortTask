@@ -5,13 +5,36 @@ const model = new ChatGoogleGenerativeAI({
   apiKey: process.env.GOOGLE_API_KEY,
 });
 
-export async function main() {
+export async function generateResponse(messages) {
+  try {
+    messages = messages.map((msg) => {
+      if (msg.role === "user") {
+        return {
+          role: "user",
+          content: msg.content,
+        };
+      }
+
+      if (msg.role === "ai") {
+        return {
+          role: "ai",
+          content: msg.content,
+        };
+      }
+    });
+
+    return messages; // 👈 missing
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+export async function generateChatTitle(message) {
   try {
     const response = await model.invoke(
-      "define what is ai is 100 words in most easy way"
+      `Generate a relevant title for the following message in 2-5words: ${message}`,
     );
-
-    console.log(response.content);
+    return response.content;
   } catch (error) {
     console.error(error);
   }

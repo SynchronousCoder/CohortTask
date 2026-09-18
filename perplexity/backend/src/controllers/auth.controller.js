@@ -228,13 +228,13 @@ async function resend(req, res) {
 }
 
 async function getMe(req, res) {
-  const user = req.user;
+  const currentUser = req.user;
 
-  const currentUser = await userModel.findOne({ email: user.email }).populate();
+  const user = await userModel.findOne({ email: currentUser.email }).populate();
 
   res.status(200).json({
     message: "User fetched successfully",
-    currentUser,
+    user,
   });
 }
 
