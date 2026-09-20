@@ -5,27 +5,50 @@ const model = new ChatGoogleGenerativeAI({
   apiKey: process.env.GOOGLE_API_KEY,
 });
 
-export async function generateResponse(messages) {
+// export async function generateResponse(messages) {
+//   console.log(messages);
+//   try {
+//     const formattedMessages = messages.map((msg) => {
+//       if (msg.role == "user") {
+//         return {
+//           role: "user",
+//           content: msg.content,
+//         };
+//       } else if (msg.role == "ai") {
+//         return {
+//           role: "ai",
+//           content: msg.content,
+//         };
+//       }
+//     });
+//     const response = await model.invoke(formattedMessages);
+//     return response.content;
+//   } catch (error) {
+//     console.error(error);
+//   }
+// }
+
+export async function generateResponse(mes) {
   try {
-    messages = messages.map((msg) => {
-      if (msg.role === "user") {
+    const formattedMessage = mes.map((msg) => {
+      if (msg.role == "user") {
         return {
-          role: "user",
+          role: msg.role,
           content: msg.content,
         };
-      }
-
-      if (msg.role === "ai") {
+      } else if (msg.role == "ai") {
         return {
-          role: "ai",
+          role: msg.role,
           content: msg.content,
         };
       }
     });
+    console.log("this is formatted message = >", formattedMessage);
 
-    return messages; // 👈 missing
+    const response = await model.invoke(formattedMessage);
+    return response.content;
   } catch (error) {
-    console.error(error);
+    throw error;
   }
 }
 
