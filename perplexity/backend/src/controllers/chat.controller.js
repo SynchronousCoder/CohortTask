@@ -96,7 +96,7 @@ async function generateRes(req, res) {
 async function chat(req, res) {
   const user = req.user;
 
-  const chat = await chatModel.findOne({ user: user.id });
+  const chat = await chatModel.find({ user: user.id });
 
   if (!chat) {
     return res.status(404).json({

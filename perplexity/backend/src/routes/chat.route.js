@@ -8,15 +8,29 @@ const chatRouter = express.Router();
 chatRouter.post("/try", identifyUser, controller.generateRes)
 
 
-
+/**
+ * POST /api/chats
+ */
 chatRouter.post("/message", identifyUser, controller.generateMessage);
 
+/**
+ * 
+ */
 chatRouter.get("/", identifyUser, controller.chat)
 
+/**
+ * 
+ */
 chatRouter.get("/:chatId/message", identifyUser, controller.message)
 
-chatRouter.delete("/:chatId", identifyUser, controller.deleteChat)
+/**
+ * 
+ */
+chatRouter.delete("/delete/:chatId", identifyUser, controller.deleteChat)
 
+/**
+ * 
+ */
 chatRouter.delete("/:messageId/message", identifyUser, controller.deleteMessage)
 
 export default chatRouter;

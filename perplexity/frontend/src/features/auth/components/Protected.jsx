@@ -5,11 +5,11 @@ import { Navigate } from "react-router";
 const Protected = ({ children }) => {
   const { user, loading } = useContext(AuthContext);
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
   if (!user) {
     return <Navigate to="/login" replace />;
+  }
+  if (loading) {
+    return <div>Loading... ${user}</div>;
   }
 
   return children;

@@ -41,6 +41,7 @@ const useAuth = () => {
 
   useEffect(() => {
     handleGetMe()
+    console.log(handleGetMe())
   }, [])
 
   return { handleRegister, handleLogin, handleGetMe, user, loading };
