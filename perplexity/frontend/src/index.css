@@ -1,5 +1,9 @@
 @import "tailwindcss";
 
+.chat-area::-webkit-scrollbar{
+  display: none;
+}
+/* 
 * {
   margin: 0;
   padding: 0;
@@ -12,4 +16,4 @@ body,
   width: 100%;
   background-color: rgb(16, 16, 16);
   color: whitesmoke;
-}
+} */
