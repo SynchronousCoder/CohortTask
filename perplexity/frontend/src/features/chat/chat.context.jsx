@@ -14,6 +14,8 @@ const ChatProvider = ({ children }) => {
   // Current chat ke messages
   const [messages, setMessages] = useState([]);
 
+  const [user, setUser] = useState(null)
+
   return (
     <ChatContext.Provider
       value={{
@@ -25,6 +27,8 @@ const ChatProvider = ({ children }) => {
         setChatId,
         messages,
         setMessages,
+        user,
+        setUser
       }}
     >
       {children}

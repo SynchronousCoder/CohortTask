@@ -9,6 +9,8 @@ import {
   deleteChat,
 } from "../services/chat.api";
 
+import { getMe } from "../../auth/service/auth.api";
+
 const useChat = () => {
   const {
     loading,
@@ -22,6 +24,9 @@ const useChat = () => {
 
     messages,
     setMessages,
+
+    user,
+    setUser
   } = useContext(ChatContext);
 
   /**
@@ -114,22 +119,51 @@ const useChat = () => {
   }
 
   /**
+   * 
+   */
+  async function handleGetMe() {
+    try {
+      setLoading(true)
+      const data = await getMe()
+      setUser(data.user)
+      console.log("user data : ", data.user)
+    } catch (error) {
+      throw error
+    }finally{
+      setLoading(false)
+    }
+  }
+
+  /**
+   * HANDLE NEW CHAT
+   */
+  async function handleNewChat() {
+    setChatId(null);
+    setMessages([]);
+  }
+
+
+  /**
    * LOAD ALL CHATS WHEN DASHBOARD OPENS
    */
   useEffect(() => {
     handleGetChats();
+    handleGetMe();
   }, []);
+
 
   return {
     handleSendMessage,
     handleGetMessages,
     handleGetChats,
     handleSelectChat,
+    handleNewChat,
 
     loading,
     chatId,
     messages,
     chats,
+    user
   };
 };
 
