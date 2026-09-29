@@ -1,0 +1,1 @@
+export { emailTool } from "./email.tool.js";

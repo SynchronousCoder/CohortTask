@@ -3,8 +3,12 @@ import { generateResponse, generateChatTitle } from "../service/ai.service.js";
 import chatModel from "../model/chat.model.js";
 import messageModel from "../model/message.model.js";
 
+
+/**
+ * 
+ */
 async function generateMessage(req, res) {
-  const { message, chat: chatId } = req.body;
+  const { message, chatId } = req.body;
 
   let title, chat;
 
@@ -17,7 +21,7 @@ async function generateMessage(req, res) {
     });
   }
 
-  console.log(chat, chatId);
+  // console.log("verifying: ", chat, chatId);
 
   const humanMessage = await messageModel.create({
     chat: chatId || chat._id,
@@ -27,54 +31,12 @@ async function generateMessage(req, res) {
 
   //Finding all the messages in the chat to send to AI for response
   const messages = await messageModel.find({ chat: chatId || chat._id });
-  console.log("messages => ", messages);
+  // console.log("HumanResponse => ", messages);
 
   const responseAI = await generateResponse(messages);
-  //   console.log(message, responseAI);
-  console.log("responseAI => ", responseAI);
-
-  const aiMessage = await messageModel.create({
-    chat: chatId || chat._id,
-    content: responseAI,
-    role: "ai",
-  });
-
-  return res.status(200).json({
-    chat: chat,
-    message: responseAI,
-    humanMessage: humanMessage,
-    aiMessage: aiMessage,
-  });
-}
-
-async function generateRes(req, res) {
-  const { message, chatId } = req.body;
-  console.log(message, chatId);
-
-  let title, chat;
-
-  if (!chatId) {
-    title = await generateChatTitle(message);
-
-    chat = await chatModel.create({
-      title: title,
-      user: req.user.id,
-    });
-  }
-
-  const humanMessage = await messageModel.create({
-    chat: chatId || chat._id,
-    content: message,
-    role: "user",
-  });
-
-  const msgs = await messageModel.find({
-    chat: chatId || chat._id,
-  });
-
-  const responseAI = await generateResponse(msgs);
-  //   console.log(message, responseAI);
-  console.log("responseAI => ", responseAI);
+  // console.log("AIResponse => ", responseAI);
+  
+  // console.log(message, responseAI);
 
   const aiMessage = await messageModel.create({
     chat: chatId || chat._id,
@@ -201,5 +163,4 @@ export default {
   message,
   deleteChat,
   deleteMessage,
-  generateRes,
 };

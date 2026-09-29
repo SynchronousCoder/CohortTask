@@ -16,6 +16,7 @@ const ChatProvider = ({ children }) => {
 
   const [user, setUser] = useState(null)
 
+  const [userLoading, setUserLoading] = useState(true);
   return (
     <ChatContext.Provider
       value={{
@@ -28,7 +29,9 @@ const ChatProvider = ({ children }) => {
         messages,
         setMessages,
         user,
-        setUser
+        setUser,
+        userLoading, 
+        setUserLoading
       }}
     >
       {children}

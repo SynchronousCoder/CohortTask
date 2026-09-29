@@ -5,9 +5,6 @@ import identifyUser from "../middleware/auth.middleware.js";
 const chatRouter = express.Router();
 
 
-chatRouter.post("/try", identifyUser, controller.generateRes)
-
-
 /**
  * POST /api/chats
  */

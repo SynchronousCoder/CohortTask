@@ -11,23 +11,26 @@ import {
 
 import { getMe } from "../../auth/service/auth.api";
 
-const useChat = () => {
-  const {
-    loading,
-    setLoading,
+  const useChat = () => {
+    const {
+      loading,
+      setLoading,
 
-    chats,
-    setChats,
+      chats,
+      setChats,
 
-    chatId,
-    setChatId,
+      chatId,
+      setChatId,
 
-    messages,
-    setMessages,
+      messages,
+      setMessages,
 
-    user,
-    setUser
-  } = useContext(ChatContext);
+      user,
+      setUser,
+
+      userLoading, 
+      setUserLoading
+    } = useContext(ChatContext);
 
   /**
    * SEND MESSAGE
@@ -123,14 +126,14 @@ const useChat = () => {
    */
   async function handleGetMe() {
     try {
-      setLoading(true)
+    setUserLoading(true);
       const data = await getMe()
       setUser(data.user)
       console.log("user data : ", data.user)
     } catch (error) {
       throw error
     }finally{
-      setLoading(false)
+    setUserLoading(false);
     }
   }
 
@@ -148,7 +151,6 @@ const useChat = () => {
    */
   useEffect(() => {
     handleGetChats();
-    handleGetMe();
   }, []);
 
 
@@ -158,8 +160,11 @@ const useChat = () => {
     handleGetChats,
     handleSelectChat,
     handleNewChat,
+    handleGetMe,
 
     loading,
+    userLoading,
+
     chatId,
     messages,
     chats,

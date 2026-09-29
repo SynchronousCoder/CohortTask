@@ -2,6 +2,7 @@ import { useState } from "react";
 import ReactMarkdown from "react-markdown";
 
 const Sidebar = ({ handleSelectChat, chats, handleNewChat, user }) => {
+  console.log(user)
   const [activeChatId, setActiveChatId] = useState(null);
   const [search, setSearch] = useState("");
 
@@ -108,7 +109,6 @@ const Sidebar = ({ handleSelectChat, chats, handleNewChat, user }) => {
                   onClick={() => {
                     setActiveChatId(chat._id);
                     handleSelectChat(chat._id);
-                    console.log("wa", user)
                   }}
                   className={`group flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left transition ${
                     isActive

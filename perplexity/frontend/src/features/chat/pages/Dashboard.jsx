@@ -10,12 +10,15 @@ const Dashboard = () => {
     handleGetChats,
     handleSelectChat,
     handleNewChat,
+    handleGetMe,
 
     loading,
+    userLoading,
+
     chatId,
     messages,
     chats,
-    user
+    user,
   } = useChat();
 
   console.log("ok: ", chats);
@@ -36,13 +39,26 @@ const Dashboard = () => {
     setInput("");
   };
 
+  useEffect(() => {
+    handleGetMe();
+  }, []);
+
   return (
     <div className="flex h-screen w-full overflow-hidden bg-[#0b0b0f] text-white">
       {/* =====================================================
           SIDEBAR
       ====================================================== */}
 
-        <Sidebar handleSelectChat={handleSelectChat} chats={chats} handleNewChat={handleNewChat} user={user} />
+      {userLoading ? (
+        <div className="hidden w-[270px] md:flex">Loading...</div>
+      ) : (
+        <Sidebar
+          handleSelectChat={handleSelectChat}
+          chats={chats}
+          handleNewChat={handleNewChat}
+          user={user}
+        />
+      )}
 
       {/* =====================================================
           MAIN CONTENT
